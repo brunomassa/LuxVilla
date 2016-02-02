@@ -1,5 +1,5 @@
 # LuxVilla
--Projecto com recycleview cardview entre outras coisas
+- Projecto com recycleview cardview entre outras coisas
 - project with recycleview cardview and other things
 
 -Recycleview & cardview
