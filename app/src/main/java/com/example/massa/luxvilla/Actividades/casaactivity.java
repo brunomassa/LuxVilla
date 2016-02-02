@@ -3,6 +3,7 @@ package com.example.massa.luxvilla.Actividades;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Build;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -35,6 +36,7 @@ public class casaactivity extends AppCompatActivity {
     ImageView imageViewinfocasa;
     TextView textViewinfocasa;
     ViewGroup mRoot;
+    CollapsingToolbarLayout imgtoolbar;
 
 
     @Override
@@ -92,6 +94,8 @@ public class casaactivity extends AppCompatActivity {
             }
         });
 
+        imgtoolbar=(CollapsingToolbarLayout)findViewById(R.id.tbinfocasaactivity);
+
         imageViewinfocasa=(ImageView)findViewById(R.id.imginfocasaactivity);
         textViewinfocasa=(TextView)findViewById(R.id.txtinfocasaactivity);
 
@@ -114,6 +118,9 @@ public class casaactivity extends AppCompatActivity {
             });
         }else {
             imageViewinfocasa.setImageResource(R.drawable.logo);
+            imgtoolbar.setExpandedTitleColor(getResources().getColor(android.R.color.black));
+            imgtoolbar.setCollapsedTitleTextColor(getResources().getColor(android.R.color.white));
+
         }
 
 
