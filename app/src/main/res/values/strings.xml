@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">LuxVilla</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_hint">Procurar casas</string>
+    <string name="busca">Procurar casas</string>
+</resources>
