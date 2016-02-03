@@ -29,7 +29,6 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
 
     ArrayList<todascasas> casas=new ArrayList<>();
     private LayoutInflater layoutInflater;
-    private VolleySingleton volleySingleton;
     private ImageLoader imageLoader;
     public static Context ctx;
     BDAdapter adapter;
@@ -37,7 +36,7 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
 
     public  adaptadorrvtodas(Context context){
         layoutInflater= LayoutInflater.from(context);
-        volleySingleton=VolleySingleton.getInstancia(context);
+        VolleySingleton volleySingleton=VolleySingleton.getInstancia(context);
         imageLoader=volleySingleton.getImageLoader();
         ctx=context;
 
