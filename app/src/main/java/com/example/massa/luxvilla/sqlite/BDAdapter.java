@@ -133,8 +133,8 @@ public class BDAdapter {
             ContentValues contentValues=new ContentValues();
             contentValues.put(BDCore.TABLE_FAV, Integer.parseInt(fav));
             sqLiteDatabase.update(BDCore.TABLE_NAME, contentValues, BDCore.TABLE_ID+"="+id,null);
-            flag=verfav(String.valueOf(id));
-            Toast.makeText(ctx,"FAV updated "+ flag,Toast.LENGTH_LONG).show();
+            flag=verfav(String.valueOf(id));//only for check if work
+            Toast.makeText(ctx,"FAV updated "+ flag,Toast.LENGTH_LONG).show();//only for check if work
         }catch (Exception ex){
             Toast.makeText(ctx,ex.toString(),Toast.LENGTH_LONG).show();
         }
