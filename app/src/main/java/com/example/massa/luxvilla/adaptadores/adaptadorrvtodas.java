@@ -1,6 +1,6 @@
 package com.example.massa.luxvilla.adaptadores;
 
-import android.app.Application;
+
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,10 +36,10 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
     int favflg;
 
     public  adaptadorrvtodas(Context context){
-        layoutInflater=layoutInflater.from(context);
+        layoutInflater= LayoutInflater.from(context);
         volleySingleton=VolleySingleton.getInstancia(context);
         imageLoader=volleySingleton.getImageLoader();
-        this.ctx=context;
+        ctx=context;
 
     }
 
@@ -51,8 +51,7 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
     @Override
     public vhtodas onCreateViewHolder(ViewGroup parent, int viewType) {
         View view=layoutInflater.inflate(R.layout.itencasas, parent, false);
-        vhtodas vhtds=new vhtodas(view);
-        return vhtds;
+        return new vhtodas(view);
     }
 
     @Override
@@ -78,8 +77,6 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
                     holder.imgcasa.setImageResource(R.drawable.logo);
                 }
             });
-        }else {
-
         }
         adapter=new BDAdapter(ctx);
         favflg=adapter.verfav(String.valueOf(position));
