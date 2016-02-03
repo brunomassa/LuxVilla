@@ -97,7 +97,7 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
 
             }
         });
-        if (favflg==1){
+        if (favflg==0){
             holder.favoriteButton.setFavorite(false);
         }else {
             holder.favoriteButton.setFavorite(true);
