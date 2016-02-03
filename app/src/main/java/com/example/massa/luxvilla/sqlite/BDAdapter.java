@@ -127,14 +127,12 @@ public class BDAdapter {
     }
 
     public void updatefav(int id,String fav){
-        int flag;
         try {
             SQLiteDatabase sqLiteDatabase=core.getWritableDatabase();
             ContentValues contentValues=new ContentValues();
             contentValues.put(BDCore.TABLE_FAV, Integer.parseInt(fav));
-            sqLiteDatabase.update(BDCore.TABLE_NAME, contentValues, BDCore.TABLE_ID+"="+id,null);
-            flag=verfav(String.valueOf(id));//only for check if work
-            Toast.makeText(ctx,"FAV updated "+ flag,Toast.LENGTH_LONG).show();//only for check if work
+            //this is not working for now
+            sqLiteDatabase.update(BDCore.TABLE_NAME, contentValues, BDCore.TABLE_ID+" LIKE ?",new String[]{String.valueOf(id)});
         }catch (Exception ex){
             Toast.makeText(ctx,ex.toString(),Toast.LENGTH_LONG).show();
         }

@@ -83,20 +83,21 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
         }
         adapter=new BDAdapter(ctx);
         favflg=adapter.verfav(String.valueOf(position));
+        Toast.makeText(ctx,String.valueOf(favflg),Toast.LENGTH_LONG).show();//only for check if work
         holder.favoriteButton.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
             @Override
             public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
                 if (favflg==0){
                     adapter.updatefav(position,String.valueOf(1));
-                    //favflg=adapter.verfav(String.valueOf(position));
+                    favflg=adapter.verfav(String.valueOf(position));
                 }else {
                     adapter.updatefav(position,String.valueOf(0));
-                    //favflg=adapter.verfav(String.valueOf(position));
+                    favflg=adapter.verfav(String.valueOf(position));
                 }
 
             }
         });
-        if (favflg==0){
+        if (favflg==1){
             holder.favoriteButton.setFavorite(false);
         }else {
             holder.favoriteButton.setFavorite(true);
