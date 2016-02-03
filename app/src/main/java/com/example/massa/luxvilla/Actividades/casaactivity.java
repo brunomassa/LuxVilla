@@ -86,7 +86,12 @@ public class casaactivity extends AppCompatActivity {
 
         toolbarinfocasa=(Toolbar)findViewById(R.id.barinfocasaactivity);
         toolbarinfocasa.setTitle(localcasa);
-        toolbarinfocasa.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
+        if (isNetworkAvailable(casaactivity.this)){
+            toolbarinfocasa.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
+        }else {
+            toolbarinfocasa.setNavigationIcon(R.mipmap.ic_arrow_back_black_24dp);
+        }
+
         toolbarinfocasa.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,8 +124,7 @@ public class casaactivity extends AppCompatActivity {
         }else {
             imageViewinfocasa.setImageResource(R.drawable.logo);
             imgtoolbar.setExpandedTitleColor(getResources().getColor(android.R.color.black));
-            imgtoolbar.setCollapsedTitleTextColor(getResources().getColor(android.R.color.white));
-
+            imgtoolbar.setCollapsedTitleTextColor(getResources().getColor(android.R.color.black));
         }
 
 
