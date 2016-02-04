@@ -2,6 +2,7 @@ package com.example.massa.luxvilla.adaptadores;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +32,6 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     public static Context ctx;
-    BDAdapter adapter;
     int favflg;
 
     public  adaptadorrvtodas(Context context){
@@ -77,18 +77,15 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
                 }
             });
         }
-        adapter=new BDAdapter(ctx);
-        favflg=adapter.verfav(String.valueOf(position));
-        Toast.makeText(ctx,String.valueOf(favflg),Toast.LENGTH_LONG).show();//only for check if work
+        favflg=0;
+
         holder.favoriteButton.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
             @Override
             public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
                 if (favflg==0){
-                    adapter.updatefav(position,String.valueOf(1));
-                    favflg=adapter.verfav(String.valueOf(position));
+
                 }else {
-                    adapter.updatefav(position,String.valueOf(0));
-                    favflg=adapter.verfav(String.valueOf(position));
+
                 }
 
             }

@@ -3,6 +3,7 @@ package com.example.massa.luxvilla.separadores;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.SharedPreferencesCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
@@ -71,6 +73,8 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
     static BDAdapter adapter;
     private adaptadorrvtodasoffline adaptadoroffline;
     static Context ctxtodas;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
     public separadortodas() {
@@ -106,6 +110,7 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
         volleySingleton=VolleySingleton.getInstancia(getActivity());
         requestQueue=volleySingleton.getRequestQueue();
         ctxtodas=getContext();
+
        // sendjsonRequest();
     }
 
@@ -156,7 +161,7 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
                     cs.Preço=preco;
                     cs.IMGurl=imgurl;
                     cs.info=info;
-                    ids.add(0,cs);
+
 
                     String locsql=adapter.verlocais(id);
                     String precsql=adapter.verprecos(id);
@@ -172,6 +177,7 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
                             }
                     }
                     casas.add(0,casasadd);
+                    ids.add(0,cs);
                     //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {

@@ -107,38 +107,6 @@ public class BDAdapter {
         return cnt;
     }
 
-    public Integer verfav(String ID){
-        SQLiteDatabase sqLiteDatabase=core.getWritableDatabase();
-        String[] colunas={BDCore.TABLE_LOCAL,BDCore.TABLE_PRECO,BDCore.TABLE_INFO,BDCore.TABLE_FAV};
-        Cursor cursor=sqLiteDatabase.query(BDCore.TABLE_NAME, colunas, BDCore.TABLE_ID+"='"+ID+"'", null, null, null, null);
-        while (cursor.moveToPosition(Integer.parseInt(ID))){
-            loc=cursor.getString(0);
-            prec=cursor.getString(1);
-            inf=cursor.getString(2);
-            favflag=cursor.getInt(3);
-
-
-
-            //Toast.makeText(ctx,loc+" "+prec+" "+inf+" ",Toast.LENGTH_LONG).show();
-
-        }
-        cursor.close();
-        return favflag;
-    }
-
-    public void updatefav(int id,String fav){
-        try {
-            SQLiteDatabase sqLiteDatabase=core.getWritableDatabase();
-            ContentValues contentValues=new ContentValues();
-            contentValues.put(BDCore.TABLE_FAV, Integer.parseInt(fav));
-            //this is not working for now
-            sqLiteDatabase.update(BDCore.TABLE_NAME, contentValues, BDCore.TABLE_ID+" LIKE ?",new String[]{String.valueOf(id)});
-        }catch (Exception ex){
-            Toast.makeText(ctx,ex.toString(),Toast.LENGTH_LONG).show();
-        }
-
-    }
-
     static class BDCore extends SQLiteOpenHelper {
         private static final String BD_NAME="dbcasas";
         private static final int BD_VERSION=4;
