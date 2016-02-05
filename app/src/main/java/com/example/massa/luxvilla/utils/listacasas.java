@@ -9,4 +9,5 @@ public class listacasas {
     public String Preço;
     public String IMGurl;
     public String info;
+    public String idcs;
 }

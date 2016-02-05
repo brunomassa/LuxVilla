@@ -32,7 +32,11 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     public static Context ctx;
-    int favflg;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    String PREFSNAME = "FAVS";
+    String id;
+    int favflag;
 
     public  adaptadorrvtodas(Context context){
         layoutInflater= LayoutInflater.from(context);
@@ -77,20 +81,38 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
                 }
             });
         }
-        favflg=0;
+        sharedPreferences=ctx.getSharedPreferences(PREFSNAME, 0);
+        id=casaexata.getID();
+        favflag=sharedPreferences.getInt(id, 0);
 
-        holder.favoriteButton.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
+        holder.favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
-                if (favflg==0){
+            public void onClick(View v) {
+                id=casaexata.getID();
+                favflag=sharedPreferences.getInt(id, 0);
+                if (favflag==0){
 
+                    sharedPreferences=ctx.getSharedPreferences(PREFSNAME, 0);
+                    editor=sharedPreferences.edit();
+                    editor.putInt(id, 1);
+                    editor.apply();
+                    favflag=sharedPreferences.getInt(id,0);
+                    holder.favoriteButton.setFavorite(true);
+                    //Toast.makeText(ctx,id+" "+" "+String.valueOf(favflag),Toast.LENGTH_LONG).show();
                 }else {
 
+                    sharedPreferences=ctx.getSharedPreferences(PREFSNAME,0);
+                    editor =sharedPreferences.edit();
+                    editor.putInt(String.valueOf(id),0);
+                    editor.apply();
+                    favflag=sharedPreferences.getInt(String.valueOf(id),0);
+                    holder.favoriteButton.setFavorite(false);
+                    //Toast.makeText(ctx,id+" "+" "+String.valueOf(favflag),Toast.LENGTH_LONG).show();
                 }
-
             }
         });
-        if (favflg==0){
+
+        if (favflag==0){
             holder.favoriteButton.setFavorite(false);
         }else {
             holder.favoriteButton.setFavorite(true);
@@ -113,10 +135,11 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
         public vhtodas(final View itemView) {
             super(itemView);
 
-            imgcasa=(ImageView)itemView.findViewById(R.id.imgcasa);
-            txtLocalcasa=(TextView)itemView.findViewById(R.id.txtlocalcasa);
-            txtPrecocasa=(TextView)itemView.findViewById(R.id.txtprecocasa);
-            favoriteButton=(MaterialFavoriteButton)itemView.findViewById(R.id.favbutton);
+            imgcasa = (ImageView) itemView.findViewById(R.id.imgcasa);
+            txtLocalcasa = (TextView) itemView.findViewById(R.id.txtlocalcasa);
+            txtPrecocasa = (TextView) itemView.findViewById(R.id.txtprecocasa);
+            favoriteButton = (MaterialFavoriteButton) itemView.findViewById(R.id.favbutton);
+
         }
 
         @Override

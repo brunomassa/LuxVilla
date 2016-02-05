@@ -81,7 +81,7 @@
                 android:layout_height="match_parent"
                 android:textColor="#000"/>
             <com.github.ivbaranov.mfb.MaterialFavoriteButton
-                android:id="@+id/favbutton"
+                android:id="@+id/favbuttoncasa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

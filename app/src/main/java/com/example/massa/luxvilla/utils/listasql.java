@@ -7,4 +7,5 @@ public class listasql {
     public String Loc;
     public String Inf;
     public String Prec;
+    public String Id;
 }

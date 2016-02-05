@@ -147,11 +147,13 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
                         casasadd.setLOCAL(local);
                         casasadd.setPRECO(preco);
                         casasadd.setIMGURL(imgurl);
+                        casasadd.setID(id);
                         listacasas cs=new listacasas();
                         cs.Local=local;
                         cs.Preço=preco;
                         cs.IMGurl=imgurl;
                         cs.info=info;
+                        cs.idcs=id;
                         ids.add(0,cs);
 
                         casas.add(0,casasadd);
@@ -224,6 +226,7 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
         infocasa.putExtra("precocasa", cs.Preço);
         infocasa.putExtra("imgurl", cs.IMGurl);
         infocasa.putExtra("infocs", cs.info);
+        infocasa.putExtra("csid",cs.idcs);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             View iv = view.findViewById(R.id.imgcasa);
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), Pair.create(iv, "elementimg"));
@@ -318,17 +321,20 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
         for(int i=0;i<colunas;i++){
             listasql txtexato=new listasql();
             String locsqloffline=adapter.verlocais(String.valueOf(i+1));
-            String precsqloffline=adapter.verprecos(String.valueOf(i+1));
-            String infossqloffline=adapter.verinfos(String.valueOf(i+1));
+            String precsqloffline=adapter.verprecos(String.valueOf(i + 1));
+            String infossqloffline=adapter.verinfos(String.valueOf(i + 1));
+            String id=String.valueOf(i + 1);
             if (locsqloffline.equalsIgnoreCase("Aveiro")){
                 txtexato.Loc=locsqloffline;
                 txtexato.Prec=precsqloffline;
                 txtexato.Inf=infossqloffline;
+                txtexato.Id=id;
                 dados.add(0,txtexato);
                 listacasas cs=new listacasas();
                 cs.Local=locsqloffline;
                 cs.Preço=precsqloffline;
                 cs.info=infossqloffline;
+                cs.idcs=id;
                 ids.add(0,cs);
             }else {
 

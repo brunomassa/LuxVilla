@@ -1,6 +1,7 @@
 package com.example.massa.luxvilla.Actividades;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -22,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.network.VolleySingleton;
+import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 
 public class casaactivity extends AppCompatActivity {
 
@@ -29,6 +31,7 @@ public class casaactivity extends AppCompatActivity {
     String precocasa;
     String imgurlcasa;
     String infocasa;
+    String idcasa;
     private VolleySingleton volleySingleton;
     private ImageLoader imageLoader;
     private RequestQueue requestQueue;
@@ -37,6 +40,11 @@ public class casaactivity extends AppCompatActivity {
     TextView textViewinfocasa;
     ViewGroup mRoot;
     CollapsingToolbarLayout imgtoolbar;
+    MaterialFavoriteButton favoriteButton;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    String PREFSNAME = "FAVS";
+    int favflag;
 
 
     @Override
@@ -83,6 +91,7 @@ public class casaactivity extends AppCompatActivity {
         precocasa=getIntent().getStringExtra("precocasa");
         imgurlcasa=getIntent().getStringExtra("imgurl");
         infocasa=getIntent().getStringExtra("infocs");
+        idcasa=getIntent().getStringExtra("csid");
 
         toolbarinfocasa=(Toolbar)findViewById(R.id.barinfocasaactivity);
         toolbarinfocasa.setTitle(localcasa);
@@ -127,6 +136,40 @@ public class casaactivity extends AppCompatActivity {
             imgtoolbar.setCollapsedTitleTextColor(getResources().getColor(android.R.color.black));
         }
 
+        favoriteButton=(MaterialFavoriteButton)findViewById(R.id.favbuttoncasa);
+        sharedPreferences=getSharedPreferences(PREFSNAME, 0);
+        favflag=sharedPreferences.getInt(idcasa, 0);
+
+        if (favflag==0){
+            favoriteButton.setFavorite(false);
+        }else {
+            favoriteButton.setFavorite(true);
+        }
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                favflag=sharedPreferences.getInt(idcasa, 0);
+                if (favflag==0){
+
+                    sharedPreferences=getSharedPreferences(PREFSNAME, 0);
+                    editor=sharedPreferences.edit();
+                    editor.putInt(idcasa, 1);
+                    editor.apply();
+                    favflag=sharedPreferences.getInt(idcasa,0);
+                    favoriteButton.setFavorite(true);
+                    //Toast.makeText(ctx, id + " " + " " + String.valueOf(favflag), Toast.LENGTH_LONG).show();
+                }else {
+
+                    sharedPreferences=getSharedPreferences(PREFSNAME,0);
+                    editor =sharedPreferences.edit();
+                    editor.putInt(String.valueOf(idcasa),0);
+                    editor.apply();
+                    favflag=sharedPreferences.getInt(String.valueOf(idcasa),0);
+                    favoriteButton.setFavorite(false);
+                    //Toast.makeText(ctx,id+" "+" "+String.valueOf(favflag),Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
 
         textViewinfocasa.setText("Preço: " + precocasa+"\n\n"+infocasa);

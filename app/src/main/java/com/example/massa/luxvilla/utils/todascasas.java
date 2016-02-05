@@ -17,10 +17,12 @@ public class todascasas {
 
     public todascasas(String local,
                       String preco,
-                      String imgurl){
+                      String imgurl,
+                      String id){
         this.LOCAL=local;
         this.PRECO=preco;
         this.IMGURL=imgurl;
+        this.ID=id;
     }
 
     public void setLOCAL(String local){
@@ -34,6 +36,10 @@ public class todascasas {
         this.IMGURL=imgurl;
     }
 
+    public void setID(String id){
+        this.ID=id;
+    }
+
     public String getLOCAL(){
         return LOCAL;
     }
@@ -45,9 +51,14 @@ public class todascasas {
         return IMGURL;
     }
 
+    public String getID(){
+        return ID;
+    }
+
     public String toString(){
         return
-                "LOCAL: "+ LOCAL
+                "ID: "+ID
+                +"\nLOCAL: "+ LOCAL
                 +"\nPRECO: "+PRECO
                 +"\nIMGURL: "+IMGURL;
     }
