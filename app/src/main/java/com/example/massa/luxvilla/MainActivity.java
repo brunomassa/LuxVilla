@@ -1,5 +1,7 @@
 package com.example.massa.luxvilla;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -29,7 +31,11 @@ import com.example.massa.luxvilla.separadores.separadoraveiro;
 import com.example.massa.luxvilla.separadores.separadorbraga;
 import com.example.massa.luxvilla.separadores.separadorporto;
 import com.example.massa.luxvilla.separadores.separadortodas;
+import com.example.massa.luxvilla.services.notificationreciver;
+import com.example.massa.luxvilla.services.notificationservice;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
+
+import java.util.Calendar;
 
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
@@ -131,6 +137,17 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         });
 
         requestQueue.add(stringRequest);*/
+
+        Intent startServiceIntent = new Intent(this, notificationservice.class);
+        PendingIntent pendingIntent=PendingIntent.getService(this,0,startServiceIntent,0);
+
+
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.SECOND, 5);
+
+        AlarmManager alarmManager=(AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 300000, pendingIntent);
 
     }
 
