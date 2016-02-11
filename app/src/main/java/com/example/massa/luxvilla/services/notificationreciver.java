@@ -16,17 +16,22 @@ public class notificationreciver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Intent startServiceIntent = new Intent(context, notificationservice.class);
-        PendingIntent pendingIntent=PendingIntent.getService(context,0,startServiceIntent,0);
-        //context.startService(startServiceIntent);
+        boolean isalarmactive=(PendingIntent.getService(context,0,new Intent(context, notificationservice.class),PendingIntent.FLAG_NO_CREATE)== null);
+
+        if (isalarmactive){
+            Intent startServiceIntent = new Intent(context, notificationservice.class);
+            PendingIntent pendingIntent=PendingIntent.getService(context,0,startServiceIntent,0);
+            //context.startService(startServiceIntent);
 
 
-        Calendar calendar=Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.SECOND, 5);
+            Calendar calendar=Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.add(Calendar.SECOND, 5);
 
-        AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 300000, pendingIntent);
+            AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 300000, pendingIntent);
+        }
+
 
     }
 }

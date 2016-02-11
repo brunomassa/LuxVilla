@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -52,6 +53,10 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
     final int SEPARADOR_PORTO=3;
     SearchView searchView;
     BDAdapter adapter;
+    SharedPreferences sharedPreferences;
+    final String ISOPENAPP="appstate";
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
@@ -59,6 +64,12 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharedPreferences=getSharedPreferences(ISOPENAPP,0);
+        editor=sharedPreferences.edit();
+        editor.putInt("open",1);
+        editor.apply();
+
         barracima=(Toolbar)findViewById(R.id.brcima);
         barracima.setTitle("LuxVilla: Todas");
         barracima.setTitleTextColor(getResources().getColor(android.R.color.white));
@@ -138,18 +149,32 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
 
         requestQueue.add(stringRequest);*/
 
-        Intent startServiceIntent = new Intent(this, notificationservice.class);
-        PendingIntent pendingIntent=PendingIntent.getService(this,0,startServiceIntent,0);
+        boolean isalarmactive=(PendingIntent.getService(this,0,new Intent(this, notificationservice.class),PendingIntent.FLAG_NO_CREATE)== null);
+
+        if (isalarmactive){
+            Intent startServiceIntent = new Intent(this, notificationservice.class);
+            PendingIntent pendingIntent=PendingIntent.getService(this,0,startServiceIntent,0);
 
 
-        Calendar calendar=Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.SECOND, 5);
+            Calendar calendar=Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.add(Calendar.SECOND, 5);
 
-        AlarmManager alarmManager=(AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 300000, pendingIntent);
+            AlarmManager alarmManager=(AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 300000, pendingIntent);
+        }
+
 
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
+        editor.putInt("open",0);
+        editor.apply();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.support.design.widget.Snackbar;
 import android.widget.Toast;
@@ -33,6 +34,8 @@ public class notificationservice extends IntentService {
     VolleySingleton volleySingleton;
     static BDAdapter adapter;
     RequestQueue requestQueue;
+    final String ISOPENAPP="appstate";
+    SharedPreferences sharedPreferences;
 
     public notificationservice(){
         super("notificationservice");
@@ -42,7 +45,9 @@ public class notificationservice extends IntentService {
     protected void onHandleIntent(Intent intent) {
         volleySingleton=VolleySingleton.getInstancia(this);
         requestQueue=volleySingleton.getRequestQueue();
-            if (isNetworkAvailable(this))
+        sharedPreferences=getSharedPreferences(ISOPENAPP,0);
+        int flagopen=sharedPreferences.getInt("open",0);
+            if (isNetworkAvailable(this) && flagopen==0)
                 sendjsonRequest();
 
 
