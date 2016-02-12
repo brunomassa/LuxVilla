@@ -5,18 +5,22 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.massa.Actividades.casaactivity"
-    android:background="#E5E4E2">
+    android:background="#E5E4E2"
+    style="@style/Infocasa"
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:layout_height="270dp"
         android:layout_width="match_parent"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/tbinfocasaactivity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            android:fitsSystemWindows="true"
+            android:minHeight="?attr/actionBarSize"
+            app:statusBarScrim="?attr/colorPrimaryDark"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp">
@@ -38,10 +42,13 @@
                 android:layout_width="match_parent"
                 android:fitsSystemWindows="true"
                 android:minHeight="?attr/actionBarSize"
+                android:layout_marginTop="25dp"
                 android:layout_height="?attr/actionBarSize"
                 android:gravity="top"
+                app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
                 app:layout_collapseMode="pin"/>
-            >
+
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 

@@ -59,9 +59,9 @@ public class casaactivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_casaactivity);
 
-        isappopen=getSharedPreferences(ISOPENAPP,0);
+        isappopen=getSharedPreferences(ISOPENAPP, 0);
         editor=isappopen.edit();
-        editor.putInt("open",1);
+        editor.putInt("open", 1);
         editor.apply();
 
         localcasa=getIntent().getStringExtra("localcasa");
@@ -86,6 +86,7 @@ public class casaactivity extends AppCompatActivity {
         });
 
         imgtoolbar=(CollapsingToolbarLayout)findViewById(R.id.tbinfocasaactivity);
+        imgtoolbar.setStatusBarScrimColor(getResources().getColor(R.color.black_trans80));
 
         imageViewinfocasa=(ImageView)findViewById(R.id.imginfocasaactivity);
         textViewinfocasa=(TextView)findViewById(R.id.txtinfocasaactivity);
