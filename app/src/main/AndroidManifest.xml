@@ -33,7 +33,8 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".Actividades.casaactivity" />
+        <activity android:name=".Actividades.casaactivity"
+            android:parentActivityName=".MainActivity"/>
 
         <receiver android:name=".services.notificationreciver">
             <intent-filter>

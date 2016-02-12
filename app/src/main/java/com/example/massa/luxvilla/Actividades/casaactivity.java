@@ -42,8 +42,10 @@ public class casaactivity extends AppCompatActivity {
     CollapsingToolbarLayout imgtoolbar;
     MaterialFavoriteButton favoriteButton;
     SharedPreferences sharedPreferences;
+    SharedPreferences isappopen;
     SharedPreferences.Editor editor;
     String PREFSNAME = "FAVS";
+    final String ISOPENAPP="appstate";
     int favflag;
 
 
@@ -52,40 +54,15 @@ public class casaactivity extends AppCompatActivity {
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
             getWindow().setSharedElementEnterTransition(new ChangeBounds());
 
-            Transition transitioncardview=getWindow().getSharedElementEnterTransition();
-            transitioncardview.addListener(new Transition.TransitionListener() {
-                @Override
-                public void onTransitionStart(Transition transition) {
-
-                }
-
-                @Override
-                public void onTransitionEnd(Transition transition) {
-
-                    TransitionManager.beginDelayedTransition(mRoot,new Slide());
-                    mRoot.setVisibility(View.VISIBLE);
-                }
-
-                @Override
-                public void onTransitionCancel(Transition transition) {
-
-                }
-
-                @Override
-                public void onTransitionPause(Transition transition) {
-
-                }
-
-                @Override
-                public void onTransitionResume(Transition transition) {
-
-                }
-            });
-
         }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_casaactivity);
+
+        isappopen=getSharedPreferences(ISOPENAPP,0);
+        editor=isappopen.edit();
+        editor.putInt("open",1);
+        editor.apply();
 
         localcasa=getIntent().getStringExtra("localcasa");
         precocasa=getIntent().getStringExtra("precocasa");
@@ -148,23 +125,23 @@ public class casaactivity extends AppCompatActivity {
         favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                favflag=sharedPreferences.getInt(idcasa, 0);
-                if (favflag==0){
+                favflag = sharedPreferences.getInt(idcasa, 0);
+                if (favflag == 0) {
 
-                    sharedPreferences=getSharedPreferences(PREFSNAME, 0);
-                    editor=sharedPreferences.edit();
+                    sharedPreferences = getSharedPreferences(PREFSNAME, 0);
+                    editor = sharedPreferences.edit();
                     editor.putInt(idcasa, 1);
                     editor.apply();
-                    favflag=sharedPreferences.getInt(idcasa,0);
+                    favflag = sharedPreferences.getInt(idcasa, 0);
                     favoriteButton.setFavorite(true);
                     //Toast.makeText(ctx, id + " " + " " + String.valueOf(favflag), Toast.LENGTH_LONG).show();
-                }else {
+                } else {
 
-                    sharedPreferences=getSharedPreferences(PREFSNAME,0);
-                    editor =sharedPreferences.edit();
-                    editor.putInt(String.valueOf(idcasa),0);
+                    sharedPreferences = getSharedPreferences(PREFSNAME, 0);
+                    editor = sharedPreferences.edit();
+                    editor.putInt(String.valueOf(idcasa), 0);
                     editor.apply();
-                    favflag=sharedPreferences.getInt(String.valueOf(idcasa),0);
+                    favflag = sharedPreferences.getInt(String.valueOf(idcasa), 0);
                     favoriteButton.setFavorite(false);
                     //Toast.makeText(ctx,id+" "+" "+String.valueOf(favflag),Toast.LENGTH_LONG).show();
                 }
@@ -175,6 +152,10 @@ public class casaactivity extends AppCompatActivity {
         textViewinfocasa.setText("Preço: " + precocasa+"\n\n"+infocasa);
 
         mRoot=(ViewGroup)findViewById(R.id.card_viewinfo);
+        mRoot.setVisibility(View.VISIBLE);
+
+
+
 
 
         //Toast.makeText(casaactivity.this,localcasa+" "+precocasa+" "+imgurlcasa,Toast.LENGTH_LONG).show();
@@ -192,5 +173,11 @@ public class casaactivity extends AppCompatActivity {
     public boolean isNetworkAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 }
