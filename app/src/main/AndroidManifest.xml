@@ -34,7 +34,8 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".Actividades.casaactivity"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Infocasa"/>
 
         <receiver android:name=".services.notificationreciver">
             <intent-filter>
