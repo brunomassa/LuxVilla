@@ -6,11 +6,11 @@
     tools:context=".MainActivity"
     android:id="@+id/coordll">
 
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="4dp">
-
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/brcima"
@@ -19,7 +19,8 @@
             android:minHeight="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways">
-            </android.support.v7.widget.Toolbar>
+
+        </android.support.v7.widget.Toolbar>
         <it.neokree.materialtabs.MaterialTabHost
             android:id="@+id/materialTabHost"
             android:layout_width="match_parent"
@@ -39,4 +40,5 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>
+
 

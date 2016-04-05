@@ -22,10 +22,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.transition.ChangeBounds;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.example.massa.luxvilla.separadores.separadoraveiro;
@@ -36,6 +42,7 @@ import com.example.massa.luxvilla.services.notificationreciver;
 import com.example.massa.luxvilla.services.notificationservice;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
 
+import java.lang.reflect.Field;
 import java.util.Calendar;
 
 import it.neokree.materialtabs.MaterialTab;
@@ -65,9 +72,9 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferences=getSharedPreferences(ISOPENAPP,0);
+        sharedPreferences=getSharedPreferences(ISOPENAPP, 0);
         editor=sharedPreferences.edit();
-        editor.putInt("open",1);
+        editor.putInt("open", 1);
         editor.apply();
 
         barracima=(Toolbar)findViewById(R.id.brcima);
@@ -81,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         tabs.addTab(tabs.newTab().setText("PORTO").setTabListener(this));
         vwpgr= (ViewPager) findViewById(R.id.vpgr);
         adapter=new BDAdapter(this);
+
         int numerocolunas=adapter.numerodecolunas();
         if (numerocolunas==0 && !isNetworkAvailable(this)){
             vwpgr.setVisibility(View.GONE);
@@ -181,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
+
         SearchManager searchManager=(SearchManager)getSystemService(Context.SEARCH_SERVICE);
         MenuItem item=menu.findItem(R.id.procura);
         Drawable drawable = menu.findItem(R.id.procura).getIcon();
@@ -192,7 +201,6 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         searchView=(SearchView) MenuItemCompat.getActionView(item);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setQueryHint(getResources().getString(R.string.busca));
-
         return true;
     }
 

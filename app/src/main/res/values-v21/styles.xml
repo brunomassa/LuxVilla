@@ -13,6 +13,7 @@
                 <item name="actionMenuTextColor">@android:color/white</item>
             <item name="android:windowActionBarOverlay">true</item>
             <item name="android:windowContentOverlay">@null</item>
+            <item name="searchViewStyle">@style/SearchViewMy</item>
         </style>
     <style name="Infocasa" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -25,5 +26,9 @@
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
         <item name="actionMenuTextColor">@android:color/white</item>
+    </style>
+    <style name="SearchViewMy" parent="Widget.AppCompat.Light.SearchView">
+        <item name="submitBackground">@color/colorPrimary</item>
+        <item name="queryBackground">@color/colorPrimary</item>
     </style>
 </resources>
