@@ -201,6 +201,16 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         searchView=(SearchView) MenuItemCompat.getActionView(item);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setQueryHint(getResources().getString(R.string.busca));
+
+        try {
+            Field mDrawable = SearchView.class.getDeclaredField("mSearchHintIcon");
+            mDrawable.setAccessible(true);
+            Drawable drw = (Drawable) mDrawable.get(searchView);
+            drw.setBounds(0, 0, 0, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return true;
     }
 
