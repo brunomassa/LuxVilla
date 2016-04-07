@@ -15,6 +15,8 @@
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="searchViewStyle">@style/SearchViewMy</item>
+        <item name="android:dropDownItemStyle">@style/myDropDownItemStyle</item>
+        <item name="android:dropDownListViewStyle">@style/myDropDownListViewStyle</item>
     </style>
 
     <style name="Infocasa" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -30,6 +32,12 @@
     <style name="SearchViewMy" parent="Widget.AppCompat.Light.SearchView">
         <item name="submitBackground">@color/colorPrimary</item>
         <item name="queryBackground">@color/colorPrimary</item>
+    </style>
+    <style name="myDropDownItemStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:textColor">@color/secondary_text_default_material_light</item>
+    </style>
+    <style name="myDropDownListViewStyle" parent="Widget.AppCompat.ListView.DropDown">
+        <item name="android:background">#FFF</item>
     </style>
 
 </resources>
