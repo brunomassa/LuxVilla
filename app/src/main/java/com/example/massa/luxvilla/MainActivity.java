@@ -11,6 +11,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Build;
+import android.provider.SearchRecentSuggestions;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -41,6 +42,7 @@ import com.example.massa.luxvilla.separadores.separadortodas;
 import com.example.massa.luxvilla.services.notificationreciver;
 import com.example.massa.luxvilla.services.notificationservice;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
+import com.example.massa.luxvilla.sugestoes.SearchSugestionsProvider;
 
 import java.lang.reflect.Field;
 import java.util.Calendar;
@@ -211,11 +213,20 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
             e.printStackTrace();
         }
 
+
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        switch (item.getItemId()){
+            case R.id.limparcockies:
+                SearchRecentSuggestions searchRecentSuggestions=new SearchRecentSuggestions(this, SearchSugestionsProvider.AUTHORITY,
+                        SearchSugestionsProvider.MODE);
+                searchRecentSuggestions.clearHistory();
+                Snackbar.make(vwpgr,"histórico de busca eliminado",Snackbar.LENGTH_SHORT).show();
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 

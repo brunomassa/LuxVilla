@@ -79,6 +79,7 @@ public class searchableactivity extends Activity implements RecyclerViewOnClickL
 
         barsearch=(Toolbar)findViewById(R.id.brcimasearch);
         barsearch.setTitle(query);
+        barsearch.setTitleTextColor(getResources().getColor(android.R.color.white));
         barsearch.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
         barsearch.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

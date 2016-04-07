@@ -17,6 +17,7 @@
         <item name="searchViewStyle">@style/SearchViewMy</item>
         <item name="android:dropDownItemStyle">@style/myDropDownItemStyle</item>
         <item name="android:dropDownListViewStyle">@style/myDropDownListViewStyle</item>
+        <item name="android:editTextColor">@android:color/white</item>
     </style>
 
     <style name="Infocasa" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
