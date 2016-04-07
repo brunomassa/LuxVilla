@@ -5,8 +5,8 @@
         android:id="@+id/procura"
         android:orderInCategory="100"
         android:title="@string/app_hint"
-        android:icon="@drawable/ic_search"
-        app:showAsAction="always"
+        android:icon="@mipmap/ic_search_white_24dp"
+        app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
 
 </menu>
