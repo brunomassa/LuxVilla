@@ -4,7 +4,7 @@
 
 -Recycleview & cardview:
 <p align="center">
-  <img src="http://brunomassa.esy.es/device-2016-02-02-183915.png" width="320"/>
+  <img src="http://brunomassa.esy.es/device-2016-04-08-093219.png" width="320"/>
   <img src="http://brunomassa.esy.es/device-2016-02-12-173430.png" width="320"/>
 </p>
 
