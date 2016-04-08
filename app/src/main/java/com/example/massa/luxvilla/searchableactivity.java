@@ -150,6 +150,8 @@ public class searchableactivity extends Activity implements RecyclerViewOnClickL
     private ArrayList<todascasas> parsejsonResponse(JSONArray array){
         ArrayList<todascasas> casas=new ArrayList<>();
         ids.clear();
+        String loclowercase;
+        String querylowercase;
         if (array!=null||array.length()>0){
             for (int i=0;i<array.length();i++){
                 try {
@@ -160,7 +162,9 @@ public class searchableactivity extends Activity implements RecyclerViewOnClickL
                     String imgurl=casaexata.getString(keys.allkeys.KEY_IMGURL);
                     String info=casaexata.getString(keys.allkeys.KEY_INFO);
 
-                    if (local.equalsIgnoreCase(query)){
+                    loclowercase=local.toLowerCase();
+                    querylowercase=query.toLowerCase();
+                    if (loclowercase.contains(querylowercase)){
                         todascasas casasadd=new todascasas();
                         casasadd.setLOCAL(local);
                         casasadd.setPRECO(preco);
@@ -197,10 +201,10 @@ public class searchableactivity extends Activity implements RecyclerViewOnClickL
         listacasas cs=casas.get(position);
         Intent infocasa = new Intent(searchableactivity.this, casaactivity.class);
         infocasa.putExtra("localcasa", cs.Local);
-        infocasa.putExtra("precocasa",cs.Preço);
+        infocasa.putExtra("precocasa", cs.Preço);
         infocasa.putExtra("imgurl", cs.IMGurl);
         infocasa.putExtra("infocs", cs.info);
-        infocasa.putExtra("csid",cs.idcs);
+        infocasa.putExtra("csid", cs.idcs);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             View iv=view.findViewById(R.id.imgcasa);
             ActivityOptionsCompat optionsCompat=ActivityOptionsCompat.makeSceneTransitionAnimation(searchableactivity.this, Pair.create(iv, "elementimg"));
