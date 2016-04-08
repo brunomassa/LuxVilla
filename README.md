@@ -16,7 +16,7 @@
 
 -Offline mode (SQLite database):
 <p align="center">
-  <img src="http://brunomassa.esy.es/device-2016-02-02-185306.png" width="285"/>
+  <img src="http://brunomassa.esy.es/device-2016-04-08-095326.png" width="285"/>
   <img src="http://brunomassa.esy.es/device-2016-02-12-173759.png" width="285"/>
   <img src="http://brunomassa.esy.es/device-2016-02-12-173549.png" width="285"/>
 </p>
