@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                 SearchRecentSuggestions searchRecentSuggestions=new SearchRecentSuggestions(this, SearchSugestionsProvider.AUTHORITY,
                         SearchSugestionsProvider.MODE);
                 searchRecentSuggestions.clearHistory();
-                Snackbar.make(vwpgr,"histórico de busca eliminado",Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(vwpgr,"histórico de busca eliminado",Snackbar.LENGTH_LONG).show();
                 break;
         }
         return super.onOptionsItemSelected(item);

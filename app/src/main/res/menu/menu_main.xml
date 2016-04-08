@@ -10,6 +10,7 @@
     <item
         android:id="@+id/limparcockies"
         android:orderInCategory="100"
+        android:icon="@mipmap/ic_delete_black_24dp"
         android:title="@string/clearhistory"
         app:showAsAction="never"/>
 

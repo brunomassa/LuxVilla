@@ -43,6 +43,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class searchableactivity extends Activity implements RecyclerViewOnClickListenerHack {
@@ -158,6 +159,7 @@ public class searchableactivity extends Activity implements RecyclerViewOnClickL
                     String preco=casaexata.getString(keys.allkeys.KEY_PRECO);
                     String imgurl=casaexata.getString(keys.allkeys.KEY_IMGURL);
                     String info=casaexata.getString(keys.allkeys.KEY_INFO);
+
                     if (local.equalsIgnoreCase(query)){
                         todascasas casasadd=new todascasas();
                         casasadd.setLOCAL(local);
