@@ -14,6 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value="com.example.massa.luxvilla.searchableactivity" />
+
         <provider
             android:authorities="com.example.massa.luxvilla.sugestoes.SearchSugestionsProvider"
             android:name="com.example.massa.luxvilla.sugestoes.SearchSugestionsProvider"/>
@@ -25,9 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.example.massa.luxvilla.searchableactivity" />
+
 
         </activity>
         <activity android:name=".searchableactivity">

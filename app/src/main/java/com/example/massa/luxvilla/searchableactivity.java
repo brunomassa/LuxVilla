@@ -4,19 +4,29 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -42,11 +52,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class searchableactivity extends Activity implements RecyclerViewOnClickListenerHack {
+public class searchableactivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
     private RecyclerView rvc1;
     private adaptadorrvtodas adaptador;
     Toolbar barsearch;
@@ -59,12 +70,14 @@ public class searchableactivity extends Activity implements RecyclerViewOnClickL
     static BDAdapter adapter;
     private adaptadorrvtodasoffline adaptadoroffline;
     static Context ctxtodas;
+    SearchView searchView;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchableactivity);
-        Intent intent = getIntent();
+        intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
             SearchRecentSuggestions searchRecentSuggestions=new SearchRecentSuggestions(this, SearchSugestionsProvider.AUTHORITY,
@@ -82,6 +95,7 @@ public class searchableactivity extends Activity implements RecyclerViewOnClickL
         barsearch.setTitle(query);
         barsearch.setTitleTextColor(getResources().getColor(android.R.color.white));
         barsearch.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
+        setSupportActionBar(barsearch);
         barsearch.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -285,6 +299,102 @@ public class searchableactivity extends Activity implements RecyclerViewOnClickL
     public boolean isNetworkAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+
+        SearchManager searchManager=(SearchManager)getSystemService(Context.SEARCH_SERVICE);
+        MenuItem item=menu.findItem(R.id.procura);
+        Drawable drawable = menu.findItem(R.id.procura).getIcon();
+        if (drawable != null) {
+            drawable.mutate();
+            drawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        }
+
+        searchView=(SearchView) MenuItemCompat.getActionView(item);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint(getResources().getString(R.string.busca));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String querysb) {
+                intent = null;
+                query = querysb;
+                barsearch.setTitle(query);
+                SearchRecentSuggestions searchRecentSuggestions = new SearchRecentSuggestions(searchableactivity.this, SearchSugestionsProvider.AUTHORITY,
+                        SearchSugestionsProvider.MODE);
+                searchRecentSuggestions.saveRecentQuery(query, null);
+                if (isNetworkAvailable(searchableactivity.this)) {
+
+                    adaptador = new adaptadorrvtodas(searchableactivity.this);
+                    rvc1.setAdapter(adaptador);
+
+                    sendjsonRequest();
+                } else {
+                    adaptadoroffline = new adaptadorrvtodasoffline(searchableactivity.this, getdados());
+                    rvc1.setAdapter(adaptadoroffline);
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
+            @Override
+            public boolean onSuggestionSelect(int position) {
+                return false;
+            }
+
+            @Override
+            public boolean onSuggestionClick(int position) {
+                intent = null;
+                Cursor cursor=searchView.getSuggestionsAdapter().getCursor();
+                cursor.moveToPosition(position);
+                query=cursor.getString(2);
+                barsearch.setTitle(query);
+                if (isNetworkAvailable(searchableactivity.this)) {
+
+                    adaptador = new adaptadorrvtodas(searchableactivity.this);
+                    rvc1.setAdapter(adaptador);
+
+                    sendjsonRequest();
+                } else {
+                    adaptadoroffline = new adaptadorrvtodasoffline(searchableactivity.this, getdados());
+                    rvc1.setAdapter(adaptadoroffline);
+                }
+                return true;
+            }
+        });
+
+        try {
+            Field mDrawable = SearchView.class.getDeclaredField("mSearchHintIcon");
+            mDrawable.setAccessible(true);
+            Drawable drw = (Drawable) mDrawable.get(searchView);
+            drw.setBounds(0, 0, 0, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch (item.getItemId()){
+            case R.id.limparcockies:
+                SearchRecentSuggestions searchRecentSuggestions=new SearchRecentSuggestions(this, SearchSugestionsProvider.AUTHORITY,
+                        SearchSugestionsProvider.MODE);
+                searchRecentSuggestions.clearHistory();
+                Snackbar.make(rvc1, "histórico de busca eliminado", Snackbar.LENGTH_LONG).show();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public static List<listasql> getdados(){
