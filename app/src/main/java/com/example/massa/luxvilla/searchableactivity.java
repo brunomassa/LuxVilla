@@ -295,6 +295,9 @@ public class searchableactivity extends Activity implements RecyclerViewOnClickL
         int colunas=adapter.numerodecolunas();
         ids.clear();
 
+        String loclowercase;
+        String querylowercase;
+
 
         for(int i=0;i<colunas;i++){
             listasql txtexato=new listasql();
@@ -302,7 +305,9 @@ public class searchableactivity extends Activity implements RecyclerViewOnClickL
             String precsqloffline=adapter.verprecos(String.valueOf(i + 1));
             String infossqloffline=adapter.verinfos(String.valueOf(i + 1));
             String id=String.valueOf(i + 1);
-            if (locsqloffline.equalsIgnoreCase(query)) {
+            loclowercase=locsqloffline.toLowerCase();
+            querylowercase=query.toLowerCase();
+            if (loclowercase.contains(querylowercase)) {
                 txtexato.Loc = locsqloffline;
                 txtexato.Prec = precsqloffline;
                 txtexato.Inf = infossqloffline;
