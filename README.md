@@ -11,7 +11,7 @@
 -Searchview with recent search sugestions:
 <p align="center">
   <img src="http://brunomassa.esy.es/device-2016-04-08-093050.png" width="320"/>
-  <img src="http://brunomassa.esy.es/device-2016-02-12-173724.png" width="320"/>
+  <img src="http://brunomassa.esy.es/device-2016-04-08-153643.png" width="320"/>
 </p>
 
 -Offline mode (SQLite database):
