@@ -166,6 +166,8 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         ids.clear();
         String loclowercase;
         String querylowercase;
+        String preclowercase;
+        String infolowercase;
         if (array!=null||array.length()>0){
             for (int i=0;i<array.length();i++){
                 try {
@@ -177,8 +179,10 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
                     String info=casaexata.getString(keys.allkeys.KEY_INFO);
 
                     loclowercase=local.toLowerCase();
+                    preclowercase=preco.toLowerCase();
+                    infolowercase=info.toLowerCase();
                     querylowercase=query.toLowerCase();
-                    if (loclowercase.contains(querylowercase)){
+                    if (loclowercase.contains(querylowercase) || preclowercase.contains(querylowercase) || infolowercase.contains(querylowercase)){
                         todascasas casasadd=new todascasas();
                         casasadd.setLOCAL(local);
                         casasadd.setPRECO(preco);
@@ -407,17 +411,22 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
 
         String loclowercase;
         String querylowercase;
+        String preclowercase;
+        String infolowercase;
 
 
         for(int i=0;i<colunas;i++){
             listasql txtexato=new listasql();
-            String locsqloffline=adapter.verlocais(String.valueOf(i+1));
+            String locsqloffline=adapter.verlocais(String.valueOf(i + 1));
             String precsqloffline=adapter.verprecos(String.valueOf(i + 1));
             String infossqloffline=adapter.verinfos(String.valueOf(i + 1));
             String id=String.valueOf(i + 1);
+
             loclowercase=locsqloffline.toLowerCase();
+            preclowercase=precsqloffline.toLowerCase();
+            infolowercase=infossqloffline.toLowerCase();
             querylowercase=query.toLowerCase();
-            if (loclowercase.contains(querylowercase)) {
+            if (loclowercase.contains(querylowercase) || preclowercase.contains(querylowercase) || infolowercase.contains(querylowercase)) {
                 txtexato.Loc = locsqloffline;
                 txtexato.Prec = precsqloffline;
                 txtexato.Inf = infossqloffline;
