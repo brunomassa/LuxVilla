@@ -49,7 +49,9 @@ public class notificationservice extends IntentService {
     RequestQueue requestQueue;
     ImageLoader imageLoader;
     final String ISOPENAPP="appstate";
+    final String NOTIFICATION="notificationsenabled";
     SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences1;
 
     public notificationservice(){
         super("notificationservice");
@@ -60,9 +62,11 @@ public class notificationservice extends IntentService {
         volleySingleton=VolleySingleton.getInstancia(this);
         requestQueue=volleySingleton.getRequestQueue();
         imageLoader=volleySingleton.getImageLoader();
-        sharedPreferences=getSharedPreferences(ISOPENAPP,0);
+        sharedPreferences=getSharedPreferences(ISOPENAPP, 0);
+        sharedPreferences1=getSharedPreferences(NOTIFICATION,0);
+        int flagenabled=sharedPreferences1.getInt("enabled",0);
         int flagopen=sharedPreferences.getInt("open",0);
-            if (isNetworkAvailable(this) && flagopen==0)
+            if (isNetworkAvailable(this) && flagopen==0 && flagenabled==0)
                 sendjsonRequest();
 
 

@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
+import com.example.massa.luxvilla.Actividades.SettingsActivity;
 import com.example.massa.luxvilla.separadores.separadoraveiro;
 import com.example.massa.luxvilla.separadores.separadorbraga;
 import com.example.massa.luxvilla.separadores.separadorporto;
@@ -220,11 +221,16 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.limparcockies:
+            case R.id.defenicoes:
+
+                /*
                 SearchRecentSuggestions searchRecentSuggestions=new SearchRecentSuggestions(this, SearchSugestionsProvider.AUTHORITY,
                         SearchSugestionsProvider.MODE);
                 searchRecentSuggestions.clearHistory();
-                Snackbar.make(vwpgr,"histórico de busca eliminado",Snackbar.LENGTH_LONG).show();
+                Snackbar.make(vwpgr,"histórico de busca eliminado",Snackbar.LENGTH_LONG).show();*/
+
+                Intent it=new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(it);
                 break;
         }
         return super.onOptionsItemSelected(item);

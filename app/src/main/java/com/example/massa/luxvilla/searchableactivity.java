@@ -36,6 +36,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.massa.luxvilla.Actividades.SettingsActivity;
 import com.example.massa.luxvilla.Actividades.casaactivity;
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodas;
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodasoffline;
@@ -390,11 +391,15 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
     public boolean onOptionsItemSelected(MenuItem item){
 
         switch (item.getItemId()){
-            case R.id.limparcockies:
+            case R.id.defenicoes:
+                /*
                 SearchRecentSuggestions searchRecentSuggestions=new SearchRecentSuggestions(this, SearchSugestionsProvider.AUTHORITY,
                         SearchSugestionsProvider.MODE);
                 searchRecentSuggestions.clearHistory();
-                Snackbar.make(rvc1, "histórico de busca eliminado", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rvc1, "histórico de busca eliminado", Snackbar.LENGTH_LONG).show();*/
+
+                Intent it=new Intent(searchableactivity.this, SettingsActivity.class);
+                startActivity(it);
                 break;
         }
 
