@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.massa.Actividades.casaactivity"
+    tools:context="com.example.massa.luxvilla.Actividades.casaactivity"
     android:background="#E5E4E2"
     style="@style/Infocasa"
     android:fitsSystemWindows="true">

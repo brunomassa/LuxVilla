@@ -12,15 +12,19 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"/>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <RelativeLayout
         android:id="@+id/lmphistorico"
         android:background="#FFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/brcimadefenicoes"
         android:paddingLeft="16dp"
-        android:paddingTop="16dp"
+        android:paddingTop="80dp"
         android:paddingBottom="16dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
@@ -46,13 +50,20 @@
             android:layout_toRightOf="@+id/imageView"
             android:layout_toEndOf="@+id/imageView"
             />
+
     </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/linha"
+                android:background="#000"
+                android:layout_below="@+id/lmphistorico"/>
     <RelativeLayout
         android:id="@+id/rlnotifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF"
-        android:layout_below="@+id/lmphistorico"
+        android:layout_below="@+id/linha"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
@@ -69,12 +80,18 @@
             android:layout_centerVertical="true" />
 
     </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/linha2"
+                android:background="#000"
+                android:layout_below="@+id/rlnotifications"/>
     <RelativeLayout
         android:id="@+id/infoversao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF"
-        android:layout_below="@+id/rlnotifications"
+        android:layout_below="@+id/linha2"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
@@ -125,5 +142,6 @@
                 android:textColor="#000"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
-
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
