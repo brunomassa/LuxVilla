@@ -4,6 +4,7 @@ package com.example.massa.luxvilla.separadores;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
@@ -19,6 +20,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.TelephonyManager;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -205,21 +207,43 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
 
         recyclerViewtodas=(RecyclerView)view.findViewById(R.id.rvtodas);
 
-        final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
-        switch (rotation) {
-            case Surface.ROTATION_0:
-                recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
-                break;
-            case Surface.ROTATION_90:
-                recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
-                break;
-            case Surface.ROTATION_180:
-                recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
-                break;
-            default:
-                recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
-                break;
+        TelephonyManager manager = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        if(manager.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE){
+            //tablet
+            final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+            switch (rotation) {
+                case Surface.ROTATION_0:
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    break;
+                case Surface.ROTATION_90:
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),4,GridLayoutManager.VERTICAL,false));
+                    break;
+                case Surface.ROTATION_180:
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    break;
+                default:
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),4,GridLayoutManager.VERTICAL,false));
+                    break;
+            }
+        }else{
+            //phone
+            final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+            switch (rotation) {
+                case Surface.ROTATION_0:
+                    recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    break;
+                case Surface.ROTATION_90:
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    break;
+                case Surface.ROTATION_180:
+                    recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    break;
+                default:
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    break;
+            }
         }
+
 
 
 
