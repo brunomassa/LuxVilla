@@ -4,6 +4,7 @@ package com.example.massa.luxvilla.separadores;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.os.Build;
@@ -15,13 +16,17 @@ import android.support.v4.content.SharedPreferencesCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -200,8 +205,24 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
 
         recyclerViewtodas=(RecyclerView)view.findViewById(R.id.rvtodas);
 
+        final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
+                break;
+            case Surface.ROTATION_90:
+                recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                break;
+            case Surface.ROTATION_180:
+                recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
+                break;
+            default:
+                recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                break;
+        }
 
-        recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
 
         if (isNetworkAvailable(getActivity())) {
 

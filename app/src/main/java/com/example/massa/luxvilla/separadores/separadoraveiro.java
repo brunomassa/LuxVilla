@@ -13,13 +13,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
@@ -180,7 +183,21 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
         recyclerViewtodas=(RecyclerView)view.findViewById(R.id.rvaveiro);
 
 
-        recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
+        final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
+                break;
+            case Surface.ROTATION_90:
+                recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                break;
+            case Surface.ROTATION_180:
+                recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
+                break;
+            default:
+                recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                break;
+        }
 
         if (isNetworkAvailable(getActivity())) {
 
