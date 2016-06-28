@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -48,6 +49,9 @@ import com.example.massa.luxvilla.utils.keys;
 import com.example.massa.luxvilla.utils.listacasas;
 import com.example.massa.luxvilla.utils.listasql;
 import com.example.massa.luxvilla.utils.todascasas;
+import com.lapism.searchview.SearchAdapter;
+import com.lapism.searchview.SearchHistoryTable;
+import com.lapism.searchview.SearchItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,6 +77,9 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
     static Context ctxtodas;
     SearchView searchView;
     Intent intent;
+    com.lapism.searchview.SearchView searchViewpr;
+    List<SearchItem> sugestions;
+    SearchHistoryTable msearchHistoryTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +93,11 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         requestQueue=volleySingleton.getRequestQueue();
         ctxtodas=searchableactivity.this;
 
+        searchViewpr=(com.lapism.searchview.SearchView)findViewById(R.id.searchViewpresult);
+        searchViewpr.setVersion(com.lapism.searchview.SearchView.VERSION_MENU_ITEM);
+        searchViewpr.setVersionMargins(com.lapism.searchview.SearchView.VERSION_MARGINS_MENU_ITEM);
+        searchViewpr.setHint(R.string.busca);
+        searchViewpr.setVoice(false);
 
         barsearch=(Toolbar)findViewById(R.id.brcimasearch);
         barsearch.setTitle(query);
@@ -305,58 +317,20 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
 
         getMenuInflater().inflate(R.menu.menu_search, menu);
 
-        SearchManager searchManager=(SearchManager)getSystemService(Context.SEARCH_SERVICE);
-        MenuItem item=menu.findItem(R.id.procura);
-        Drawable drawable = menu.findItem(R.id.procura).getIcon();
-        if (drawable != null) {
-            drawable.mutate();
-            drawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        }
-
-        searchView=(SearchView) MenuItemCompat.getActionView(item);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setQueryHint(getResources().getString(R.string.busca));
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String querysb) {
-                intent = null;
-                query = querysb;
-                barsearch.setTitle(query);
-                SearchRecentSuggestions searchRecentSuggestions = new SearchRecentSuggestions(searchableactivity.this, SearchSugestionsProvider.AUTHORITY,
-                        SearchSugestionsProvider.MODE);
-                searchRecentSuggestions.saveRecentQuery(query, null);
-                if (isNetworkAvailable(searchableactivity.this)) {
-
-                    adaptador = new adaptadorrvtodas(searchableactivity.this);
-                    rvc1.setAdapter(adaptador);
-
-                    sendjsonRequest();
-                } else {
-                    adaptadoroffline = new adaptadorrvtodasoffline(searchableactivity.this, getdados());
-                    rvc1.setAdapter(adaptadoroffline);
-                }
-                return true;
-            }
-
+        sugestions=new ArrayList<SearchItem>();
+        msearchHistoryTable=new SearchHistoryTable(searchableactivity.this);
+        searchViewpr.setOnQueryTextListener(new com.lapism.searchview.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
-        });
-        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
-            @Override
-            public boolean onSuggestionSelect(int position) {
-                return false;
-            }
 
             @Override
-            public boolean onSuggestionClick(int position) {
-                intent = null;
-                Cursor cursor=searchView.getSuggestionsAdapter().getCursor();
-                cursor.moveToPosition(position);
-                query=cursor.getString(2);
+            public boolean onQueryTextSubmit(String querysb) {
+                query=querysb;
                 barsearch.setTitle(query);
+                sugestions.add(new SearchItem(query));
+                msearchHistoryTable.addItem(new SearchItem(query));
                 if (isNetworkAvailable(searchableactivity.this)) {
 
                     adaptador = new adaptadorrvtodas(searchableactivity.this);
@@ -367,19 +341,33 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
                     adaptadoroffline = new adaptadorrvtodasoffline(searchableactivity.this, getdados());
                     rvc1.setAdapter(adaptadoroffline);
                 }
+                searchViewpr.close(true);
                 return true;
             }
         });
+        SearchAdapter searchAdapter=new SearchAdapter(searchableactivity.this,sugestions);
+        searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                TextView textView = (TextView) view.findViewById(R.id.textView_item_text);
+                query = textView.getText().toString();
+                barsearch.setTitle(query);
 
-        try {
-            Field mDrawable = SearchView.class.getDeclaredField("mSearchHintIcon");
-            mDrawable.setAccessible(true);
-            Drawable drw = (Drawable) mDrawable.get(searchView);
-            drw.setBounds(0, 0, 0, 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                if (isNetworkAvailable(searchableactivity.this)) {
 
+                    adaptador = new adaptadorrvtodas(searchableactivity.this);
+                    rvc1.setAdapter(adaptador);
+
+                    sendjsonRequest();
+                } else {
+                    adaptadoroffline = new adaptadorrvtodasoffline(searchableactivity.this, getdados());
+                    rvc1.setAdapter(adaptadoroffline);
+                }
+
+                searchViewpr.close(true);
+            }
+        });
+        searchViewpr.setAdapter(searchAdapter);
         return true;
     }
 
@@ -387,14 +375,11 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
 
         switch (item.getItemId()){
             case R.id.defenicoes:
-                /*
-                SearchRecentSuggestions searchRecentSuggestions=new SearchRecentSuggestions(this, SearchSugestionsProvider.AUTHORITY,
-                        SearchSugestionsProvider.MODE);
-                searchRecentSuggestions.clearHistory();
-                Snackbar.make(rvc1, "histórico de busca eliminado", Snackbar.LENGTH_LONG).show();*/
-
                 Intent it=new Intent(searchableactivity.this, SettingsActivity.class);
                 startActivity(it);
+                break;
+            case R.id.procura:
+                searchViewpr.open(true);
                 break;
         }
 

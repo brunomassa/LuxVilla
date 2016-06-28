@@ -174,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                 Intent search=new Intent(MainActivity.this,searchableactivity.class);
                 search.putExtra("query",query);
                 startActivity(search);
+                searchViewpr.close(true);
                 return true;
             }
         });
@@ -187,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                 Intent search=new Intent(MainActivity.this,searchableactivity.class);
                 search.putExtra("query",query);
                 startActivity(search);
+                searchViewpr.close(true);
             }
         });
         searchViewpr.setAdapter(searchAdapter);
