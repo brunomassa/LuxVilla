@@ -79,15 +79,10 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchableactivity);
         intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            query = intent.getStringExtra(SearchManager.QUERY);
-            SearchRecentSuggestions searchRecentSuggestions=new SearchRecentSuggestions(this, SearchSugestionsProvider.AUTHORITY,
-                    SearchSugestionsProvider.MODE);
-            searchRecentSuggestions.saveRecentQuery(query, null);
-        }
+        query = intent.getStringExtra("query");
 
 
-            volleySingleton=VolleySingleton.getInstancia(searchableactivity.this);
+        volleySingleton=VolleySingleton.getInstancia(searchableactivity.this);
         requestQueue=volleySingleton.getRequestQueue();
         ctxtodas=searchableactivity.this;
 

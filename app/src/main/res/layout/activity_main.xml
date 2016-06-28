@@ -1,11 +1,14 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity"
-    android:id="@+id/coordll">
+    tools:context=".MainActivity">
 
+<android.support.design.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/coordll">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -41,4 +44,9 @@
 
 </android.support.design.widget.CoordinatorLayout>
 
+    <com.lapism.searchview.SearchView
+        android:id="@+id/searchViewp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
+</RelativeLayout>

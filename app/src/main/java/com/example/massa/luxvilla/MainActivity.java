@@ -13,6 +13,8 @@ import android.net.ConnectivityManager;
 import android.os.Build;
 import android.provider.SearchRecentSuggestions;
 import android.provider.Settings;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -44,9 +46,14 @@ import com.example.massa.luxvilla.services.notificationreciver;
 import com.example.massa.luxvilla.services.notificationservice;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
 import com.example.massa.luxvilla.sugestoes.SearchSugestionsProvider;
+import com.lapism.searchview.SearchAdapter;
+import com.lapism.searchview.SearchHistoryTable;
+import com.lapism.searchview.SearchItem;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
@@ -61,11 +68,13 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
     final int SEPARADOR_AVEIRO=1;
     final int SEPARADOR_BRAGA=2;
     final int SEPARADOR_PORTO=3;
-    SearchView searchView;
     BDAdapter adapter;
     SharedPreferences sharedPreferences;
     final String ISOPENAPP="appstate";
     SharedPreferences.Editor editor;
+    com.lapism.searchview.SearchView searchViewpr;
+    List<SearchItem> sugestions;
+    SearchHistoryTable msearchHistoryTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +89,13 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         editor.putInt("open", 1);
         editor.apply();
 
+        searchViewpr=(com.lapism.searchview.SearchView)findViewById(R.id.searchViewp);
+        searchViewpr.setHint("LuxVilla: Todas");
+        searchViewpr.setVoice(false);
+        searchViewpr.setTextStyle(1);
+
         barracima=(Toolbar)findViewById(R.id.brcima);
-        barracima.setTitle("LuxVilla: Todas");
-        barracima.setTitleTextColor(getResources().getColor(android.R.color.white));
+        barracima.setTitle("");
         setSupportActionBar(barracima);
         tabs= (MaterialTabHost) findViewById(R.id.materialTabHost);
         tabs.addTab(tabs.newTab().setText("TODAS").setTabListener(this));
@@ -112,16 +125,16 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                     tabs.setSelectedNavigationItem(position);
                     switch (position){
                         case 0:
-                            barracima.setTitle("LuxVilla: Todas");
+                            searchViewpr.setHint("LuxVilla: Todas");
                             break;
                         case 1:
-                            barracima.setTitle("LuxVilla: Aveiro");
+                            searchViewpr.setHint("LuxVilla: Aveiro");
                             break;
                         case 2:
-                            barracima.setTitle("LuxVilla: Braga");
+                            searchViewpr.setHint("LuxVilla: Braga");
                             break;
                         case 3:
-                            barracima.setTitle("LuxVilla: Porto");
+                            searchViewpr.setHint("LuxVilla: Porto");
                             break;
                     }
                     if (isNetworkAvailable(MainActivity.this)){
@@ -144,21 +157,45 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
             });
         }
 
-        /*requestQueue= VolleySingleton.getInstancia(MainActivity.this).getRequestQueue();
-        StringRequest stringRequest=new StringRequest(Request.Method.GET, "http://brunomassa.esy.es/resultado.json", new Response.Listener<String>() {
+        sugestions=new ArrayList<SearchItem>();
+        msearchHistoryTable=new SearchHistoryTable(MainActivity.this);
+        searchViewpr.setOnQueryTextListener(new com.lapism.searchview.SearchView.OnQueryTextListener() {
             @Override
-            public void onResponse(String response) {
-
-                Toast.makeText(MainActivity.this,"Resposta: "+response,Toast.LENGTH_LONG).show();
+            public boolean onQueryTextChange(String newText) {
+                return false;
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this,"Erro: "+error,Toast.LENGTH_LONG).show();
+            public boolean onQueryTextSubmit(String query) {
+                sugestions.add(new SearchItem(query));
+                msearchHistoryTable.addItem(new SearchItem(query));
+
+
+                Intent search=new Intent(MainActivity.this,searchableactivity.class);
+                search.putExtra("query",query);
+                startActivity(search);
+                return true;
             }
         });
+        SearchAdapter searchAdapter=new SearchAdapter(MainActivity.this,sugestions);
+        searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                TextView textView = (TextView) view.findViewById(R.id.textView_item_text);
+                String query = textView.getText().toString();
 
-        requestQueue.add(stringRequest);*/
+                Intent search=new Intent(MainActivity.this,searchableactivity.class);
+                search.putExtra("query",query);
+                startActivity(search);
+            }
+        });
+        searchViewpr.setAdapter(searchAdapter);
+        searchViewpr.setOnMenuClickListener(new com.lapism.searchview.SearchView.OnMenuClickListener() {
+            @Override
+            public void onMenuClick() {
+                Toast.makeText(MainActivity.this,"Menu click",Toast.LENGTH_LONG).show();
+            }
+        });
 
         boolean isalarmactive=(PendingIntent.getService(this,0,new Intent(this, notificationservice.class),PendingIntent.FLAG_NO_CREATE)== null);
 
@@ -192,29 +229,6 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-
-        SearchManager searchManager=(SearchManager)getSystemService(Context.SEARCH_SERVICE);
-        MenuItem item=menu.findItem(R.id.procura);
-        Drawable drawable = menu.findItem(R.id.procura).getIcon();
-        if (drawable != null) {
-            drawable.mutate();
-            drawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        }
-
-        searchView=(SearchView) MenuItemCompat.getActionView(item);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setQueryHint(getResources().getString(R.string.busca));
-
-        try {
-            Field mDrawable = SearchView.class.getDeclaredField("mSearchHintIcon");
-            mDrawable.setAccessible(true);
-            Drawable drw = (Drawable) mDrawable.get(searchView);
-            drw.setBounds(0, 0, 0, 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
         return true;
     }
 
@@ -222,12 +236,6 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
 
         switch (item.getItemId()){
             case R.id.defenicoes:
-
-                /*
-                SearchRecentSuggestions searchRecentSuggestions=new SearchRecentSuggestions(this, SearchSugestionsProvider.AUTHORITY,
-                        SearchSugestionsProvider.MODE);
-                searchRecentSuggestions.clearHistory();
-                Snackbar.make(vwpgr,"histórico de busca eliminado",Snackbar.LENGTH_LONG).show();*/
 
                 Intent it=new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(it);
@@ -242,16 +250,16 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         vwpgr.setCurrentItem(tab.getPosition());
         switch (tab.getPosition()){
             case 0:
-                barracima.setTitle("LuxVilla: Todas");
+                searchViewpr.setHint("LuxVilla: Todas");
                 break;
             case 1:
-                barracima.setTitle("LuxVilla: Aveiro");
+                searchViewpr.setHint("LuxVilla: Aveiro");
                 break;
             case 2:
-                barracima.setTitle("LuxVilla: Braga");
+                searchViewpr.setHint("LuxVilla: Braga");
                 break;
             case 3:
-                barracima.setTitle("LuxVilla: Porto");
+                searchViewpr.setHint("LuxVilla: Porto");
                 break;
         }
     }
