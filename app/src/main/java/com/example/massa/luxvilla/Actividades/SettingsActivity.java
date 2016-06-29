@@ -15,6 +15,11 @@ import android.widget.Toast;
 
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.sugestoes.SearchSugestionsProvider;
+import com.lapism.searchview.SearchHistoryTable;
+import com.lapism.searchview.SearchItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -25,6 +30,8 @@ public class SettingsActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     final String NOTIFICATION="notificationsenabled";
     SharedPreferences.Editor editor;
+    SearchHistoryTable msearchHistoryTable;
+    List<SearchItem> sugestions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +54,10 @@ public class SettingsActivity extends AppCompatActivity {
         limparhistorico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchRecentSuggestions searchRecentSuggestions=new SearchRecentSuggestions(SettingsActivity.this, SearchSugestionsProvider.AUTHORITY,
-                        SearchSugestionsProvider.MODE);
-                searchRecentSuggestions.clearHistory();
+                sugestions=new ArrayList<SearchItem>();
+                sugestions.clear();
+                msearchHistoryTable = new SearchHistoryTable(SettingsActivity.this);
+                msearchHistoryTable.clearDatabase();
                 Snackbar.make(limparhistorico, "histórico de busca eliminado", Snackbar.LENGTH_LONG).show();
             }
         });

@@ -37,6 +37,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.massa.luxvilla.Actividades.SettingsActivity;
 import com.example.massa.luxvilla.separadores.separadoraveiro;
 import com.example.massa.luxvilla.separadores.separadorbraga;
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
     com.lapism.searchview.SearchView searchViewpr;
     List<SearchItem> sugestions;
     SearchHistoryTable msearchHistoryTable;
+    AppBarLayout appBarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
 
         searchViewpr=(com.lapism.searchview.SearchView)findViewById(R.id.searchViewp);
         searchViewpr.setHint("LuxVilla: Todas");
+        searchViewpr.setTextSize(18);
         searchViewpr.setVoice(false);
         searchViewpr.setTextStyle(1);
 
@@ -178,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                 return true;
             }
         });
-        SearchAdapter searchAdapter=new SearchAdapter(MainActivity.this,sugestions);
+        final SearchAdapter searchAdapter=new SearchAdapter(MainActivity.this,sugestions);
         searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -196,6 +200,18 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
             @Override
             public void onMenuClick() {
                 Toast.makeText(MainActivity.this,"Menu click",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        appBarLayout=(AppBarLayout)findViewById(R.id.appbarll);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (verticalOffset==0){
+                    searchViewpr.setVisibility(View.VISIBLE);
+                }else {
+                    searchViewpr.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
@@ -236,13 +252,13 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+       /* switch (item.getItemId()){
             case R.id.defenicoes:
 
                 Intent it=new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(it);
                 break;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 
