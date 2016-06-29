@@ -17,6 +17,7 @@
             <item name="android:dropDownItemStyle">@style/myDropDownItemStyle</item>
             <item name="android:dropDownListViewStyle">@style/myDropDownListViewStyle</item>
             <item name="android:editTextColor">@android:color/white</item>
+            <item name="android:windowTranslucentStatus">true</item>
         </style>
     <style name="Infocasa" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>

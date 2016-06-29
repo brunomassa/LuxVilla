@@ -15,12 +15,14 @@ import android.provider.SearchRecentSuggestions;
 import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -78,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
     List<SearchItem> sugestions;
     SearchHistoryTable msearchHistoryTable;
     AppBarLayout appBarLayout;
+    NavigationView navigationView;
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         searchViewpr.setVoice(false);
         searchViewpr.setTextStyle(1);
 
+
         barracima=(Toolbar)findViewById(R.id.brcima);
         barracima.setTitle("");
         setSupportActionBar(barracima);
@@ -108,6 +113,9 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         tabs.addTab(tabs.newTab().setText("PORTO").setTabListener(this));
         vwpgr= (ViewPager) findViewById(R.id.vpgr);
         adapter=new BDAdapter(this);
+
+        drawerLayout=(DrawerLayout)findViewById(R.id.drawerll);
+        navigationView=(NavigationView)findViewById(R.id.navigationview);
 
         int numerocolunas=adapter.numerodecolunas();
         if (numerocolunas==0 && !isNetworkAvailable(this)){
@@ -130,15 +138,19 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                     switch (position){
                         case 0:
                             searchViewpr.setHint("LuxVilla: Todas");
+                            navigationView.getMenu().getItem(0).setChecked(true);
                             break;
                         case 1:
                             searchViewpr.setHint("LuxVilla: Aveiro");
+                            navigationView.getMenu().getItem(1).setChecked(true);
                             break;
                         case 2:
                             searchViewpr.setHint("LuxVilla: Braga");
+                            navigationView.getMenu().getItem(2).setChecked(true);
                             break;
                         case 3:
                             searchViewpr.setHint("LuxVilla: Porto");
+                            navigationView.getMenu().getItem(3).setChecked(true);
                             break;
                     }
                     if (isNetworkAvailable(MainActivity.this)){
@@ -199,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         searchViewpr.setOnMenuClickListener(new com.lapism.searchview.SearchView.OnMenuClickListener() {
             @Override
             public void onMenuClick() {
-                Toast.makeText(MainActivity.this,"Menu click",Toast.LENGTH_LONG).show();
+                drawerLayout.openDrawer(navigationView);
             }
         });
 
@@ -212,6 +224,32 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                 }else {
                     searchViewpr.setVisibility(View.INVISIBLE);
                 }
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.navigation_item_1:
+                        tabs.setSelectedNavigationItem(0);
+                        vwpgr.setCurrentItem(0);
+                        break;
+                    case R.id.navigation_item_2:
+                        tabs.setSelectedNavigationItem(1);
+                        vwpgr.setCurrentItem(1);
+                        break;
+                    case R.id.navigation_item_3:
+                        tabs.setSelectedNavigationItem(2);
+                        vwpgr.setCurrentItem(2);
+                        break;
+                    case R.id.navigation_item_4:
+                        tabs.setSelectedNavigationItem(3);
+                        vwpgr.setCurrentItem(3);
+                        break;
+                }
+                drawerLayout.closeDrawers();
+                return true;
             }
         });
 
@@ -232,6 +270,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
 
 
     }
+
 
     @Override
     public void onDestroy(){
@@ -269,15 +308,19 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         switch (tab.getPosition()){
             case 0:
                 searchViewpr.setHint("LuxVilla: Todas");
+                //navigationView.getMenu().getItem(0).setChecked(true);
                 break;
             case 1:
                 searchViewpr.setHint("LuxVilla: Aveiro");
+                //navigationView.getMenu().getItem(1).setChecked(true);
                 break;
             case 2:
                 searchViewpr.setHint("LuxVilla: Braga");
+               // navigationView.getMenu().getItem(2).setChecked(true);
                 break;
             case 3:
                 searchViewpr.setHint("LuxVilla: Porto");
+                //navigationView.getMenu().getItem(3).setChecked(true);
                 break;
         }
     }
@@ -322,6 +365,16 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         public int getCount() {
             return 4;
         }
+    }
+
+    public void onBackPressed() {
+
+        if (drawerLayout.isDrawerOpen(navigationView)){
+            drawerLayout.closeDrawer(navigationView);
+        }else {
+            super.onBackPressed();
+        }
+
     }
 
     public boolean isNetworkAvailable(final Context context) {
