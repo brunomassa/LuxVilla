@@ -16,4 +16,13 @@
             android:id="@+id/navigation_item_4"
             android:title="Porto"/>
     </group>
+
+    <item android:title="Configurações">
+        <menu>
+            <item
+                android:id="@+id/navigation_subheader_1"
+                android:title="Defenições" />
+        </menu>
+
+    </item>
 </menu>

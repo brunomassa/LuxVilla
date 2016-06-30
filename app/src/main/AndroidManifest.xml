@@ -21,7 +21,8 @@
             android:name=".sugestoes.SearchSugestionsProvider"
             android:authorities="com.example.massa.luxvilla.sugestoes.SearchSugestionsProvider" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:theme="@style/Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

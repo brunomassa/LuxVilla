@@ -227,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
             }
         });
 
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -246,6 +247,10 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                     case R.id.navigation_item_4:
                         tabs.setSelectedNavigationItem(3);
                         vwpgr.setCurrentItem(3);
+                        break;
+                    case R.id.navigation_subheader_1:
+                        Intent it=new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(it);
                         break;
                 }
                 drawerLayout.closeDrawers();
