@@ -226,6 +226,31 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                 }
             }
         });
+        searchViewpr.setOnOpenCloseListener(new com.lapism.searchview.SearchView.OnOpenCloseListener() {
+            @Override
+            public void onClose() {
+                int id=vwpgr.getCurrentItem();
+                switch (id){
+                    case 0:
+                        searchViewpr.setHint("LuxVilla: Todas");
+                        break;
+                    case 1:
+                        searchViewpr.setHint("LuxVilla: Aveiro");
+                        break;
+                    case 2:
+                        searchViewpr.setHint("LuxVilla: Braga");
+                        break;
+                    case 3:
+                        searchViewpr.setHint("LuxVilla: Porto");
+                        break;
+                }
+            }
+
+            @Override
+            public void onOpen() {
+                searchViewpr.setHint(getResources().getString(R.string.app_hint));
+            }
+        });
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
