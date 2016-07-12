@@ -54,8 +54,6 @@
             android:id="@+id/favbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:like_drawable="@drawable/heart"
-            app:unlike_drawable="@drawable/heartliked"
             android:layout_below="@+id/imgcasa"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
