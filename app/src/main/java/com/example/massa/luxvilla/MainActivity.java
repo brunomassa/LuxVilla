@@ -227,11 +227,13 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                         searchViewpr.setHint("LuxVilla: Porto");
                         break;
                 }
+                searchViewpr.setTextStyle(1);
             }
 
             @Override
             public void onOpen() {
                 searchViewpr.setHint(getResources().getString(R.string.app_hint));
+                searchViewpr.setTextStyle(0);
             }
         });
 
