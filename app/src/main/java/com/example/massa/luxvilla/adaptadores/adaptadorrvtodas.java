@@ -89,9 +89,11 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
         id=casaexata.getID();
         favflag=sharedPreferences.getInt(id, 0);
         holder.favoriteButton.setIcon(IconType.Heart);
-        holder.favoriteButton.setIconSizeDp(20);
+        holder.favoriteButton.setIconSizeDp(25);
         holder.favoriteButton.setCircleEndColorRes(R.color.colorAccent);
         holder.favoriteButton.setExplodingDotColorsRes(R.color.colorPrimary,R.color.colorAccent);
+        holder.favoriteButton.setLikeDrawableRes(R.drawable.heartliked);
+        holder.favoriteButton.setUnlikeDrawableRes(R.drawable.heartunliked);
 
         holder.favoriteButton.setOnLikeListener(new OnLikeListener() {
             @Override

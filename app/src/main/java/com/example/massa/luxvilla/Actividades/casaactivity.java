@@ -118,9 +118,11 @@ public class casaactivity extends AppCompatActivity {
 
         favoriteButton=(LikeButton) findViewById(R.id.favbuttoncasa);
         favoriteButton.setIcon(IconType.Heart);
-        favoriteButton.setIconSizeDp(20);
+        favoriteButton.setIconSizeDp(25);
         favoriteButton.setCircleEndColorRes(R.color.colorAccent);
         favoriteButton.setExplodingDotColorsRes(R.color.colorPrimary,R.color.colorAccent);
+        favoriteButton.setLikeDrawableRes(R.drawable.heartliked);
+        favoriteButton.setUnlikeDrawableRes(R.drawable.heartunliked);
 
         sharedPreferences=getSharedPreferences(PREFSNAME, 0);
         favflag=sharedPreferences.getInt(idcasa, 0);
