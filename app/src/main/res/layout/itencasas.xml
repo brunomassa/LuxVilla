@@ -49,16 +49,16 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtlocalcasa"/>
 
-        <com.github.ivbaranov.mfb.MaterialFavoriteButton
+        <com.like.LikeButton
+            app:icon_type="heart"
             android:id="@+id/favbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgcasa"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            app:mfb_color="black"
-            app:mfb_animate_favorite="true"
-            app:mfb_animate_unfavorite="true"/>
+            app:anim_scale_factor="2"
+            />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

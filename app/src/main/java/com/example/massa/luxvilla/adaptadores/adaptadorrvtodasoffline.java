@@ -14,7 +14,10 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.utils.listasql;
-import com.github.ivbaranov.mfb.MaterialFavoriteButton;
+import com.like.IconType;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
+
 
 import java.util.Collections;
 import java.util.List;
@@ -63,38 +66,45 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
         id=offlinedata.Id;
         favflag=sharedPreferences.getInt(id, 0);
 
-        holder.favoriteButton.setOnClickListener(new View.OnClickListener() {
+        holder.favoriteButton.setIcon(IconType.Heart);
+        holder.favoriteButton.setIconSizeDp(20);
+        holder.favoriteButton.setCircleEndColorRes(R.color.colorAccent);
+        holder.favoriteButton.setExplodingDotColorsRes(R.color.colorPrimary,R.color.colorAccent);
+
+
+        holder.favoriteButton.setOnLikeListener(new OnLikeListener() {
             @Override
-            public void onClick(View v) {
+            public void liked(LikeButton likeButton) {
+                id=offlinedata.Id;
+                favflag=sharedPreferences.getInt(id, 0);
+
+                sharedPreferences=ctx.getSharedPreferences(PREFSNAME, 0);
+                editor=sharedPreferences.edit();
+                editor.putInt(id, 1);
+                editor.apply();
+                favflag=sharedPreferences.getInt(id,0);
+                holder.favoriteButton.setLiked(true);
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
 
                 id=offlinedata.Id;
                 favflag=sharedPreferences.getInt(id, 0);
-                if (favflag==0){
 
-                    sharedPreferences=ctx.getSharedPreferences(PREFSNAME, 0);
-                    editor=sharedPreferences.edit();
-                    editor.putInt(id, 1);
-                    editor.apply();
-                    favflag=sharedPreferences.getInt(id,0);
-                    holder.favoriteButton.setFavorite(true);
-                    //Toast.makeText(ctx, id + " " + " " + String.valueOf(favflag), Toast.LENGTH_LONG).show();
-                }else {
-
-                    sharedPreferences=ctx.getSharedPreferences(PREFSNAME,0);
-                    editor =sharedPreferences.edit();
-                    editor.putInt(String.valueOf(id),0);
-                    editor.apply();
-                    favflag=sharedPreferences.getInt(String.valueOf(id),0);
-                    holder.favoriteButton.setFavorite(false);
-                    //Toast.makeText(ctx,id+" "+" "+String.valueOf(favflag),Toast.LENGTH_LONG).show();
-                }
+                sharedPreferences=ctx.getSharedPreferences(PREFSNAME,0);
+                editor =sharedPreferences.edit();
+                editor.putInt(String.valueOf(id),0);
+                editor.apply();
+                favflag=sharedPreferences.getInt(String.valueOf(id),0);
+                holder.favoriteButton.setLiked(false);
             }
         });
 
         if (favflag==0){
-            holder.favoriteButton.setFavorite(false);
+            holder.favoriteButton.setLiked(false);
         }else {
-            holder.favoriteButton.setFavorite(true);
+            holder.favoriteButton.setLiked(true);
         }
     }
 
@@ -107,7 +117,7 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
         private ImageView imgcasa;
         private TextView txtLocalcasa;
         private TextView txtPrecocasa;
-        private MaterialFavoriteButton favoriteButton;
+        private LikeButton favoriteButton;
 
         public vhoffline(View itemView) {
             super(itemView);
@@ -115,7 +125,7 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
             imgcasa=(ImageView)itemView.findViewById(R.id.imgcasa);
             txtLocalcasa=(TextView)itemView.findViewById(R.id.txtlocalcasa);
             txtPrecocasa=(TextView)itemView.findViewById(R.id.txtprecocasa);
-            favoriteButton=(MaterialFavoriteButton)itemView.findViewById(R.id.favbutton);
+            favoriteButton=(LikeButton) itemView.findViewById(R.id.favbutton);
         }
     }
 }

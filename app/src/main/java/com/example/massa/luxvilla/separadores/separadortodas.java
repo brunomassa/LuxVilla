@@ -341,6 +341,8 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
                         float y;// = ((RelativeLayout) ((CardView) cv).getChildAt(0)).getChildAt(3).getY();
                         float h = ((RelativeLayout) ((CardView) cv).getChildAt(0)).getChildAt(3).getHeight();
 
+
+
                         Rect rect = new Rect();
                         ((RelativeLayout) ((CardView) cv).getChildAt(0)).getChildAt(3).getGlobalVisibleRect(rect);
                         y = rect.top;

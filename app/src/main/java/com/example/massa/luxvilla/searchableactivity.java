@@ -98,6 +98,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         searchViewpr.setVersionMargins(com.lapism.searchview.SearchView.VERSION_MARGINS_MENU_ITEM);
         searchViewpr.setHint(R.string.busca);
         searchViewpr.setVoice(false);
+        searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
 
         barsearch=(Toolbar)findViewById(R.id.brcimasearch);
         barsearch.setTitle(query);

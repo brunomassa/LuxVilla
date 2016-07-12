@@ -87,15 +87,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="#000"/>
-            <com.github.ivbaranov.mfb.MaterialFavoriteButton
-                android:id="@+id/favbuttoncasa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                app:mfb_color="black"
-                app:mfb_animate_favorite="true"
-                app:mfb_animate_unfavorite="false"/>
+
+                <com.like.LikeButton
+                    app:icon_type="star"
+                    android:id="@+id/favbuttoncasa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    app:anim_scale_factor="2"
+                    />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 

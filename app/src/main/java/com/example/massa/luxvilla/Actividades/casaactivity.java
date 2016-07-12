@@ -23,7 +23,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.network.VolleySingleton;
-import com.github.ivbaranov.mfb.MaterialFavoriteButton;
+import com.like.IconType;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 public class casaactivity extends AppCompatActivity {
 
@@ -40,7 +42,7 @@ public class casaactivity extends AppCompatActivity {
     TextView textViewinfocasa;
     ViewGroup mRoot;
     CollapsingToolbarLayout imgtoolbar;
-    MaterialFavoriteButton favoriteButton;
+    LikeButton favoriteButton;
     SharedPreferences sharedPreferences;
     SharedPreferences isappopen;
     SharedPreferences.Editor editor;
@@ -114,38 +116,46 @@ public class casaactivity extends AppCompatActivity {
             imgtoolbar.setCollapsedTitleTextColor(getResources().getColor(android.R.color.black));
         }
 
-        favoriteButton=(MaterialFavoriteButton)findViewById(R.id.favbuttoncasa);
+        favoriteButton=(LikeButton) findViewById(R.id.favbuttoncasa);
+        favoriteButton.setIcon(IconType.Heart);
+        favoriteButton.setIconSizeDp(20);
+        favoriteButton.setCircleEndColorRes(R.color.colorAccent);
+        favoriteButton.setExplodingDotColorsRes(R.color.colorPrimary,R.color.colorAccent);
+
         sharedPreferences=getSharedPreferences(PREFSNAME, 0);
         favflag=sharedPreferences.getInt(idcasa, 0);
 
         if (favflag==0){
-            favoriteButton.setFavorite(false);
+            favoriteButton.setLiked(false);
         }else {
-            favoriteButton.setFavorite(true);
+            favoriteButton.setLiked(true);
         }
-        favoriteButton.setOnClickListener(new View.OnClickListener() {
+
+
+        favoriteButton.setOnLikeListener(new OnLikeListener() {
             @Override
-            public void onClick(View v) {
+            public void liked(LikeButton likeButton) {
                 favflag = sharedPreferences.getInt(idcasa, 0);
-                if (favflag == 0) {
 
-                    sharedPreferences = getSharedPreferences(PREFSNAME, 0);
-                    editor = sharedPreferences.edit();
-                    editor.putInt(idcasa, 1);
-                    editor.apply();
-                    favflag = sharedPreferences.getInt(idcasa, 0);
-                    favoriteButton.setFavorite(true);
-                    //Toast.makeText(ctx, id + " " + " " + String.valueOf(favflag), Toast.LENGTH_LONG).show();
-                } else {
+                sharedPreferences = getSharedPreferences(PREFSNAME, 0);
+                editor = sharedPreferences.edit();
+                editor.putInt(idcasa, 1);
+                editor.apply();
+                favflag = sharedPreferences.getInt(idcasa, 0);
+                favoriteButton.setLiked(true);
+            }
 
-                    sharedPreferences = getSharedPreferences(PREFSNAME, 0);
-                    editor = sharedPreferences.edit();
-                    editor.putInt(String.valueOf(idcasa), 0);
-                    editor.apply();
-                    favflag = sharedPreferences.getInt(String.valueOf(idcasa), 0);
-                    favoriteButton.setFavorite(false);
-                    //Toast.makeText(ctx,id+" "+" "+String.valueOf(favflag),Toast.LENGTH_LONG).show();
-                }
+            @Override
+            public void unLiked(LikeButton likeButton) {
+
+                favflag = sharedPreferences.getInt(idcasa, 0);
+
+                sharedPreferences = getSharedPreferences(PREFSNAME, 0);
+                editor = sharedPreferences.edit();
+                editor.putInt(String.valueOf(idcasa), 0);
+                editor.apply();
+                favflag = sharedPreferences.getInt(String.valueOf(idcasa), 0);
+                favoriteButton.setLiked(false);
             }
         });
 

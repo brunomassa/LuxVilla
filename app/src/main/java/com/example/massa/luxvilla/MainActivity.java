@@ -2,59 +2,40 @@ package com.example.massa.luxvilla;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Build;
-import android.provider.SearchRecentSuggestions;
 import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.transition.ChangeBounds;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.example.massa.luxvilla.Actividades.SettingsActivity;
 import com.example.massa.luxvilla.separadores.separadoraveiro;
 import com.example.massa.luxvilla.separadores.separadorbraga;
 import com.example.massa.luxvilla.separadores.separadorporto;
 import com.example.massa.luxvilla.separadores.separadortodas;
-import com.example.massa.luxvilla.services.notificationreciver;
 import com.example.massa.luxvilla.services.notificationservice;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
-import com.example.massa.luxvilla.sugestoes.SearchSugestionsProvider;
 import com.lapism.searchview.SearchAdapter;
 import com.lapism.searchview.SearchHistoryTable;
 import com.lapism.searchview.SearchItem;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -101,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         searchViewpr.setTextSize(18);
         searchViewpr.setVoice(false);
         searchViewpr.setTextStyle(1);
+        searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
 
 
         barracima=(Toolbar)findViewById(R.id.brcima);
@@ -175,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
 
         sugestions=new ArrayList<SearchItem>();
         msearchHistoryTable=new SearchHistoryTable(MainActivity.this);
+        msearchHistoryTable.setHistorySize(3);
         searchViewpr.setOnQueryTextListener(new com.lapism.searchview.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextChange(String newText) {
@@ -298,7 +281,6 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 300000, pendingIntent);
         }
 
-
     }
 
 
@@ -411,4 +393,5 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
+
 }
