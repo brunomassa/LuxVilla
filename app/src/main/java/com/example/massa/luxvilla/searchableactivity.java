@@ -100,6 +100,18 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         searchViewpr.setVoice(false);
         searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
 
+        searchViewpr.setOnOpenCloseListener(new com.lapism.searchview.SearchView.OnOpenCloseListener() {
+            @Override
+            public void onClose() {
+                searchViewpr.setTextStyle(1);
+            }
+
+            @Override
+            public void onOpen() {
+                searchViewpr.setTextStyle(0);
+            }
+        });
+
         barsearch=(Toolbar)findViewById(R.id.brcimasearch);
         barsearch.setTitle(query);
         barsearch.setTitleTextColor(getResources().getColor(android.R.color.white));
