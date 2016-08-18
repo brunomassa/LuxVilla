@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.massa.luxvilla.R;
@@ -80,6 +83,7 @@ public class casaactivity extends AppCompatActivity {
             toolbarinfocasa.setNavigationIcon(R.mipmap.ic_arrow_back_black_24dp);
         }
 
+        imageViewinfocasa=(ImageView) findViewById(R.id.imginfocasaactivity);
         toolbarinfocasa.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +94,7 @@ public class casaactivity extends AppCompatActivity {
         imgtoolbar=(CollapsingToolbarLayout)findViewById(R.id.tbinfocasaactivity);
         imgtoolbar.setStatusBarScrimColor(getResources().getColor(R.color.black_trans80));
 
-        imageViewinfocasa=(ImageView)findViewById(R.id.imginfocasaactivity);
+
         textViewinfocasa=(TextView)findViewById(R.id.txtinfocasaactivity);
 
         volleySingleton=VolleySingleton.getInstancia(casaactivity.this);
@@ -98,23 +102,25 @@ public class casaactivity extends AppCompatActivity {
         imageLoader=volleySingleton.getImageLoader();
 
         if (isNetworkAvailable(casaactivity.this)) {
+
             imageLoader.get(imgurlcasa, new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-
                     imageViewinfocasa.setImageBitmap(response.getBitmap());
                 }
-
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
                 }
+
             });
+
         }else {
             imageViewinfocasa.setImageResource(R.drawable.logo);
             imgtoolbar.setExpandedTitleColor(getResources().getColor(android.R.color.black));
             imgtoolbar.setCollapsedTitleTextColor(getResources().getColor(android.R.color.black));
         }
+
 
         favoriteButton=(LikeButton) findViewById(R.id.favbuttoncasa);
         favoriteButton.setIcon(IconType.Heart);
