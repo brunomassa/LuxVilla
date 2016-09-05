@@ -233,6 +233,7 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
         }
 
         swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipeaveiro);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

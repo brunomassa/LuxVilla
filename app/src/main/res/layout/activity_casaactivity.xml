@@ -33,9 +33,9 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:scaleType="centerCrop"
-                android:fitsSystemWindows="true"
+                android:fitsSystemWindows="false"
                 android:transitionName="elementimg"
-                app:layout_collapseMode="parallax"/>
+                app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/barinfocasaactivity"

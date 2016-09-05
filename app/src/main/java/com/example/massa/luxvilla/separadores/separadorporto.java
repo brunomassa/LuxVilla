@@ -235,6 +235,7 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
         }
 
         swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipeporto);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
