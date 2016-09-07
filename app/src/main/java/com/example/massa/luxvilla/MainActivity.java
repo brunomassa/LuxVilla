@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         searchViewpr.setTextSize(18);
         searchViewpr.setVoice(false);
         searchViewpr.setTextStyle(1);
+        searchViewpr.setNavigationIconArrowHamburger(true);
         searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
 
 
