@@ -99,6 +99,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         searchViewpr.setHint(R.string.busca);
         searchViewpr.setVoice(false);
         searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
+        searchViewpr.setCursorDrawable(R.drawable.cursor);
 
         searchViewpr.setOnOpenCloseListener(new com.lapism.searchview.SearchView.OnOpenCloseListener() {
             @Override
