@@ -24,13 +24,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -65,7 +68,6 @@ import java.util.List;
 public class searchableactivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
     private RecyclerView rvc1;
     private adaptadorrvtodas adaptador;
-    Toolbar barsearch;
     private RequestQueue requestQueue;
     private ArrayList<todascasas> casas=new ArrayList<>();
     private VolleySingleton volleySingleton;
@@ -75,11 +77,12 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
     static BDAdapter adapter;
     private adaptadorrvtodasoffline adaptadoroffline;
     static Context ctxtodas;
-    SearchView searchView;
     Intent intent;
     com.lapism.searchview.SearchView searchViewpr;
     List<SearchItem> sugestions;
     SearchHistoryTable msearchHistoryTable;
+    LinearLayout linearLayout;
+    int y;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,14 +92,12 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         query = intent.getStringExtra("query");
 
 
-        volleySingleton=VolleySingleton.getInstancia(searchableactivity.this);
-        requestQueue=volleySingleton.getRequestQueue();
-        ctxtodas=searchableactivity.this;
+        volleySingleton = VolleySingleton.getInstancia(searchableactivity.this);
+        requestQueue = volleySingleton.getRequestQueue();
+        ctxtodas = searchableactivity.this;
 
-        searchViewpr=(com.lapism.searchview.SearchView)findViewById(R.id.searchViewpresult);
-        searchViewpr.setVersion(com.lapism.searchview.SearchView.VERSION_MENU_ITEM);
-        searchViewpr.setVersionMargins(com.lapism.searchview.SearchView.VERSION_MARGINS_MENU_ITEM);
-        searchViewpr.setHint(R.string.busca);
+        searchViewpr = (com.lapism.searchview.SearchView) findViewById(R.id.searchViewpresult);
+        searchViewpr.setHint(query);
         searchViewpr.setVoice(false);
         searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
         searchViewpr.setCursorDrawable(R.drawable.cursor);
@@ -104,53 +105,110 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         searchViewpr.setOnOpenCloseListener(new com.lapism.searchview.SearchView.OnOpenCloseListener() {
             @Override
             public void onClose() {
+                searchViewpr.setHint(query);
                 searchViewpr.setTextStyle(1);
             }
 
             @Override
             public void onOpen() {
+                searchViewpr.setHint(getResources().getString(R.string.app_hint));
                 searchViewpr.setTextStyle(0);
             }
         });
-
-        barsearch=(Toolbar)findViewById(R.id.brcimasearch);
-        barsearch.setTitle(query);
-        barsearch.setTitleTextColor(getResources().getColor(android.R.color.white));
-        barsearch.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
-        setSupportActionBar(barsearch);
-        barsearch.setNavigationOnClickListener(new View.OnClickListener() {
+        searchViewpr.setOnMenuClickListener(new com.lapism.searchview.SearchView.OnMenuClickListener() {
             @Override
-            public void onClick(View v) {
-                onBackPressed();
+            public void onMenuClick() {
+                if (searchViewpr.isSearchOpen()) {
+                    searchViewpr.close(true);
+                } else {
+                    onBackPressed();
+                }
             }
         });
 
+        sugestions = new ArrayList<SearchItem>();
+        msearchHistoryTable = new SearchHistoryTable(searchableactivity.this);
+        searchViewpr.setOnQueryTextListener(new com.lapism.searchview.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
 
-        rvc1 = (RecyclerView)findViewById(R.id.rv_search);
+            @Override
+            public boolean onQueryTextSubmit(String querysb) {
+                query = querysb;
+                sugestions.add(new SearchItem(query));
+                msearchHistoryTable.addItem(new SearchItem(query));
+                if (isNetworkAvailable(searchableactivity.this)) {
+
+                    adaptador = new adaptadorrvtodas(searchableactivity.this);
+                    rvc1.setAdapter(adaptador);
+
+                    sendjsonRequest();
+                } else {
+                    adaptadoroffline = new adaptadorrvtodasoffline(searchableactivity.this, getdados());
+                    rvc1.setAdapter(adaptadoroffline);
+                }
+                searchViewpr.close(true);
+                return true;
+            }
+        });
+        SearchAdapter searchAdapter = new SearchAdapter(searchableactivity.this, sugestions);
+        searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                TextView textView = (TextView) view.findViewById(R.id.textView_item_text);
+                query = textView.getText().toString();
+
+                if (isNetworkAvailable(searchableactivity.this)) {
+
+                    adaptador = new adaptadorrvtodas(searchableactivity.this);
+                    rvc1.setAdapter(adaptador);
+
+                    sendjsonRequest();
+                } else {
+                    adaptadoroffline = new adaptadorrvtodasoffline(searchableactivity.this, getdados());
+                    rvc1.setAdapter(adaptadoroffline);
+                }
+
+                searchViewpr.close(true);
+            }
+        });
+        searchViewpr.setAdapter(searchAdapter);
+
+        linearLayout=(LinearLayout)findViewById(R.id.ll);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT
+        );
+        params.setMargins(0, 170, 0, 0);
+        linearLayout.setLayoutParams(params);
+
+        rvc1 = (RecyclerView) findViewById(R.id.rv_search);
         rvc1.setLayoutManager(new LinearLayoutManager(searchableactivity.this));
         if (isNetworkAvailable(searchableactivity.this)) {
 
-            adaptador=new adaptadorrvtodas(searchableactivity.this);
+            adaptador = new adaptadorrvtodas(searchableactivity.this);
             rvc1.setAdapter(adaptador);
 
             sendjsonRequest();
         } else {
-            adaptadoroffline=new adaptadorrvtodasoffline(searchableactivity.this,getdados());
+            adaptadoroffline = new adaptadorrvtodasoffline(searchableactivity.this, getdados());
             rvc1.setAdapter(adaptadoroffline);
         }
 
-        swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipesearch);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipesearch);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 if (isNetworkAvailable(searchableactivity.this)) {
 
-                    adaptador=new adaptadorrvtodas(searchableactivity.this);
+                    adaptador = new adaptadorrvtodas(searchableactivity.this);
                     rvc1.setAdapter(adaptador);
 
                     sendjsonRequest();
                 } else {
-                    adaptadoroffline=new adaptadorrvtodasoffline(searchableactivity.this,getdados());
+                    adaptadoroffline = new adaptadorrvtodasoffline(searchableactivity.this, getdados());
                     rvc1.setAdapter(adaptadoroffline);
                 }
 
@@ -331,57 +389,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
 
         getMenuInflater().inflate(R.menu.menu_search, menu);
 
-        sugestions=new ArrayList<SearchItem>();
-        msearchHistoryTable=new SearchHistoryTable(searchableactivity.this);
-        searchViewpr.setOnQueryTextListener(new com.lapism.searchview.SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextSubmit(String querysb) {
-                query=querysb;
-                barsearch.setTitle(query);
-                sugestions.add(new SearchItem(query));
-                msearchHistoryTable.addItem(new SearchItem(query));
-                if (isNetworkAvailable(searchableactivity.this)) {
-
-                    adaptador = new adaptadorrvtodas(searchableactivity.this);
-                    rvc1.setAdapter(adaptador);
-
-                    sendjsonRequest();
-                } else {
-                    adaptadoroffline = new adaptadorrvtodasoffline(searchableactivity.this, getdados());
-                    rvc1.setAdapter(adaptadoroffline);
-                }
-                searchViewpr.close(true);
-                return true;
-            }
-        });
-        SearchAdapter searchAdapter=new SearchAdapter(searchableactivity.this,sugestions);
-        searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                TextView textView = (TextView) view.findViewById(R.id.textView_item_text);
-                query = textView.getText().toString();
-                barsearch.setTitle(query);
-
-                if (isNetworkAvailable(searchableactivity.this)) {
-
-                    adaptador = new adaptadorrvtodas(searchableactivity.this);
-                    rvc1.setAdapter(adaptador);
-
-                    sendjsonRequest();
-                } else {
-                    adaptadoroffline = new adaptadorrvtodasoffline(searchableactivity.this, getdados());
-                    rvc1.setAdapter(adaptadoroffline);
-                }
-
-                searchViewpr.close(true);
-            }
-        });
-        searchViewpr.setAdapter(searchAdapter);
         return true;
     }
 
