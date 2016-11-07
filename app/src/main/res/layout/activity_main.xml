@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways">
+            app:layout_scrollFlags="scroll|enterAlways|snap">
 
         </android.support.v7.widget.Toolbar>
         <it.neokree.materialtabs.MaterialTabHost

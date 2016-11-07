@@ -1,31 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E5E4E2">
-    <LinearLayout
-        android:id="@+id/ll"
+
+    <android.support.design.widget.AppBarLayout
+        app:elevation="4dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingTop="0dp">
+        android:layout_height="wrap_content"
+        android:id="@+id/appbarll"
+        android:visibility="invisible"
+        android:alpha="0">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/brcimasearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        android:alpha="0"
+        android:visibility="invisible"
+        app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
+
+    </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipesearch"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    </LinearLayout>
     <com.lapism.searchview.SearchView
         android:id="@+id/searchViewpresult"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
