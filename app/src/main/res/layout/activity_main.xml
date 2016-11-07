@@ -10,13 +10,14 @@
 <android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/coordll">
+    android:id="@+id/coordll"
+    >
 
     <android.support.design.widget.AppBarLayout
+        app:elevation="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/appbarll"
-        android:elevation="4dp">
+        android:id="@+id/appbarll">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/brcima"
@@ -38,6 +39,7 @@
     </android.support.design.widget.AppBarLayout>
 
 
+
     <android.support.v4.view.ViewPager
         android:id="@+id/vpgr"
         android:background="#E5E4E2"
@@ -45,12 +47,16 @@
         android:layout_width="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-</android.support.design.widget.CoordinatorLayout>
 
     <com.lapism.searchview.SearchView
+        app:elevation="4dp"
         android:id="@+id/searchViewp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:layout_behavior="com.lapism.searchview.SearchBehavior"/>
+
+</android.support.design.widget.CoordinatorLayout>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigationview"

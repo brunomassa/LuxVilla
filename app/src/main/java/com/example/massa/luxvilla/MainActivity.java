@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                 Intent search=new Intent(MainActivity.this,searchableactivity.class);
                 search.putExtra("query",query);
                 startActivity(search);
+                searchViewpr.setShouldClearOnClose(true);
                 searchViewpr.close(true);
                 return true;
             }
@@ -201,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         });
 
         appBarLayout=(AppBarLayout)findViewById(R.id.appbarll);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+        /*appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (verticalOffset==0){
@@ -210,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                     searchViewpr.setVisibility(View.INVISIBLE);
                 }
             }
-        });
+        });*/
         searchViewpr.setOnOpenCloseListener(new SearchView.OnOpenCloseListener() {
             @Override
             public boolean onClose() {
