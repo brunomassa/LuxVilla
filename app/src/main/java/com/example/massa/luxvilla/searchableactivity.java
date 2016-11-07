@@ -81,7 +81,6 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
     com.lapism.searchview.SearchView searchViewpr;
     List<SearchItem> sugestions;
     SearchHistoryTable msearchHistoryTable;
-    Toolbar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +93,6 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         volleySingleton = VolleySingleton.getInstancia(searchableactivity.this);
         requestQueue = volleySingleton.getRequestQueue();
         ctxtodas = searchableactivity.this;
-
-        //bar=(Toolbar)findViewById(R.id.brcimasearch);
 
         searchViewpr = (com.lapism.searchview.SearchView) findViewById(R.id.searchViewpresult);
         searchViewpr.setHint(query);

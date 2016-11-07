@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         searchViewpr.setTextStyle(1);
         searchViewpr.setCursorDrawable(R.drawable.cursor);
         searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
+        searchViewpr.setShouldClearOnClose(true);
 
 
         barracima=(Toolbar)findViewById(R.id.brcima);
