@@ -99,10 +99,27 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         searchViewpr = (com.lapism.searchview.SearchView) findViewById(R.id.searchViewpresult);
         searchViewpr.setHint(query);
         searchViewpr.setVoice(false);
+        searchViewpr.setArrowOnly(true);
         searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
         searchViewpr.setCursorDrawable(R.drawable.cursor);
 
         searchViewpr.setOnOpenCloseListener(new com.lapism.searchview.SearchView.OnOpenCloseListener() {
+            @Override
+            public boolean onClose() {
+                searchViewpr.setHint(query);
+                searchViewpr.setTextStyle(1);
+                return true;
+            }
+
+            @Override
+            public boolean onOpen() {
+                searchViewpr.setHint(getResources().getString(R.string.app_hint));
+                searchViewpr.setTextStyle(0);
+                return true;
+            }
+        });
+
+        /*searchViewpr.setOnOpenCloseListener(new com.lapism.searchview.SearchView.OnOpenCloseListener() {
             @Override
             public void onClose() {
                 searchViewpr.setHint(query);
@@ -114,7 +131,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
                 searchViewpr.setHint(getResources().getString(R.string.app_hint));
                 searchViewpr.setTextStyle(0);
             }
-        });
+        });*/
         searchViewpr.setOnMenuClickListener(new com.lapism.searchview.SearchView.OnMenuClickListener() {
             @Override
             public void onMenuClick() {

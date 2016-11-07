@@ -35,6 +35,7 @@ import com.example.massa.luxvilla.sqlite.BDAdapter;
 import com.lapism.searchview.SearchAdapter;
 import com.lapism.searchview.SearchHistoryTable;
 import com.lapism.searchview.SearchItem;
+import com.lapism.searchview.SearchView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         searchViewpr.setTextSize(18);
         searchViewpr.setVoice(false);
         searchViewpr.setTextStyle(1);
-        searchViewpr.setNavigationIconArrowHamburger();
         searchViewpr.setCursorDrawable(R.drawable.cursor);
         searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
 
@@ -211,9 +211,9 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                 }
             }
         });
-        searchViewpr.setOnOpenCloseListener(new com.lapism.searchview.SearchView.OnOpenCloseListener() {
+        searchViewpr.setOnOpenCloseListener(new SearchView.OnOpenCloseListener() {
             @Override
-            public void onClose() {
+            public boolean onClose() {
                 int id=vwpgr.getCurrentItem();
                 switch (id){
                     case 0:
@@ -230,12 +230,14 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                         break;
                 }
                 searchViewpr.setTextStyle(1);
+                return true;
             }
 
             @Override
-            public void onOpen() {
+            public boolean onOpen() {
                 searchViewpr.setHint(getResources().getString(R.string.app_hint));
                 searchViewpr.setTextStyle(0);
+                return true;
             }
         });
 
