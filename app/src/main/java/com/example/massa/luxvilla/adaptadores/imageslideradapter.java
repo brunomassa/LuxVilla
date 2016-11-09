@@ -1,6 +1,7 @@
 package com.example.massa.luxvilla.adaptadores;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -54,17 +55,21 @@ public class imageslideradapter extends PagerAdapter {
         sliderimgs slider=IMAGES.get(position);
         String url=slider.getIMGURL();
         if(url!=null){
-            imageLoader.get(url, new ImageLoader.ImageListener() {
-                @Override
-                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                    imageView.setImageBitmap(response.getBitmap());
-                }
+            if (isNetworkAvailable(context)){
+                imageLoader.get(url, new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                        imageView.setImageBitmap(response.getBitmap());
+                    }
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    imageView.setImageResource(R.drawable.logo);
-                }
-            });
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        imageView.setImageResource(R.drawable.logo);
+                    }
+                });
+            }else {
+                imageView.setImageResource(R.drawable.logo);
+            }
         }
         view.addView(imageLayout);
         return imageLayout;
@@ -82,5 +87,10 @@ public class imageslideradapter extends PagerAdapter {
     @Override
     public Parcelable saveState() {
         return null;
+    }
+
+    public boolean isNetworkAvailable(final Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 }
