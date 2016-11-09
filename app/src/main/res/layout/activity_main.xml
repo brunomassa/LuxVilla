@@ -3,40 +3,76 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:attrs="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
     android:id="@+id/drawerll"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="false">
 
 <android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/coordll"
+    android:fitsSystemWindows="true"
     >
-
-    <android.support.design.widget.AppBarLayout
-        app:elevation="4dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/appbarll">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/brcima"
-            android:layout_width="match_parent"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbarll"
             android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|snap">
+            android:layout_width="match_parent"
+            android:fitsSystemWindows="true"
+            style="@style/Infocasa"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/tbinfocasaactivity"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                style="@style/Infocasa"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                android:minHeight="?attr/actionBarSize"
+                app:statusBarScrim="?attr/colorPrimaryDark"
+                app:contentScrim="?attr/colorPrimary">
 
-        </android.support.v7.widget.Toolbar>
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/mainslider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:scaleType="centerCrop"
+                    android:fitsSystemWindows="true"
+                    app:layout_collapseMode="parallax"/>
+
+                <com.rd.PageIndicatorView
+                    android:id="@+id/pageIndicatorView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    attrs:piv_viewPager="@id/mainslider"
+                    android:layout_marginTop="180dp"
+                    android:layout_gravity="center_horizontal"/>
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/brcima"
+                    android:layout_width="match_parent"
+                    android:fitsSystemWindows="false"
+                    android:minHeight="0dp"
+                    android:layout_height="0dp"
+                    app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+                    app:layout_scrollFlags="scroll|enterAlways|snap"/>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
         <it.neokree.materialtabs.MaterialTabHost
             android:id="@+id/materialTabHost"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             app:textColor="#FFF"
             app:primaryColor="?attr/colorPrimary"
-            app:accentColor="?attr/colorAccent" />
+            app:accentColor="?attr/colorAccent"
+            />
 
     </android.support.design.widget.AppBarLayout>
+
 
 
 

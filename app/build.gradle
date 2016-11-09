@@ -34,4 +34,5 @@ dependencies {
     compile 'com.daimajia.androidanimations:library:1.1.3@aar'
     compile 'com.lapism:searchview:4.0'
     compile 'com.github.jd-alexander:LikeButton:0.2.0'
+    compile 'com.romandanylyk:pageindicatorview:0.0.6'
 }

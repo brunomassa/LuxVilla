@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Build;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
@@ -25,21 +26,40 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.massa.luxvilla.Actividades.SettingsActivity;
+import com.example.massa.luxvilla.adaptadores.imageslideradapter;
+import com.example.massa.luxvilla.network.VolleySingleton;
 import com.example.massa.luxvilla.separadores.separadoraveiro;
 import com.example.massa.luxvilla.separadores.separadorbraga;
 import com.example.massa.luxvilla.separadores.separadorporto;
 import com.example.massa.luxvilla.separadores.separadortodas;
 import com.example.massa.luxvilla.services.notificationservice;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
+import com.example.massa.luxvilla.utils.keys;
+import com.example.massa.luxvilla.utils.listacasas;
+import com.example.massa.luxvilla.utils.sliderimgs;
+import com.example.massa.luxvilla.utils.todascasas;
 import com.lapism.searchview.SearchAdapter;
 import com.lapism.searchview.SearchHistoryTable;
 import com.lapism.searchview.SearchItem;
 import com.lapism.searchview.SearchView;
+import com.rd.PageIndicatorView;
+import com.rd.animation.AnimationType;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
@@ -65,6 +85,16 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
     NavigationView navigationView;
     DrawerLayout drawerLayout;
 
+    private static ViewPager mPager;
+    private static int currentPage = 0;
+    private static int NUM_PAGES = 0;
+
+    private RequestQueue requestQueue;
+    private ArrayList<sliderimgs> Imagensslider=new ArrayList<>();
+    private VolleySingleton volleySingleton;
+
+    PageIndicatorView pageIndicatorView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
@@ -72,6 +102,9 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        volleySingleton = VolleySingleton.getInstancia(MainActivity.this);
+        requestQueue = volleySingleton.getRequestQueue();
 
         sharedPreferences=getSharedPreferences(ISOPENAPP, 0);
         editor=sharedPreferences.edit();
@@ -91,6 +124,38 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         barracima=(Toolbar)findViewById(R.id.brcima);
         barracima.setTitle("");
         setSupportActionBar(barracima);
+
+        sendjsonRequest();
+
+        mPager = (ViewPager) findViewById(R.id.mainslider);
+        pageIndicatorView = (PageIndicatorView)findViewById(R.id.pageIndicatorView);
+        pageIndicatorView.setRadius(5);
+        pageIndicatorView.setAnimationType(AnimationType.WORM);
+        pageIndicatorView.setUnselectedColor(getResources().getColor(R.color.colorPrimary));
+        pageIndicatorView.setSelectedColor(getResources().getColor(R.color.colorPrimaryDark));
+
+
+
+
+
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == NUM_PAGES) {
+                    currentPage = 0;
+                }
+                mPager.setCurrentItem(currentPage++, true);
+            }
+        };
+        Timer swipeTimer = new Timer();
+        swipeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 3000, 3000);
+
+
         tabs= (MaterialTabHost) findViewById(R.id.materialTabHost);
         tabs.addTab(tabs.newTab().setText("TODAS").setTabListener(this));
         tabs.addTab(tabs.newTab().setText("AVEIRO").setTabListener(this));
@@ -203,16 +268,6 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         });
 
         appBarLayout=(AppBarLayout)findViewById(R.id.appbarll);
-        /*appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (verticalOffset==0){
-                    searchViewpr.setVisibility(View.VISIBLE);
-                }else {
-                    searchViewpr.setVisibility(View.INVISIBLE);
-                }
-            }
-        });*/
         searchViewpr.setOnOpenCloseListener(new SearchView.OnOpenCloseListener() {
             @Override
             public boolean onClose() {
@@ -400,6 +455,56 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
     public boolean isNetworkAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+    private void sendjsonRequest(){
+
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, "http://brunomassa.esy.es/query_slider.php", new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                //Toast.makeText(getActivity(),"Resposta: "+response,Toast.LENGTH_LONG).show();
+                Imagensslider=parsejsonResponse(response);
+                mPager.setAdapter(new imageslideradapter(MainActivity.this,Imagensslider));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+
+            }
+        });
+
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    private ArrayList<sliderimgs> parsejsonResponse(JSONArray array){
+        ArrayList<sliderimgs> imgslider=new ArrayList<>();
+        if (array!=null||array.length()>0){
+            for (int i=0;i<array.length();i++){
+                try {
+                    JSONObject casaexata=array.getJSONObject(i);
+                    String imgid=casaexata.getString(keys.allkeys.KEY_IMAGESLIDERID);
+                    String imgurl=casaexata.getString(keys.allkeys.KEY_IMAGESLIDERURL);
+
+                    sliderimgs slider=new sliderimgs();
+                    slider.setID(imgid);
+                    slider.setIMGURL(imgurl);
+                    imgslider.add(slider);
+                    NUM_PAGES++;
+
+
+                    //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
+
+                } catch (JSONException e) {
+
+                }
+            }
+
+        }
+
+        //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
+        return imgslider;
     }
 
 }
