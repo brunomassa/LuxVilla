@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -24,6 +26,7 @@ import android.transition.ChangeBounds;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -84,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
     AppBarLayout appBarLayout;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
+    CollapsingToolbarLayout tabmain;
 
     private static ViewPager mPager;
     private static int currentPage = 0;
@@ -94,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
     private VolleySingleton volleySingleton;
 
     PageIndicatorView pageIndicatorView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,10 +125,9 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
         searchViewpr.setShouldClearOnClose(true);
 
+        drawerLayout=(DrawerLayout)findViewById(R.id.drawerll);
+        navigationView=(NavigationView)findViewById(R.id.navigationview);
 
-        barracima=(Toolbar)findViewById(R.id.brcima);
-        barracima.setTitle("");
-        setSupportActionBar(barracima);
 
         sendjsonRequest();
 
@@ -131,11 +135,20 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         pageIndicatorView = (PageIndicatorView)findViewById(R.id.pageIndicatorView);
         pageIndicatorView.setRadius(5);
         pageIndicatorView.setAnimationType(AnimationType.WORM);
-        pageIndicatorView.setUnselectedColor(getResources().getColor(R.color.colorPrimary));
-        pageIndicatorView.setSelectedColor(getResources().getColor(R.color.colorPrimaryDark));
+        pageIndicatorView.setUnselectedColor(getResources().getColor(android.R.color.darker_gray));
+        pageIndicatorView.setSelectedColor(getResources().getColor(R.color.colorAccent));
 
 
+        if (!isNetworkAvailable(MainActivity.this)){
 
+            tabmain=(CollapsingToolbarLayout)findViewById(R.id.tbmain);
+            AppBarLayout.LayoutParams params= (AppBarLayout.LayoutParams) tabmain.getLayoutParams();
+            params.height=247;
+            params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
+            tabmain.setLayoutParams(params);
+
+            Snackbar.make(drawerLayout,"Sem ligação há internet",Snackbar.LENGTH_LONG).show();
+        }
 
 
         final Handler handler = new Handler();
@@ -164,8 +177,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         vwpgr= (ViewPager) findViewById(R.id.vpgr);
         adapter=new BDAdapter(this);
 
-        drawerLayout=(DrawerLayout)findViewById(R.id.drawerll);
-        navigationView=(NavigationView)findViewById(R.id.navigationview);
+
 
         int numerocolunas=adapter.numerodecolunas();
         if (numerocolunas==0 && !isNetworkAvailable(this)){
