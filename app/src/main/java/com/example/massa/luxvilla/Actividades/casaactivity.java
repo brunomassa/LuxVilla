@@ -92,7 +92,7 @@ public class casaactivity extends AppCompatActivity {
         });
 
         imgtoolbar=(CollapsingToolbarLayout)findViewById(R.id.tbinfocasaactivity);
-        imgtoolbar.setStatusBarScrimColor(getResources().getColor(R.color.black_trans80));
+        //imgtoolbar.setStatusBarScrimColor(getResources().getColor(R.color.black_trans80));
 
 
         textViewinfocasa=(TextView)findViewById(R.id.txtinfocasaactivity);
