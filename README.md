@@ -3,7 +3,7 @@
 
 -Recycleview & cardview:
 <p align="center">
-  <img src="http://brunomassa.esy.es/main3.png" width="320"/>
+  <img src="http://brunomassa.esy.es/main4.png" width="320"/>
   <img src="http://brunomassa.esy.es/contentactivity.png" width="320"/>
 </p>
 
