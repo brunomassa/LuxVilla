@@ -11,7 +11,5 @@ public interface keys {
         public static final String KEY_PRECO="preco";
         public static final String KEY_IMGURL="imgURL";
         public static final String KEY_INFO="infocasa";
-        public static final String KEY_IMAGESLIDERID="IMAGE_ID";
-        public static final String KEY_IMAGESLIDERURL="IMAGEURL";
     }
 }

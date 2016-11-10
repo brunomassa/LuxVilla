@@ -205,6 +205,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         }
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipesearch);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
