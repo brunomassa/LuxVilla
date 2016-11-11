@@ -12,6 +12,7 @@ import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -44,15 +45,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import it.neokree.materialtabs.MaterialTab;
-import it.neokree.materialtabs.MaterialTabHost;
-import it.neokree.materialtabs.MaterialTabListener;
+public class MainActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity implements MaterialTabListener {
-
-    MaterialTabHost tabs;
     ViewPager vwpgr;
-    public Toolbar barracima;
+    TabLayout tbs;
     final int SEPARADOR_TODAS=0;
     final int SEPARADOR_AVEIRO=1;
     final int SEPARADOR_BRAGA=2;
@@ -94,21 +90,20 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         drawerLayout=(DrawerLayout)findViewById(R.id.drawerll);
         navigationView=(NavigationView)findViewById(R.id.navigationview);
 
-
-        tabs= (MaterialTabHost) findViewById(R.id.materialTabHost);
-        tabs.addTab(tabs.newTab().setText("TODAS").setTabListener(this));
-        tabs.addTab(tabs.newTab().setText("AVEIRO").setTabListener(this));
-        tabs.addTab(tabs.newTab().setText("BRAGA").setTabListener(this));
-        tabs.addTab(tabs.newTab().setText("PORTO").setTabListener(this));
+        tbs=(TabLayout)findViewById(R.id.tabs);
+        tbs.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
         vwpgr= (ViewPager) findViewById(R.id.vpgr);
         adapter=new BDAdapter(this);
+
+
+        tbs.setupWithViewPager(vwpgr);
 
 
 
         int numerocolunas=adapter.numerodecolunas();
         if (numerocolunas==0 && !isNetworkAvailable(this)){
             vwpgr.setVisibility(View.GONE);
-            tabs.setVisibility(View.GONE);
+            tbs.setVisibility(View.GONE);
         }else {
             adaptadorpaginas adaptador=new adaptadorpaginas(getSupportFragmentManager());
             vwpgr.setAdapter(adaptador);
@@ -122,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                 @Override
                 public void onPageSelected(int position) {
 
-                    tabs.setSelectedNavigationItem(position);
                     switch (position){
                         case 0:
                             searchViewpr.setHint("LuxVilla: Todas");
@@ -242,19 +236,15 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.navigation_item_1:
-                        tabs.setSelectedNavigationItem(0);
                         vwpgr.setCurrentItem(0);
                         break;
                     case R.id.navigation_item_2:
-                        tabs.setSelectedNavigationItem(1);
                         vwpgr.setCurrentItem(1);
                         break;
                     case R.id.navigation_item_3:
-                        tabs.setSelectedNavigationItem(2);
                         vwpgr.setCurrentItem(2);
                         break;
                     case R.id.navigation_item_4:
-                        tabs.setSelectedNavigationItem(3);
                         vwpgr.setCurrentItem(3);
                         break;
                     case R.id.navigation_subheader_1:
@@ -314,40 +304,6 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onTabSelected(MaterialTab tab) {
-
-        vwpgr.setCurrentItem(tab.getPosition());
-        switch (tab.getPosition()){
-            case 0:
-                searchViewpr.setHint("LuxVilla: Todas");
-                //navigationView.getMenu().getItem(0).setChecked(true);
-                break;
-            case 1:
-                searchViewpr.setHint("LuxVilla: Aveiro");
-                //navigationView.getMenu().getItem(1).setChecked(true);
-                break;
-            case 2:
-                searchViewpr.setHint("LuxVilla: Braga");
-               // navigationView.getMenu().getItem(2).setChecked(true);
-                break;
-            case 3:
-                searchViewpr.setHint("LuxVilla: Porto");
-                //navigationView.getMenu().getItem(3).setChecked(true);
-                break;
-        }
-    }
-
-    @Override
-    public void onTabReselected(MaterialTab tab) {
-
-    }
-
-    @Override
-    public void onTabUnselected(MaterialTab tab) {
-
-    }
-
     public class adaptadorpaginas extends FragmentPagerAdapter{
 
         public adaptadorpaginas(FragmentManager fm) {
@@ -372,6 +328,12 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
                     return porto;
             }
             return null;
+        }
+
+        public CharSequence getPageTitle(int position){
+            String[] tabsname={"TODAS","AVEIRO","BRAGA","PORTO"};
+
+            return tabsname[position];
         }
 
         @Override
