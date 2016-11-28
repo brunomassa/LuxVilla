@@ -32,6 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     SearchHistoryTable msearchHistoryTable;
     List<SearchItem> sugestions;
+    RelativeLayout rlnotificacoes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        rlnotificacoes=(RelativeLayout)findViewById(R.id.rlnotifications);
         notificaoes=(Switch)findViewById(R.id.switch1);
         sharedPreferences=getSharedPreferences(NOTIFICATION, 0);
         int flagenabled=sharedPreferences.getInt("enabled",0);
@@ -70,18 +72,20 @@ public class SettingsActivity extends AppCompatActivity {
         }else {
             notificaoes.setChecked(false);
         }
-        notificaoes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        rlnotificacoes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    sharedPreferences=getSharedPreferences(NOTIFICATION, 0);
-                    editor=sharedPreferences.edit();
-                    editor.putInt("enabled", 0);
-                    editor.apply();
-                }else {
+            public void onClick(View view) {
+                if (notificaoes.isChecked()){
+                    notificaoes.setChecked(false);
                     sharedPreferences=getSharedPreferences(NOTIFICATION, 0);
                     editor=sharedPreferences.edit();
                     editor.putInt("enabled", 1);
+                    editor.apply();
+                }else {
+                    notificaoes.setChecked(true);
+                    sharedPreferences=getSharedPreferences(NOTIFICATION, 0);
+                    editor=sharedPreferences.edit();
+                    editor.putInt("enabled", 0);
                     editor.apply();
                 }
             }

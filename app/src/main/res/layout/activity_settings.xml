@@ -40,7 +40,7 @@
 
     <RelativeLayout
         android:id="@+id/lmphistorico"
-        android:background="#FFF"
+        android:background="?attr/selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
@@ -76,27 +76,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:id="@+id/linha"
-                android:background="#000"
+                android:background="#ccc"
                 android:layout_below="@+id/lmphistorico"/>
     <RelativeLayout
         android:id="@+id/rlnotifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFF"
+        android:background="?attr/selectableItemBackground"
         android:layout_below="@+id/linha"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Notificações"
+            android:id="@+id/textViewswitch"
+            android:textColor="#000"
+            android:paddingLeft="10dp"
+            android:layout_alignParentLeft="true"
+            />
 
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notificações"
             android:textSize="20dp"
             android:id="@+id/switch1"
-            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true" />
 
     </RelativeLayout>
@@ -104,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:id="@+id/linha2"
-                android:background="#000"
+                android:background="#ccc"
                 android:layout_below="@+id/rlnotifications"/>
     <RelativeLayout
         android:id="@+id/infoversao"
