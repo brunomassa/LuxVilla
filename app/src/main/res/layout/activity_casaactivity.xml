@@ -73,8 +73,7 @@
             android:layout_margin="8dp"
 
             card_view:cardCornerRadius="4dp"
-            android:background="#fff"
-            android:visibility="invisible">
+            android:background="#fff">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

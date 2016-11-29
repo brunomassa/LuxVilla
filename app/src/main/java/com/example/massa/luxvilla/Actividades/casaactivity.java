@@ -92,7 +92,6 @@ public class casaactivity extends AppCompatActivity {
         });
 
         imgtoolbar=(CollapsingToolbarLayout)findViewById(R.id.tbinfocasaactivity);
-        //imgtoolbar.setStatusBarScrimColor(getResources().getColor(R.color.black_trans80));
 
 
         textViewinfocasa=(TextView)findViewById(R.id.txtinfocasaactivity);
@@ -171,13 +170,7 @@ public class casaactivity extends AppCompatActivity {
         textViewinfocasa.setText("Preço: " + precocasa+"\n\n"+infocasa);
 
         mRoot=(ViewGroup)findViewById(R.id.card_viewinfo);
-        mRoot.setVisibility(View.VISIBLE);
 
-
-
-
-
-        //Toast.makeText(casaactivity.this,localcasa+" "+precocasa+" "+imgurlcasa,Toast.LENGTH_LONG).show();
     }
 
     @Override
