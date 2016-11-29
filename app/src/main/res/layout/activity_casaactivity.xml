@@ -86,7 +86,11 @@
                 android:id="@+id/txtinfocasaactivity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="#000"/>
+                android:textColor="#000"
+                android:enabled="true"
+                android:textIsSelectable="true"
+                android:focusable="true"
+                android:longClickable="true"/>
 
                 <com.like.LikeButton
                     app:icon_type="star"
