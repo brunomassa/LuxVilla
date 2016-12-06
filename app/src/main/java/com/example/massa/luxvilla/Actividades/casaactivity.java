@@ -1,5 +1,6 @@
 package com.example.massa.luxvilla.Actividades;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -14,7 +15,9 @@ import android.transition.Slide;
 import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,8 +60,8 @@ public class casaactivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
-            getWindow().setSharedElementEnterTransition(new ChangeBounds());
-
+            Transition tr=new ChangeBounds();
+            getWindow().setSharedElementEnterTransition(tr);
         }
 
         super.onCreate(savedInstanceState);
@@ -192,4 +195,5 @@ public class casaactivity extends AppCompatActivity {
         super.onDestroy();
 
     }
+
 }

@@ -36,7 +36,8 @@
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="false"
                 android:transitionName="elementimg"
-                app:layout_collapseMode="parallax" />
+                app:layout_collapseMode="parallax"
+                />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/barinfocasaactivity"

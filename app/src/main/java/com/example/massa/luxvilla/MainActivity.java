@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.transition.ChangeBounds;
+import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -69,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
-            getWindow().setSharedElementExitTransition(new ChangeBounds());
+            Transition tr=new ChangeBounds();
+            getWindow().setSharedElementExitTransition(tr);
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
