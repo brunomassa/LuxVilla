@@ -114,7 +114,7 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
 
     private void sendjsonRequest(){
 
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, "http://brunomassa.esy.es/resultado.json", new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, "http://brunoferreira.esy.es/resultado.json", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 

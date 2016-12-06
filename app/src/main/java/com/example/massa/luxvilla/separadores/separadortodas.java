@@ -29,7 +29,9 @@ import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -52,8 +54,6 @@ import com.example.massa.luxvilla.utils.todascasas;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +81,8 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
     static BDAdapter adapter;
     private adaptadorrvtodasoffline adaptadoroffline;
     static Context ctxtodas;
+    String fburl="https://luxvilla-598a9.firebaseio.com/";
+
 
 
     public separadortodas() {
@@ -117,12 +119,11 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
         requestQueue=volleySingleton.getRequestQueue();
         ctxtodas=getContext();
 
-       // sendjsonRequest();
     }
 
     private void sendjsonRequest(){
 
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, "http://brunomassa.esy.es/resultado.json", new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, "http://brunoferreira.esy.es/resultado.json", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
@@ -206,6 +207,7 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
         View view= inflater.inflate(R.layout.fragment_separadortodas, container, false);
 
         recyclerViewtodas=(RecyclerView)view.findViewById(R.id.rvtodas);
+
 
         TelephonyManager manager = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         if(manager.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE){
@@ -411,4 +413,5 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
         }
         return dados;
     }
+
 }

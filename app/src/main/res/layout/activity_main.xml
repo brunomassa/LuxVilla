@@ -12,8 +12,7 @@
 <android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/coordll"
-    >
+    android:id="@+id/coordll">
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbarll"
             android:layout_height="wrap_content"
@@ -46,7 +45,6 @@
 
 
     <com.lapism.searchview.SearchView
-        app:elevation="4dp"
         android:id="@+id/searchViewp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
