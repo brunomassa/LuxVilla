@@ -5,8 +5,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.graphics.Color;
+import android.graphics.drawable.Icon;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
@@ -44,6 +48,7 @@ import com.lapism.searchview.SearchItem;
 import com.lapism.searchview.SearchView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -274,6 +279,41 @@ public class MainActivity extends AppCompatActivity {
             AlarmManager alarmManager=(AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 300000, pendingIntent);
         }
+
+
+        ShortcutManager shortcutManager = null;
+
+        ShortcutInfo shortcut = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1) {
+            shortcutManager = getSystemService(ShortcutManager.class);
+
+            shortcut = new ShortcutInfo.Builder(this, "id1")
+                    .setShortLabel(getResources().getString(R.string.busca))
+                    .setLongLabel(getResources().getString(R.string.busca))
+                    .setIcon(Icon.createWithResource(MainActivity.this, R.mipmap.ic_search_black_24dp))
+                    .setIntents(
+                            new Intent[]{
+                                    new Intent(Intent.ACTION_MAIN, Uri.EMPTY, this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK),
+                                    new Intent(Intent.ACTION_MAIN, Uri.EMPTY, this, searchableactivity.class)
+                            })
+                    .build();
+            ShortcutInfo shortcutInfoLink = new ShortcutInfo.Builder(this, "shortcut_web")
+                    .setShortLabel("website")
+                    .setLongLabel("LuxVilla website")
+                    .setIcon(Icon.createWithResource(this, R.drawable.logo))
+                    .setIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("http://brunoferreira.esy.es/")))
+                    .build();
+
+
+            shortcutManager.setDynamicShortcuts(Arrays.asList(shortcut, shortcutInfoLink));
+        }
+
+
+
+
+
+
+
 
     }
 

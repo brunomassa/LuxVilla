@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_search_black_24dp"
+        android:shortcutDisabledMessage="@string/nao_activado"
+        android:shortcutLongLabel="@string/busca"
+        android:shortcutId="busca"
+        android:shortcutShortLabel="@string/busca">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="com.example.massa.luxvilla.MainActivity"
+            android:targetPackage="com.example.massa.luxvilla"/>
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.example.massa.luxvilla.MainActivity"
+            android:targetPackage="com.example.massa.luxvilla"/>
+    </shortcut>
+
+</shortcuts>

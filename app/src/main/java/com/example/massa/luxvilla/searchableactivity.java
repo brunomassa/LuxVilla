@@ -64,6 +64,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class searchableactivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
     private RecyclerView rvc1;
@@ -72,7 +73,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
     private ArrayList<todascasas> casas=new ArrayList<>();
     private VolleySingleton volleySingleton;
     SwipeRefreshLayout swipeRefreshLayout;
-    static String query;
+    static String query=null;
     static ArrayList<listacasas> ids=new ArrayList();
     static BDAdapter adapter;
     private adaptadorrvtodasoffline adaptadoroffline;
@@ -87,7 +88,9 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchableactivity);
         intent = getIntent();
+        if (intent!=null)
         query = intent.getStringExtra("query");
+
 
 
         volleySingleton = VolleySingleton.getInstancia(searchableactivity.this);
@@ -95,7 +98,11 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         ctxtodas = searchableactivity.this;
 
         searchViewpr = (com.lapism.searchview.SearchView) findViewById(R.id.searchViewpresult);
-        searchViewpr.setHint(query);
+        if (query!=null) {
+            searchViewpr.setHint(query);
+        }else {
+            searchViewpr.setHint(R.string.app_hint);
+        }
         searchViewpr.setVoice(false);
         searchViewpr.setArrowOnly(true);
         searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
@@ -104,7 +111,11 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         searchViewpr.setOnOpenCloseListener(new com.lapism.searchview.SearchView.OnOpenCloseListener() {
             @Override
             public boolean onClose() {
-                searchViewpr.setHint(query);
+                if (query!=null) {
+                    searchViewpr.setHint(query);
+                }else {
+                    searchViewpr.setHint(R.string.app_hint);
+                }
                 searchViewpr.setTextStyle(1);
                 return true;
             }
@@ -252,10 +263,10 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
     private ArrayList<todascasas> parsejsonResponse(JSONArray array){
         ArrayList<todascasas> casas=new ArrayList<>();
         ids.clear();
-        String loclowercase;
-        String querylowercase;
-        String preclowercase;
-        String infolowercase;
+        String loclowercase="";
+        String querylowercase="";
+        String preclowercase="";
+        String infolowercase="";
         if (array!=null||array.length()>0){
             for (int i=0;i<array.length();i++){
                 try {
@@ -266,11 +277,28 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
                     String imgurl=casaexata.getString(keys.allkeys.KEY_IMGURL);
                     String info=casaexata.getString(keys.allkeys.KEY_INFO);
 
-                    loclowercase=local.toLowerCase();
-                    preclowercase=preco.toLowerCase();
-                    infolowercase=info.toLowerCase();
-                    querylowercase=query.toLowerCase();
-                    if (loclowercase.contains(querylowercase) || preclowercase.contains(querylowercase) || infolowercase.contains(querylowercase)){
+                    if (query!=null){
+                        loclowercase=local.toLowerCase();
+                        preclowercase=preco.toLowerCase();
+                        infolowercase=info.toLowerCase();
+                        querylowercase=query.toLowerCase();
+                        if (loclowercase.contains(querylowercase) || preclowercase.contains(querylowercase) || infolowercase.contains(querylowercase)){
+                            todascasas casasadd=new todascasas();
+                            casasadd.setLOCAL(local);
+                            casasadd.setPRECO(preco);
+                            casasadd.setIMGURL(imgurl);
+                            casasadd.setID(id);
+                            listacasas cs=new listacasas();
+                            cs.Local=local;
+                            cs.Preço=preco;
+                            cs.IMGurl=imgurl;
+                            cs.info=info;
+                            cs.idcs=id;
+                            ids.add(0,cs);
+
+                            casas.add(0,casasadd);
+                        }
+                    }else {
                         todascasas casasadd=new todascasas();
                         casasadd.setLOCAL(local);
                         casasadd.setPRECO(preco);
@@ -286,6 +314,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
 
                         casas.add(0,casasadd);
                     }
+
 
                     //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
 
