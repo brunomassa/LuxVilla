@@ -3,19 +3,19 @@
 
 -Recycleview & cardview:
 <p align="center">
-  <img src="http://brunomassa.esy.es/main4.png" width="320"/>
-  <img src="http://brunomassa.esy.es/contentactivity.png" width="320"/>
+  <img src="http://brunoferreira.esy.es/imgsapp/appmain.png" width="320"/>
+  <img src="http://brunoferreira.esy.es/imgsapp/appconteudo.png" width="320"/>
 </p>
 
 -Searchview with recent search sugestions:
 <p align="center">
-  <img src="http://brunomassa.esy.es/searchview2.png" width="320"/>
-  <img src="http://brunomassa.esy.es/searchresult2.png" width="320"/>
+  <img src="http://brunoferreira.esy.es/imgsapp/appsearch.png" width="320"/>
+  <img src="http://brunoferreira.esy.es/imgsapp/appsearchresult.png" width="320"/>
 </p>
 
 -Offline mode (SQLite database):
 <p align="center">
-  <img src="http://brunomassa.esy.es/offline2.png" width="285"/>
-  <img src="http://brunomassa.esy.es/offlinesearchresult2.png" width="285"/>
-  <img src="http://brunomassa.esy.es/offlinecontent.png" width="285"/>
+  <img src="http://brunoferreira.esy.es/imgsapp/appmainoffline.png" width="285"/>
+  <img src="http://brunoferreira.esy.es/imgsapp/appconteudooffline.png" width="285"/>
+  <img src="http://brunoferreira.esy.es/imgsapp/appsearchresultoffline.png" width="285"/>
 </p>
