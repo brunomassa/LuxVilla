@@ -40,7 +40,6 @@ import com.example.massa.luxvilla.separadores.separadoraveiro;
 import com.example.massa.luxvilla.separadores.separadorbraga;
 import com.example.massa.luxvilla.separadores.separadorporto;
 import com.example.massa.luxvilla.separadores.separadortodas;
-import com.example.massa.luxvilla.services.notificationservice;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
 import com.lapism.searchview.SearchAdapter;
 import com.lapism.searchview.SearchHistoryTable;
@@ -264,21 +263,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        boolean isalarmactive=(PendingIntent.getService(this,0,new Intent(this, notificationservice.class),PendingIntent.FLAG_NO_CREATE)== null);
-
-        if (isalarmactive){
-            Intent startServiceIntent = new Intent(this, notificationservice.class);
-            PendingIntent pendingIntent=PendingIntent.getService(this,0,startServiceIntent,0);
-
-
-            Calendar calendar=Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.add(Calendar.SECOND, 5);
-
-            AlarmManager alarmManager=(AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 300000, pendingIntent);
-        }
 
 
         ShortcutManager shortcutManager = null;

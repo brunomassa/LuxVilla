@@ -44,24 +44,23 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/Infocasa" />
 
-        <receiver android:name=".services.notificationreciver">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
+        <activity android:name=".Actividades.SettingsActivity"></activity>
 
         <service
-            android:name=".services.notificationservice"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter android:priority="1000">
-                <category android:name="android.intent.category.DEFAULT" />
+
+            android:name=".notificacoes.FirebaseMessagingService">
+
+            <intent-filter>
+
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+
             </intent-filter>
+
         </service>
 
-        <activity android:name=".Actividades.SettingsActivity"></activity>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
     </application>
 
 </manifest>
