@@ -41,6 +41,7 @@ import com.example.massa.luxvilla.separadores.separadorbraga;
 import com.example.massa.luxvilla.separadores.separadorporto;
 import com.example.massa.luxvilla.separadores.separadortodas;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.lapism.searchview.SearchAdapter;
 import com.lapism.searchview.SearchHistoryTable;
 import com.lapism.searchview.SearchItem;
@@ -84,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
         editor=sharedPreferences.edit();
         editor.putInt("open", 1);
         editor.apply();
+
+        FirebaseMessaging.getInstance().subscribeToTopic("todos");
 
         searchViewpr=(com.lapism.searchview.SearchView)findViewById(R.id.searchViewp);
         searchViewpr.setHint("LuxVilla: Todas");

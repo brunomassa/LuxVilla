@@ -42,7 +42,13 @@
         <activity
             android:name=".Actividades.casaactivity"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Infocasa" />
+            android:theme="@style/Infocasa">
+            <intent-filter>
+                <action android:name="casaactivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
 
         <activity android:name=".Actividades.SettingsActivity"></activity>
 
@@ -53,6 +59,18 @@
             <intent-filter>
 
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+
+            </intent-filter>
+
+        </service>
+
+        <service
+
+            android:name=".notificacoes.FirebaseInstanceIDService">
+
+            <intent-filter>
+
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
 
             </intent-filter>
 
