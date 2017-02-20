@@ -41,13 +41,16 @@
         </activity>
         <activity
             android:name=".Actividades.casaactivity"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.example.massa.luxvilla.MainActivity"
             android:theme="@style/Infocasa">
             <intent-filter>
                 <action android:name="casaactivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.massa.luxvilla.MainActivity"/>
         </activity>
 
         <activity android:name=".Actividades.SettingsActivity"></activity>

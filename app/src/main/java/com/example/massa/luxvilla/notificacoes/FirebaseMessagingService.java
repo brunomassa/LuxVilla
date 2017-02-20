@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.example.massa.luxvilla.Actividades.casaactivity;
 import com.example.massa.luxvilla.MainActivity;
 import com.example.massa.luxvilla.R;
 import com.google.firebase.messaging.RemoteMessage;
@@ -20,6 +21,12 @@ import com.google.firebase.messaging.RemoteMessage;
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     private static final String TAG = "FirebaseMsgService";
+
+    String localcasa;
+    String precocasa;
+    String imgurlcasa;
+    String infocasa;
+    String idcasa;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -55,13 +62,24 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
 
+        localcasa=remoteMessage.getData().get("localcasa");
+        precocasa=remoteMessage.getData().get("precocasa");
+        imgurlcasa=remoteMessage.getData().get("imgurl");
+        infocasa=remoteMessage.getData().get("infocs");
+        idcasa=remoteMessage.getData().get("csid");
+
         sendNotification(remoteMessage.getNotification().getBody());
     }
 
     private void sendNotification(String messageBody) {
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, casaactivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("localcasa",localcasa);
+        intent.putExtra("precocasa",precocasa);
+        intent.putExtra("imgurl",imgurlcasa);
+        intent.putExtra("infocs",infocasa);
+        intent.putExtra("csid",idcasa);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
@@ -69,9 +87,10 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.logo)
-                .setContentTitle("LuxVilla")
+                .setContentTitle("Nova casa")
                 .setContentText(messageBody)
                 .setAutoCancel(true)
+                .setColor(getResources().getColor(R.color.colorAccent))
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
