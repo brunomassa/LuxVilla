@@ -86,11 +86,11 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.logo)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle("Nova casa")
                 .setContentText(messageBody)
                 .setAutoCancel(true)
-                .setColor(getResources().getColor(R.color.colorAccent))
+                .setColor(getResources().getColor(R.color.colorPrimary))
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 

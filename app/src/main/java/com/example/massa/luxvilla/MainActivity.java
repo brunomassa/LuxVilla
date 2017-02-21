@@ -62,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
     final int SEPARADOR_PORTO=3;
     BDAdapter adapter;
     SharedPreferences sharedPreferences;
-    final String ISOPENAPP="appstate";
-    SharedPreferences.Editor editor;
+    final String ISNOTIFICATIONON="notificationsenabled";
     com.lapism.searchview.SearchView searchViewpr;
     List<SearchItem> sugestions;
     SearchHistoryTable msearchHistoryTable;
@@ -81,12 +80,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferences=getSharedPreferences(ISOPENAPP, 0);
-        editor=sharedPreferences.edit();
-        editor.putInt("open", 1);
-        editor.apply();
+        sharedPreferences=getSharedPreferences(ISNOTIFICATIONON, 0);
+        int flagenabled=sharedPreferences.getInt("enabled",0);
 
-        FirebaseMessaging.getInstance().subscribeToTopic("todos");
+        if (flagenabled==0){
+            FirebaseMessaging.getInstance().subscribeToTopic("todos");
+        }else{
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("todos");
+        }
+
 
         searchViewpr=(com.lapism.searchview.SearchView)findViewById(R.id.searchViewp);
         searchViewpr.setHint("LuxVilla: Todas");
@@ -308,9 +310,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy(){
         super.onDestroy();
-
-        editor.putInt("open",0);
-        editor.apply();
     }
 
 

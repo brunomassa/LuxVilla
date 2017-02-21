@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.sugestoes.SearchSugestionsProvider;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.lapism.searchview.SearchHistoryTable;
 import com.lapism.searchview.SearchItem;
 
@@ -81,12 +82,14 @@ public class SettingsActivity extends AppCompatActivity {
                     editor=sharedPreferences.edit();
                     editor.putInt("enabled", 1);
                     editor.apply();
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic("todos");
                 }else {
                     notificaoes.setChecked(true);
                     sharedPreferences=getSharedPreferences(NOTIFICATION, 0);
                     editor=sharedPreferences.edit();
                     editor.putInt("enabled", 0);
                     editor.apply();
+                    FirebaseMessaging.getInstance().subscribeToTopic("todos");
                 }
             }
         });
