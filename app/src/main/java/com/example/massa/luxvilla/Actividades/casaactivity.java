@@ -184,7 +184,12 @@ public class casaactivity extends AppCompatActivity {
             TransitionManager.beginDelayedTransition(mRoot,new Slide());
             mRoot.setVisibility(View.INVISIBLE);
         }
-        super.onBackPressed();
+        if (isTaskRoot()) {
+            finish();
+            startActivity(new Intent(this, MainActivity.class));
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public boolean isNetworkAvailable(final Context context) {
