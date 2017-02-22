@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
             shortcut = new ShortcutInfo.Builder(this, "id1")
                     .setShortLabel(getResources().getString(R.string.busca))
                     .setLongLabel(getResources().getString(R.string.busca))
-                    .setIcon(Icon.createWithResource(MainActivity.this, R.mipmap.ic_search_black_24dp))
+                    .setIcon(Icon.createWithResource(MainActivity.this, R.drawable.ic_shortcut_search))
                     .setIntents(
                             new Intent[]{
                                     new Intent(Intent.ACTION_MAIN, Uri.EMPTY, this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK),
