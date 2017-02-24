@@ -242,18 +242,17 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
 
     private void sendjsonRequest(){
 
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, "http://brunoferreira.esy.es/resultado.json", new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET,"http://brunoferreira.esy.es/resultado.json",null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-
-                //Toast.makeText(getActivity(),"Resposta: "+response,Toast.LENGTH_LONG).show();
                 casas=parsejsonResponse(response);
                 adaptador.setCasas(casas);
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Snackbar.make(rvc1,"Falha ao ligar ao servidor",Snackbar.LENGTH_LONG).show();
 
             }
         });
