@@ -5,13 +5,13 @@
 -Recycleview & cardview:
 <p align="center">
   <img src="http://brunoferreira.esy.es/imgsapp/appmain.png" width="320"/>
-  <img src="http://brunoferreira.esy.es/imgsapp/appconteudo.png" width="320"/>
+  <img src="http://brunoferreira.esy.es/casaactivity.png" width="320"/>
 </p>
 
 -Searchview with recent search sugestions:
 <p align="center">
   <img src="http://brunoferreira.esy.es/imgsapp/appsearch.png" width="320"/>
-  <img src="http://brunoferreira.esy.es/imgsapp/appsearchresult.png" width="320"/>
+  <img src="http://brunoferreira.esy.es/searchactivity.png" width="320"/>
 </p>
 
 -Offline mode (SQLite database):
