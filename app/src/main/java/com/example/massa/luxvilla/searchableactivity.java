@@ -104,7 +104,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
             searchViewpr.setHint(R.string.app_hint);
             searchViewpr.open(true);
         }
-        searchViewpr.setVoice(false);
+        searchViewpr.setVoice(true);
         searchViewpr.setArrowOnly(true);
         searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
         searchViewpr.setCursorDrawable(R.drawable.cursor);

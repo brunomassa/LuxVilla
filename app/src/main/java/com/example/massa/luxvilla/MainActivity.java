@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         searchViewpr=(com.lapism.searchview.SearchView)findViewById(R.id.searchViewp);
         searchViewpr.setHint("LuxVilla: Todas");
         searchViewpr.setTextSize(18);
-        searchViewpr.setVoice(false);
+        searchViewpr.setVoice(true);
         searchViewpr.setTextStyle(1);
         searchViewpr.setCursorDrawable(R.drawable.cursor);
         searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
