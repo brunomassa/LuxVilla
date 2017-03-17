@@ -15,6 +15,7 @@
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <style name="Infocasa" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
