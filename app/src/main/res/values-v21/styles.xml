@@ -14,6 +14,7 @@
             <item name="android:windowActionBarOverlay">true</item>
             <item name="android:windowContentOverlay">@null</item>
             <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+            <item name="android:windowDisablePreview">true</item>
 </style>
 
     <style name="Main" parent="Theme.AppCompat.Light.NoActionBar">
@@ -30,6 +31,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
     <style name="Infocasa" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
