@@ -1,13 +1,11 @@
 package com.example.massa.luxvilla;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
-import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.net.ConnectivityManager;
 import android.net.Uri;
@@ -24,15 +22,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.text.SpannableString;
 import android.transition.ChangeBounds;
 import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.massa.luxvilla.Actividades.SettingsActivity;
@@ -49,7 +43,6 @@ import com.lapism.searchview.SearchView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -147,9 +140,7 @@ public class MainActivity extends AppCompatActivity {
                             navigationView.getMenu().getItem(3).setChecked(true);
                             break;
                     }
-                    if (isNetworkAvailable(MainActivity.this)){
-
-                    }else {
+                    if (!isNetworkAvailable(MainActivity.this)){
                         Snackbar.make(vwpgr,"Sem ligação há internet",Snackbar.LENGTH_LONG).setAction("ligar", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -270,9 +261,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        ShortcutManager shortcutManager = null;
+        ShortcutManager shortcutManager;
 
-        ShortcutInfo shortcut = null;
+        ShortcutInfo shortcut;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1) {
             shortcutManager = getSystemService(ShortcutManager.class);
 
@@ -297,13 +288,6 @@ public class MainActivity extends AppCompatActivity {
             shortcutManager.setDynamicShortcuts(Arrays.asList(shortcut, shortcutInfoLink));
         }
 
-
-
-
-
-
-
-
     }
 
 
@@ -323,19 +307,12 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
-       /* switch (item.getItemId()){
-            case R.id.defenicoes:
-
-                Intent it=new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(it);
-                break;
-        }*/
         return super.onOptionsItemSelected(item);
     }
 
-    public class adaptadorpaginas extends FragmentPagerAdapter{
+    private class adaptadorpaginas extends FragmentPagerAdapter{
 
-        public adaptadorpaginas(FragmentManager fm) {
+        adaptadorpaginas(FragmentManager fm) {
             super(fm);
         }
 
@@ -344,17 +321,13 @@ public class MainActivity extends AppCompatActivity {
 
             switch (position){
                 case SEPARADOR_TODAS:
-                    separadortodas todas=new separadortodas();
-                    return todas;
+                    return new separadortodas();
                 case SEPARADOR_AVEIRO:
-                    separadoraveiro aveiro=new separadoraveiro();
-                    return aveiro;
+                    return new separadoraveiro();
                 case SEPARADOR_BRAGA:
-                    separadorbraga braga=new separadorbraga();
-                    return braga;
+                    return new separadorbraga();
                 case SEPARADOR_PORTO:
-                    separadorporto porto=new separadorporto();
-                    return porto;
+                    return new separadorporto();
             }
             return null;
         }

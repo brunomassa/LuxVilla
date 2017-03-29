@@ -136,7 +136,7 @@ public class separadorbraga extends Fragment implements RecyclerViewOnClickListe
     private ArrayList<todascasas> parsejsonResponse(JSONArray array){
         ArrayList<todascasas> casas=new ArrayList<>();
         ids.clear();
-        if (array!=null||array.length()>0){
+        if (array != null){
             for (int i=2;i<5;i++){
                 try {
                     JSONObject casaexata=array.getJSONObject(i);
@@ -284,12 +284,12 @@ public class separadorbraga extends Fragment implements RecyclerViewOnClickListe
     }
 
 
-    public static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {
+    private static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {
         private Context mContext;
         private GestureDetector mGestureDetector;
         private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
-        public RecyclerViewTouchListener(Context c, final RecyclerView rv, RecyclerViewOnClickListenerHack rvoclh){
+        RecyclerViewTouchListener(Context c, final RecyclerView rv, RecyclerViewOnClickListenerHack rvoclh){
             mContext = c;
             mRecyclerViewOnClickListenerHack = rvoclh;
 
@@ -377,8 +377,6 @@ public class separadorbraga extends Fragment implements RecyclerViewOnClickListe
                 cs.info=infossqloffline;
                 cs.idcs=id;
                 ids.add(0,cs);
-            }else {
-
             }
 
         }

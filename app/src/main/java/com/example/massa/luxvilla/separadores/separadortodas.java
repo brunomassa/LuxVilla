@@ -3,9 +3,6 @@ package com.example.massa.luxvilla.separadores;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.os.Build;
@@ -13,7 +10,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.SharedPreferencesCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
@@ -21,7 +17,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.TelephonyManager;
-import android.view.Display;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -29,9 +24,7 @@ import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -71,7 +64,6 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private VolleySingleton volleySingleton;
     private RequestQueue requestQueue;
     private ArrayList<todascasas> casas=new ArrayList<>();
     RecyclerView recyclerViewtodas;
@@ -81,7 +73,6 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
     static BDAdapter adapter;
     private adaptadorrvtodasoffline adaptadoroffline;
     static Context ctxtodas;
-    String fburl="https://luxvilla-598a9.firebaseio.com/";
 
 
 
@@ -115,8 +106,8 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        volleySingleton=VolleySingleton.getInstancia(getActivity());
-        requestQueue=volleySingleton.getRequestQueue();
+        VolleySingleton volleySingleton = VolleySingleton.getInstancia(getActivity());
+        requestQueue= volleySingleton.getRequestQueue();
         ctxtodas=getContext();
 
     }
@@ -145,7 +136,7 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
         ArrayList<todascasas> casas=new ArrayList<>();
 
         ids.clear();
-        if (array!=null||array.length()>0){
+        if (array != null){
 
             adapter=new BDAdapter(getActivity());
 
@@ -173,15 +164,13 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
                     String locsql=adapter.verlocais(id);
                     String precsql=adapter.verprecos(id);
                     String infossql=adapter.verinfos(id);
-                    if (local.equalsIgnoreCase(locsql) && preco.equalsIgnoreCase(precsql) && info.equalsIgnoreCase(infossql)){
-                        //Toast.makeText(getActivity(),"IGUAIS",Toast.LENGTH_LONG).show();
-                    }else {
+                    if (!local.equalsIgnoreCase(locsql) && !preco.equalsIgnoreCase(precsql) && !info.equalsIgnoreCase(infossql)){
                         long longid=adapter.inserirdados(local,preco,info);
-                            if (longid>0){
-                                Toast.makeText(getActivity(), "Casa adicionada ao modo offline", Toast.LENGTH_LONG).show();
-                            }else {
-                                Toast.makeText(getActivity(), "Ocorreu um erro, tente novamente mais tarde", Toast.LENGTH_LONG).show();
-                            }
+                        if (longid>0){
+                            Toast.makeText(getActivity(), "Casa adicionada ao modo offline", Toast.LENGTH_LONG).show();
+                        }else {
+                            Toast.makeText(getActivity(), "Ocorreu um erro, tente novamente mais tarde", Toast.LENGTH_LONG).show();
+                        }
                     }
                     casas.add(0,casasadd);
                     ids.add(0,cs);
@@ -314,12 +303,12 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
 
     }
 
-    public static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {
+    private static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {
         private Context mContext;
         private GestureDetector mGestureDetector;
         private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
-        public RecyclerViewTouchListener(Context c, final RecyclerView rv, RecyclerViewOnClickListenerHack rvoclh){
+        RecyclerViewTouchListener(Context c, final RecyclerView rv, RecyclerViewOnClickListenerHack rvoclh){
             mContext = c;
             mRecyclerViewOnClickListenerHack = rvoclh;
 

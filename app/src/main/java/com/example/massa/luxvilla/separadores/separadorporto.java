@@ -65,7 +65,6 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private VolleySingleton volleySingleton;
     private ImageLoader imageLoader;
     private RequestQueue requestQueue;
     private ArrayList<todascasas> casas=new ArrayList<>();
@@ -108,8 +107,8 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        volleySingleton=VolleySingleton.getInstancia(getActivity());
-        requestQueue=volleySingleton.getRequestQueue();
+        VolleySingleton volleySingleton = VolleySingleton.getInstancia(getActivity());
+        requestQueue= volleySingleton.getRequestQueue();
         ctxtodas=getContext();
     }
 
@@ -136,7 +135,7 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
     private ArrayList<todascasas> parsejsonResponse(JSONArray array){
         ArrayList<todascasas> casas=new ArrayList<>();
         ids.clear();
-        if (array!=null||array.length()>0){
+        if (array != null){
             for (int i=0;i<array.length();i++){
                 try {
                     JSONObject casaexata=array.getJSONObject(i);
@@ -284,12 +283,12 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
     }
 
 
-    public static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {
+    private static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {
         private Context mContext;
         private GestureDetector mGestureDetector;
         private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
-        public RecyclerViewTouchListener(Context c, final RecyclerView rv, RecyclerViewOnClickListenerHack rvoclh){
+        RecyclerViewTouchListener(Context c, final RecyclerView rv, RecyclerViewOnClickListenerHack rvoclh){
             mContext = c;
             mRecyclerViewOnClickListenerHack = rvoclh;
 
@@ -376,8 +375,6 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
                 cs.info=infossqloffline;
                 cs.idcs=id;
                 ids.add(0,cs);
-            }else {
-
             }
 
         }

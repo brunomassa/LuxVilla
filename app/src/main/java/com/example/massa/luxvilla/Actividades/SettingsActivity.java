@@ -1,20 +1,16 @@
 package com.example.massa.luxvilla.Actividades;
 
 import android.content.SharedPreferences;
-import android.provider.SearchRecentSuggestions;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.massa.luxvilla.R;
-import com.example.massa.luxvilla.sugestoes.SearchSugestionsProvider;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.lapism.searchview.SearchHistoryTable;
 import com.lapism.searchview.SearchItem;

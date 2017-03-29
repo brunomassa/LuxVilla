@@ -263,11 +263,11 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
     private ArrayList<todascasas> parsejsonResponse(JSONArray array){
         ArrayList<todascasas> casas=new ArrayList<>();
         ids.clear();
-        String loclowercase="";
-        String querylowercase="";
-        String preclowercase="";
-        String infolowercase="";
-        if (array!=null||array.length()>0){
+        String loclowercase;
+        String querylowercase;
+        String preclowercase;
+        String infolowercase;
+        if (array != null){
             for (int i=0;i<array.length();i++){
                 try {
                     JSONObject casaexata=array.getJSONObject(i);
@@ -318,7 +318,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
 
                     //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
 
-                } catch (JSONException e) {
+                } catch (JSONException ignored) {
 
                 }
             }
@@ -356,12 +356,12 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
     }
 
 
-    public static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {
+    private static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {
         private Context mContext;
         private GestureDetector mGestureDetector;
         private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
-        public RecyclerViewTouchListener(Context c, final RecyclerView rv, RecyclerViewOnClickListenerHack rvoclh){
+        RecyclerViewTouchListener(Context c, final RecyclerView rv, RecyclerViewOnClickListenerHack rvoclh){
             mContext = c;
             mRecyclerViewOnClickListenerHack = rvoclh;
 
@@ -482,8 +482,6 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
                 cs.info = infossqloffline;
                 cs.idcs=id;
                 ids.add(0,cs);
-            }else {
-
             }
         }
         return dados;
