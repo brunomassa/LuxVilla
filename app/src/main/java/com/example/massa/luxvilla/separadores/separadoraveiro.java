@@ -38,6 +38,7 @@ import com.example.massa.luxvilla.adaptadores.adaptadorrvtodas;
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodasoffline;
 import com.example.massa.luxvilla.network.VolleySingleton;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
+import com.example.massa.luxvilla.utils.NetworkCheck;
 import com.example.massa.luxvilla.utils.RecyclerViewOnClickListenerHack;
 import com.example.massa.luxvilla.utils.keys;
 import com.example.massa.luxvilla.utils.listacasas;
@@ -218,7 +219,7 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
             }
         }
 
-        if (isNetworkAvailable(getActivity())) {
+        if (NetworkCheck.isNetworkAvailable(getActivity())) {
 
             adaptador=new adaptadorrvtodas(getActivity());
             recyclerViewtodas.setAdapter(adaptador);
@@ -234,7 +235,7 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (isNetworkAvailable(getActivity())) {
+                if (NetworkCheck.isNetworkAvailable(getActivity())) {
 
                     adaptador=new adaptadorrvtodas(getActivity());
                     recyclerViewtodas.setAdapter(adaptador);
@@ -339,11 +340,6 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
 
         @Override
         public void onRequestDisallowInterceptTouchEvent(boolean b) {}
-    }
-
-    public boolean isNetworkAvailable(final Context context) {
-        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
-        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
     public static List<listasql> getdados(){
