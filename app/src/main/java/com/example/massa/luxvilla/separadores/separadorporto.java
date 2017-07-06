@@ -24,6 +24,7 @@ import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
@@ -76,6 +77,7 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
     static BDAdapter adapter;
     private adaptadorrvtodasoffline adaptadoroffline;
     static Context ctxtodas;
+    ProgressBar progressBar;
 
 
     public separadorporto() {
@@ -120,11 +122,14 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
             public void onResponse(JSONArray response) {
                 casas=parsejsonResponse(response);
                 adaptador.setCasas(casas);
-
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
                 Snackbar.make(recyclerViewtodas,"Falha ao ligar ao servidor",Snackbar.LENGTH_LONG).show();
 
             }
@@ -161,17 +166,15 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
 
                         casas.add(0,casasadd);
                     }
-                    //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {
-
+                    progressBar.setVisibility(View.GONE);
+                    swipeRefreshLayout.setVisibility(View.VISIBLE);
                     Snackbar.make(recyclerViewtodas, "Falha ao ligar ao servidor", Snackbar.LENGTH_LONG).show();
                 }
             }
 
         }
-
-        //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
         return casas;
     }
 
@@ -182,6 +185,8 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
         View view= inflater.inflate(R.layout.fragment_separadorporto, container, false);
 
         recyclerViewtodas=(RecyclerView)view.findViewById(R.id.rvporto);
+        progressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
+        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipeporto);
 
 
         TelephonyManager manager = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
@@ -228,11 +233,12 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
 
             sendjsonRequest();
         } else {
+            progressBar.setVisibility(View.GONE);
+            swipeRefreshLayout.setVisibility(View.VISIBLE);
             adaptadoroffline=new adaptadorrvtodasoffline(getActivity(),getdados());
             recyclerViewtodas.setAdapter(adaptadoroffline);
         }
 
-        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipeporto);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

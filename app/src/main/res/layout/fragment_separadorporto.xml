@@ -4,11 +4,18 @@
     android:layout_height="match_parent"
     tools:context="com.example.massa.luxvilla.separadores.separadorporto">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeporto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvporto"
         android:layout_width="match_parent"

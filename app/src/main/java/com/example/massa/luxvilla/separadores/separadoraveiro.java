@@ -24,6 +24,7 @@ import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
@@ -76,6 +77,7 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
     static BDAdapter adapter;
     private adaptadorrvtodasoffline adaptadoroffline;
     static Context ctxtodas;
+    ProgressBar progressBar;
 
 
     public separadoraveiro() {
@@ -119,11 +121,15 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
             public void onResponse(JSONArray response) {
                 casas=parsejsonResponse(response);
                 adaptador.setCasas(casas);
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
                 Snackbar.make(recyclerViewtodas,"Falha ao ligar ao servidor",Snackbar.LENGTH_LONG).show();
 
             }
@@ -163,6 +169,8 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
                     //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {
+                    progressBar.setVisibility(View.GONE);
+                    swipeRefreshLayout.setVisibility(View.VISIBLE);
                     Snackbar.make(recyclerViewtodas, "Falha ao ligar ao servidor", Snackbar.LENGTH_LONG).show();
                 }
             }
@@ -180,6 +188,8 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
         View view= inflater.inflate(R.layout.fragment_separadoraveiro, container, false);
 
         recyclerViewtodas=(RecyclerView)view.findViewById(R.id.rvaveiro);
+        progressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
+        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipeaveiro);
 
 
         TelephonyManager manager = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
@@ -226,11 +236,12 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
 
             sendjsonRequest();
         } else {
+            progressBar.setVisibility(View.GONE);
+            swipeRefreshLayout.setVisibility(View.VISIBLE);
             adaptadoroffline=new adaptadorrvtodasoffline(getActivity(),getdados());
             recyclerViewtodas.setAdapter(adaptadoroffline);
         }
 
-        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipeaveiro);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

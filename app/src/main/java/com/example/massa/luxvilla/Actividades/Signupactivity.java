@@ -124,7 +124,7 @@ public class Signupactivity extends AppCompatActivity {
                 progressDialog.show();
                 Snackbar.make(linearLayout,"OK",Snackbar.LENGTH_LONG).show();
 
-                /*firebaseAuth.createUserWithEmailAndPassword(email.getText().toString().trim(),
+                firebaseAuth.createUserWithEmailAndPassword(email.getText().toString().trim(),
                         password.getText().toString().trim()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
@@ -137,7 +137,7 @@ public class Signupactivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
 
                     }
-                });*/
+                });
             }
         });
 
