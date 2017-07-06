@@ -129,19 +129,6 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
             }
         });
 
-        /*searchViewpr.setOnOpenCloseListener(new com.lapism.searchview.SearchView.OnOpenCloseListener() {
-            @Override
-            public void onClose() {
-                searchViewpr.setHint(query);
-                searchViewpr.setTextStyle(1);
-            }
-
-            @Override
-            public void onOpen() {
-                searchViewpr.setHint(getResources().getString(R.string.app_hint));
-                searchViewpr.setTextStyle(0);
-            }
-        });*/
         searchViewpr.setOnMenuClickListener(new com.lapism.searchview.SearchView.OnMenuClickListener() {
             @Override
             public void onMenuClick() {
@@ -242,7 +229,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
 
     private void sendjsonRequest(){
 
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET,"http://brunoferreira.esy.es/resultado.json",null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET,"http://brunoferreira.esy.es/serverdata.php",null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 casas=parsejsonResponse(response);

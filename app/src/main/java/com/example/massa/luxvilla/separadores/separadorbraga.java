@@ -116,7 +116,7 @@ public class separadorbraga extends Fragment implements RecyclerViewOnClickListe
 
     private void sendjsonRequest(){
 
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET,"http://brunoferreira.esy.es/resultado.json",null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET,"http://brunoferreira.esy.es/serverdata.php",null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 casas=parsejsonResponse(response);
