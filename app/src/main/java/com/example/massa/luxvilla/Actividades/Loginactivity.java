@@ -87,6 +87,7 @@ public class Loginactivity extends AppCompatActivity {
                     public void onSuccess(AuthResult authResult) {
                         progressDialog.dismiss();
                         startActivity(new Intent(Loginactivity.this,MainActivity.class));
+                        finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

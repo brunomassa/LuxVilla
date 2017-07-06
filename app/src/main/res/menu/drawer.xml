@@ -17,6 +17,18 @@
             android:title="Porto"/>
     </group>
 
+    <item android:title="Conta">
+        <menu>
+            <item
+                android:id="@+id/navigation_subheader_profile"
+                android:title="Perfil" />
+            <item
+                android:id="@+id/navigation_subheader_signout"
+                android:title="Terminar sessão" />
+        </menu>
+
+    </item>
+
     <item android:title="Configurações">
         <menu>
             <item

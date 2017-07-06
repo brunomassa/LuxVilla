@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.massa.luxvilla.Actividades.Loginactivity;
 import com.example.massa.luxvilla.Actividades.SettingsActivity;
 import com.example.massa.luxvilla.separadores.separadoraveiro;
 import com.example.massa.luxvilla.separadores.separadorbraga;
@@ -36,6 +37,7 @@ import com.example.massa.luxvilla.separadores.separadorporto;
 import com.example.massa.luxvilla.separadores.separadortodas;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
 import com.example.massa.luxvilla.utils.firebaseutils;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.lapism.searchview.SearchAdapter;
 import com.lapism.searchview.SearchHistoryTable;
@@ -260,6 +262,14 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_subheader_1:
                         Intent it=new Intent(MainActivity.this, SettingsActivity.class);
                         startActivity(it);
+                        break;
+                    case R.id.navigation_subheader_profile:
+                        //TODO: profile
+                        break;
+                    case R.id.navigation_subheader_signout:
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(MainActivity.this,Loginactivity.class));
+                        finish();
                         break;
                 }
                 drawerLayout.closeDrawers();
