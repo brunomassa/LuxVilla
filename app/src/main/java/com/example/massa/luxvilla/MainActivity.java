@@ -35,6 +35,7 @@ import com.example.massa.luxvilla.separadores.separadorbraga;
 import com.example.massa.luxvilla.separadores.separadorporto;
 import com.example.massa.luxvilla.separadores.separadortodas;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
+import com.example.massa.luxvilla.utils.firebaseutils;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.lapism.searchview.SearchAdapter;
 import com.lapism.searchview.SearchHistoryTable;
@@ -232,6 +233,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        View headerLayout = navigationView.getHeaderView(0);
+        TextView tvusername=(TextView) headerLayout.findViewById(R.id.textviewusername);
+        TextView tvusermail=(TextView) headerLayout.findViewById(R.id.textviewusermail);
+
+        firebaseutils.getuserdata(tvusername,tvusermail);
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

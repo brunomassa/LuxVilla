@@ -24,6 +24,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.example.massa.luxvilla.MainActivity;
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.network.VolleySingleton;
+import com.example.massa.luxvilla.utils.firebaseutils;
 import com.like.IconType;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
@@ -130,11 +131,13 @@ public class casaactivity extends AppCompatActivity {
         sharedPreferences=getSharedPreferences(PREFSNAME, 0);
         favflag=sharedPreferences.getInt(idcasa, 0);
 
-        if (favflag==0){
+        firebaseutils.checklike(idcasa,favoriteButton);
+
+        /*if (favflag==0){
             favoriteButton.setLiked(false);
         }else {
             favoriteButton.setLiked(true);
-        }
+        }*/
 
 
         favoriteButton.setOnLikeListener(new OnLikeListener() {
@@ -147,6 +150,9 @@ public class casaactivity extends AppCompatActivity {
                 editor.putInt(idcasa, 1);
                 editor.apply();
                 favflag = sharedPreferences.getInt(idcasa, 0);
+
+                firebaseutils.setlike(idcasa);
+
                 favoriteButton.setLiked(true);
             }
 
@@ -160,6 +166,9 @@ public class casaactivity extends AppCompatActivity {
                 editor.putInt(String.valueOf(idcasa), 0);
                 editor.apply();
                 favflag = sharedPreferences.getInt(String.valueOf(idcasa), 0);
+
+                firebaseutils.removelike(idcasa);
+
                 favoriteButton.setLiked(false);
             }
         });

@@ -20,7 +20,10 @@ import com.example.massa.luxvilla.MainActivity;
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.network.VolleySingleton;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
+import com.example.massa.luxvilla.utils.firebaseutils;
 import com.example.massa.luxvilla.utils.todascasas;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.like.IconType;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
@@ -106,6 +109,9 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
                 editor.putInt(id, 1);
                 editor.apply();
                 favflag=sharedPreferences.getInt(id,0);
+
+                firebaseutils.setlike(id);
+
                 holder.favoriteButton.setLiked(true);
             }
 
@@ -120,15 +126,13 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
                 editor.putInt(String.valueOf(id),0);
                 editor.apply();
                 favflag=sharedPreferences.getInt(String.valueOf(id),0);
+
+                firebaseutils.removelike(id);
+
                 holder.favoriteButton.setLiked(false);
             }
         });
-
-        if (favflag==0){
-            holder.favoriteButton.setLiked(false);
-        }else {
-            holder.favoriteButton.setLiked(true);
-        }
+        firebaseutils.checklike(id,holder.favoriteButton);
     }
 
     @Override

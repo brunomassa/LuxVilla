@@ -1,12 +1,16 @@
 package com.example.massa.luxvilla.utils;
 
 import android.support.design.widget.TextInputLayout;
+import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.like.LikeButton;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,12 +42,89 @@ public class firebaseutils {
         });
     }
 
+    public static void getuserdata(final TextView username, TextView useremail){
+        String uid="";
+        String umail="";
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+        FirebaseUser user=auth.getCurrentUser();
+        if (user != null){
+            uid=user.getUid();
+            umail=user.getEmail();
+        }
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("users").child(uid).child("user_name");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                username.setText(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        useremail.setText(umail);
+    }
+
     public static void setuserfirstdata(String userid,String username){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("users");
         Map<String,Object> data = new HashMap<>();
         data.put("user_name",username);
         data.put("user_bio","Para adicionar uma bio edite o prefil");
-        myRef.child(userid).setValue(data);
+        myRef.child(userid).updateChildren(data);
+    }
+
+    public static void checklike(String id, final LikeButton likeButton){
+        String uid="";
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+        FirebaseUser user=auth.getCurrentUser();
+        if (user != null){
+            uid=user.getUid();
+        }
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("users").child(uid).child("likes");
+
+        myRef.orderByKey().equalTo("heart"+id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    likeButton.setLiked(true);
+                }else{
+                    likeButton.setLiked(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public static void setlike(String id){
+        String uid="";
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+        FirebaseUser user=auth.getCurrentUser();
+        if (user != null){
+            uid=user.getUid();
+        }
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("users").child(uid).child("likes");
+        myRef.child("heart"+id).child("liked").setValue("true");
+    }
+
+    public static void removelike(String id){
+        String uid="";
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+        FirebaseUser user=auth.getCurrentUser();
+        if (user != null){
+            uid=user.getUid();
+        }
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("users").child(uid).child("likes");
+        myRef.child("heart"+id).removeValue();
     }
 }

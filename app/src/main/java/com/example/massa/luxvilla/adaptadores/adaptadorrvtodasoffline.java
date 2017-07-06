@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.massa.luxvilla.R;
+import com.example.massa.luxvilla.utils.firebaseutils;
 import com.example.massa.luxvilla.utils.listasql;
 import com.like.IconType;
 import com.like.LikeButton;
@@ -85,6 +86,9 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
                 editor.putInt(id, 1);
                 editor.apply();
                 favflag=sharedPreferences.getInt(id,0);
+
+                firebaseutils.setlike(id);
+
                 holder.favoriteButton.setLiked(true);
             }
 
@@ -99,15 +103,20 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
                 editor.putInt(String.valueOf(id),0);
                 editor.apply();
                 favflag=sharedPreferences.getInt(String.valueOf(id),0);
+
+                firebaseutils.removelike(id);
+
                 holder.favoriteButton.setLiked(false);
             }
         });
 
-        if (favflag==0){
+        firebaseutils.checklike(id,holder.favoriteButton);
+
+        /*if (favflag==0){
             holder.favoriteButton.setLiked(false);
         }else {
             holder.favoriteButton.setLiked(true);
-        }
+        }*/
     }
 
     @Override
