@@ -77,7 +77,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Actividades.Signupactivity"></activity>
+        <activity android:name=".Actividades.Signupactivity"
+            android:theme="@style/login"></activity>
     </application>
 
 </manifest>
