@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
@@ -210,16 +211,18 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
             final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
             switch (rotation) {
                 case Surface.ROTATION_0:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
                     break;
                 case Surface.ROTATION_90:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),4,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 4, GridLayoutManager.VERTICAL, false));
                     break;
                 case Surface.ROTATION_180:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
                     break;
                 default:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),4,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 4, GridLayoutManager.VERTICAL, false));
+                    break;
+                case Surface.ROTATION_270:
                     break;
             }
         }else{
@@ -230,13 +233,15 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
                     recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
                     break;
                 case Surface.ROTATION_90:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
                     break;
                 case Surface.ROTATION_180:
                     recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
                     break;
                 default:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
+                    break;
+                case Surface.ROTATION_270:
                     break;
             }
         }
@@ -260,7 +265,7 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
 
 
         //SWIPE
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark));
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark),ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark),ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
