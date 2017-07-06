@@ -8,6 +8,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by massa on 06/07/2017.
  */
@@ -33,5 +36,14 @@ public class firebaseutils {
 
             }
         });
+    }
+
+    public static void setuserfirstdata(String userid,String username){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("users");
+        Map<String,Object> data = new HashMap<>();
+        data.put("user_name",username);
+        data.put("user_bio","Para adicionar uma bio edite o prefil");
+        myRef.child(userid).setValue(data);
     }
 }

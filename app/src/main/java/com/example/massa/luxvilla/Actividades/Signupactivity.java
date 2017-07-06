@@ -78,8 +78,10 @@ public class Signupactivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(username.getText().toString().trim())){
                     textInputLayoutusername.setError("Introduza um nome de utilizador.");
                     return;
-                }else{
-                    textInputLayoutusername.setError("");
+                }
+
+                if (!TextUtils.isEmpty(textInputLayoutusername.getError())){
+                    return;
                 }
 
                 if (TextUtils.isEmpty(email.getText().toString().trim())){
@@ -127,6 +129,7 @@ public class Signupactivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         progressDialog.dismiss();
+                        firebaseutils.setuserfirstdata(authResult.getUser().getUid(),username.getText().toString().trim());
                         startActivity(new Intent(Signupactivity.this, MainActivity.class));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
