@@ -15,11 +15,13 @@ import android.widget.LinearLayout;
 
 import com.example.massa.luxvilla.MainActivity;
 import com.example.massa.luxvilla.R;
+import com.example.massa.luxvilla.utils.mailcheck;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Loginactivity extends AppCompatActivity {
 
@@ -30,10 +32,18 @@ public class Loginactivity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     FirebaseAuth firebaseAuth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        user=FirebaseAuth.getInstance().getCurrentUser();
+        if (user !=null){
+            startActivity(new Intent(Loginactivity.this,MainActivity.class));
+            finish();
+            return;
+        }
         setContentView(R.layout.activity_loginactivity);
 
         firebaseAuth=FirebaseAuth.getInstance();
@@ -54,6 +64,13 @@ public class Loginactivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(email.getText().toString().trim())){
                     textInputLayoutmail.setError("Introduza um email.");
                     return;
+                }
+
+                if (!mailcheck.isEmailValid(email.getText().toString().trim())){
+                    textInputLayoutmail.setError("Indereço de email inválido.");
+                    return;
+                }else {
+                    textInputLayoutmail.setError("");
                 }
 
                 if (TextUtils.isEmpty(password.getText().toString().trim())){
@@ -95,7 +112,7 @@ public class Loginactivity extends AppCompatActivity {
         btnsugup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: signup activity
+                startActivity(new Intent(Loginactivity.this,Signupactivity.class));
             }
         });
     }
