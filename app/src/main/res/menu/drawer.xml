@@ -21,10 +21,12 @@
         <menu>
             <item
                 android:id="@+id/navigation_subheader_profile"
-                android:title="Perfil" />
+                android:title="Perfil"
+                android:icon="@drawable/ic_timer_auto_black_36dp"/>
             <item
                 android:id="@+id/navigation_subheader_signout"
-                android:title="Terminar sessão" />
+                android:title="Terminar sessão"
+                android:icon="@drawable/ic_close_black_36dp"/>
         </menu>
 
     </item>
@@ -33,7 +35,8 @@
         <menu>
             <item
                 android:id="@+id/navigation_subheader_1"
-                android:title="Defenições" />
+                android:title="Defenições"
+                android:icon="@drawable/ic_settings_black_36dp"/>
         </menu>
 
     </item>
