@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:selectable="true"
+        android:enabled="true"
+        android:key="@string/clearhistory"
+        android:title="@string/clearhistory"
+        android:summary="@string/clear_info" />
+
+    <SwitchPreference
+        android:key="@string/notificaçãoes"
+        android:title="@string/notificaçãoes"
+        android:defaultValue="true" />
+
+    <Preference
+        android:selectable="true"
+        android:enabled="true"
+        android:key="@string/App_Version"
+        android:title="@string/App_Version"
+        android:summary="4.0" />
+
+    <Preference
+        android:key="@string/sobre"
+        android:title="@string/sobre"/>
+</PreferenceScreen>

@@ -24,7 +24,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Main"></activity>
+            android:theme="@style/Main" />
         <activity android:name=".searchableactivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -48,7 +48,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.massa.luxvilla.MainActivity" />
         </activity>
-        <activity android:name=".Actividades.SettingsActivity" />
 
         <service android:name=".notificacoes.FirebaseMessagingService">
             <intent-filter>
@@ -77,8 +76,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Actividades.Signupactivity"
-            android:theme="@style/login"></activity>
+        <activity
+            android:name=".Actividades.Signupactivity"
+            android:theme="@style/login" />
+        <activity android:name=".Actividades.Userprofile" />
+        <activity android:name=".Actividades.settings"
+            android:label="@string/defenicoes"
+            android:theme="@style/settings"></activity>
     </application>
 
 </manifest>

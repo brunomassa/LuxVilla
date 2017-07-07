@@ -1,52 +1,38 @@
 package com.example.massa.luxvilla;
 
-import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.SearchRecentSuggestions;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.example.massa.luxvilla.Actividades.SettingsActivity;
 import com.example.massa.luxvilla.Actividades.casaactivity;
+import com.example.massa.luxvilla.Actividades.settings;
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodas;
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodasoffline;
 import com.example.massa.luxvilla.network.VolleySingleton;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
-import com.example.massa.luxvilla.sugestoes.SearchSugestionsProvider;
 import com.example.massa.luxvilla.utils.RecyclerViewOnClickListenerHack;
 import com.example.massa.luxvilla.utils.keys;
 import com.example.massa.luxvilla.utils.listacasas;
@@ -60,11 +46,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class searchableactivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
     private RecyclerView rvc1;
@@ -421,7 +404,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
 
         switch (item.getItemId()){
             case R.id.defenicoes:
-                Intent it=new Intent(searchableactivity.this, SettingsActivity.class);
+                Intent it=new Intent(searchableactivity.this, settings.class);
                 startActivity(it);
                 break;
             case R.id.procura:

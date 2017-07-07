@@ -20,7 +20,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.ChangeBounds;
@@ -28,11 +27,11 @@ import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.massa.luxvilla.Actividades.Loginactivity;
-import com.example.massa.luxvilla.Actividades.SettingsActivity;
+import com.example.massa.luxvilla.Actividades.Userprofile;
+import com.example.massa.luxvilla.Actividades.settings;
 import com.example.massa.luxvilla.separadores.separadoraveiro;
 import com.example.massa.luxvilla.separadores.separadorbraga;
 import com.example.massa.luxvilla.separadores.separadorporto;
@@ -262,11 +261,12 @@ public class MainActivity extends AppCompatActivity {
                         vwpgr.setCurrentItem(3);
                         break;
                     case R.id.navigation_subheader_1:
-                        Intent it=new Intent(MainActivity.this, SettingsActivity.class);
+                        Intent it=new Intent(MainActivity.this, settings.class);
                         startActivity(it);
                         break;
                     case R.id.navigation_subheader_profile:
                         //TODO: profile
+                        startActivity(new Intent(MainActivity.this, Userprofile.class));
                         break;
                     case R.id.navigation_subheader_signout:
                         FirebaseAuth.getInstance().signOut();

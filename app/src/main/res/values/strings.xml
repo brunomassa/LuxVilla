@@ -6,6 +6,10 @@
     <string name="app_hint">Procurar casas</string>
     <string name="busca">Procurar casas</string>
     <string name="clearhistory">Limpar histórico</string>
+    <string name="clear_info">Limpar todo o hestórico de pesquisa</string>
     <string name="defenicoes">Defeniçoões</string>
+    <string name="notificaçãoes">Notificações</string>
     <string name="nao_activado">Não activado</string>
+    <string name="App_Version">Versão da App</string>
+    <string name="sobre">Sobre</string>
 </resources>
