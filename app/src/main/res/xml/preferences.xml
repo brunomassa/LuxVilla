@@ -5,21 +5,18 @@
         android:enabled="true"
         android:key="@string/clearhistory"
         android:title="@string/clearhistory"
-        android:summary="@string/clear_info" />
+        android:summary="@string/clear_info"
+        android:icon="@mipmap/ic_delete_black_24dp"/>
 
     <SwitchPreference
         android:key="@string/notificaçãoes"
         android:title="@string/notificaçãoes"
-        android:defaultValue="true" />
-
-    <Preference
-        android:selectable="true"
-        android:enabled="true"
-        android:key="@string/App_Version"
-        android:title="@string/App_Version"
-        android:summary="4.0" />
+        android:defaultValue="true"
+        android:icon="@drawable/ic_notifications_black_24dp"/>
 
     <Preference
         android:key="@string/sobre"
-        android:title="@string/sobre"/>
+        android:title="@string/sobre"
+        android:summary="@string/App_Version"
+        android:icon="@mipmap/ic_info_outline_black_24dp" />
 </PreferenceScreen>
