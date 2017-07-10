@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.example.massa.luxvilla.Actividades.Userprofile">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/brcimaprofile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+    </android.support.v7.widget.Toolbar>
+
 </android.support.constraint.ConstraintLayout>
