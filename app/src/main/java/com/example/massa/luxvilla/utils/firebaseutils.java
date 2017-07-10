@@ -2,12 +2,10 @@ package com.example.massa.luxvilla.utils;
 
 import android.net.Uri;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,7 +16,6 @@ import com.like.LikeButton;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by massa on 06/07/2017.
@@ -75,7 +72,7 @@ public class firebaseutils {
 
             }
         });
-
+        //username.setText(profileDisplayName);
         useremail.setText(profileEmail);
     }
 
