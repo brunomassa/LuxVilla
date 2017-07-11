@@ -57,7 +57,7 @@ public class firebaseutils {
             Picasso.with(context)
                     .load(image)
                     .placeholder(R.drawable.profilelogo)
-                    .resize(65, 65)
+                    .fit()
                     .into(profileimage);
         }
 

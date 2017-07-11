@@ -1,5 +1,6 @@
 package com.example.massa.luxvilla.Actividades;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -105,7 +106,7 @@ public class settings extends AppCompatActivity {
             preferencesobre.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    //TODO: sobre
+                    startActivity(new Intent(getActivity(),Sobre.class));
                     return true;
                 }
             });
