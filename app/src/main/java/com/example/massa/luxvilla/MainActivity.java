@@ -27,7 +27,9 @@ import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.massa.luxvilla.Actividades.Loginactivity;
 import com.example.massa.luxvilla.Actividades.Userprofile;
@@ -48,6 +50,8 @@ import com.lapism.searchview.SearchView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -238,10 +242,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         View headerLayout = navigationView.getHeaderView(0);
+        CircleImageView ivprofile=(CircleImageView) headerLayout.findViewById(R.id.profileimage);
         TextView tvusername=(TextView) headerLayout.findViewById(R.id.textviewusername);
         TextView tvusermail=(TextView) headerLayout.findViewById(R.id.textviewusermail);
 
-        firebaseutils.getuserdata(tvusername,tvusermail);
+        firebaseutils.getuserdata(tvusername,tvusermail, ivprofile);
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -361,6 +366,13 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             return 4;
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        //TODO: if display name not automaticaly updates
+
     }
 
     public void onBackPressed() {

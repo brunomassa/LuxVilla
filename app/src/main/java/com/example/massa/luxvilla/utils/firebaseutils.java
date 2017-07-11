@@ -16,6 +16,8 @@ import com.like.LikeButton;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 /**
  * Created by massa on 06/07/2017.
@@ -44,12 +46,12 @@ public class firebaseutils {
         });
     }
 
-    public static void getuserdata(final TextView username, TextView useremail){
+    public static void getuserdata(final TextView username, TextView useremail, CircleImageView profileimage){
         String providerId = "";
         String profileUid = "";
         String profileDisplayName = "";
         String profileEmail = "";
-        Uri profilePhotoUrl;
+        Uri profilePhotoUrl = null;
         FirebaseAuth auth=FirebaseAuth.getInstance();
         FirebaseUser user=auth.getCurrentUser();
         if (user != null){
@@ -59,20 +61,12 @@ public class firebaseutils {
             profileEmail=user.getEmail();
             profilePhotoUrl=user.getPhotoUrl();
         }
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("users").child(profileUid).child("user_name");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                username.setText(dataSnapshot.getValue(String.class));
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        if (profilePhotoUrl !=null){
+            profileimage.setImageURI(profilePhotoUrl);
+        }
 
-            }
-        });
-        //username.setText(profileDisplayName);
+        username.setText(profileDisplayName);
         useremail.setText(profileEmail);
     }
 

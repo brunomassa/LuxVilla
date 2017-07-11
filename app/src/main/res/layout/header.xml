@@ -18,7 +18,7 @@
         android:src="@drawable/nouserimage"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="40dp"
-        android:id="@+id/circleView"
+        android:id="@+id/profileimage"
     />
 
     <TextView
