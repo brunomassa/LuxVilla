@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tvusername=(TextView) headerLayout.findViewById(R.id.textviewusername);
         TextView tvusermail=(TextView) headerLayout.findViewById(R.id.textviewusermail);
 
-        firebaseutils.getuserdata(tvusername,tvusermail, ivprofile);
+        firebaseutils.getuserdata(MainActivity.this,tvusername,tvusermail, ivprofile);
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

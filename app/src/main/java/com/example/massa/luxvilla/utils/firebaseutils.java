@@ -1,9 +1,14 @@
 package com.example.massa.luxvilla.utils;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.massa.luxvilla.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -12,7 +17,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.like.LikeButton;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +53,7 @@ public class firebaseutils {
         });
     }
 
-    public static void getuserdata(final TextView username, TextView useremail, CircleImageView profileimage){
+    public static void getuserdata(Context context, final TextView username, TextView useremail, CircleImageView profileimage){
         String providerId = "";
         String profileUid = "";
         String profileDisplayName = "";
@@ -63,7 +70,13 @@ public class firebaseutils {
         }
 
         if (profilePhotoUrl !=null){
-            profileimage.setImageURI(profilePhotoUrl);
+            String image=profilePhotoUrl.toString();
+            Picasso.with(context)
+                    .load(image)
+                    .placeholder(R.drawable.profilelogo)
+                    .resize(65, 65)
+                    .centerCrop()
+                    .into(profileimage);
         }
 
         username.setText(profileDisplayName);
