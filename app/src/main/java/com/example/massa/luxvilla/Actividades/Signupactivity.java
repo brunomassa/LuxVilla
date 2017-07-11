@@ -54,24 +54,6 @@ public class Signupactivity extends AppCompatActivity {
 
         progressDialog=new ProgressDialog(this);
 
-        username.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //TODO: check if username exists
-                firebaseutils.checkusername(charSequence.toString(),textInputLayoutusername);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
         btnsugup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,14 +104,13 @@ public class Signupactivity extends AppCompatActivity {
 
                 progressDialog.setMessage("A criar utilizador...");
                 progressDialog.show();
-                Snackbar.make(linearLayout,"OK",Snackbar.LENGTH_LONG).show();
 
                 firebaseAuth.createUserWithEmailAndPassword(email.getText().toString().trim(),
                         password.getText().toString().trim()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         progressDialog.dismiss();
-                        firebaseutils.setuserfirstdata(authResult.getUser().getUid(),username.getText().toString().trim());
+                        firebaseutils.setuserfirstdata(Signupactivity.this,authResult.getUser(),username.getText().toString().trim());
                         startActivity(new Intent(Signupactivity.this, MainActivity.class));
                     }
                 }).addOnFailureListener(new OnFailureListener() {

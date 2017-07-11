@@ -78,6 +78,40 @@
             android:layout_gravity="center"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="OU"
+                android:textColor="#000"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_toLeftOf="@id/tvText"
+                android:background="#000"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:layout_toRightOf="@id/tvText"
+                android:background="#000"
+                />
+
+        </RelativeLayout>
+
         <com.google.android.gms.common.SignInButton
             android:id="@+id/googlesignin"
             android:layout_width="wrap_content"

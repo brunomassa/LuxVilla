@@ -4,13 +4,17 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.massa.luxvilla.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,27 +35,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class firebaseutils {
-
-    public static void checkusername(String username, final TextInputLayout textInputLayout){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("users");
-
-        myRef.orderByChild("user_name").equalTo(username).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    textInputLayout.setError("User name já está em uso.");
-                }else{
-                    textInputLayout.setError("");
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     public static void getuserdata(Context context, final TextView username, TextView useremail, CircleImageView profileimage){
         String providerId = "";
@@ -75,7 +58,6 @@ public class firebaseutils {
                     .load(image)
                     .placeholder(R.drawable.profilelogo)
                     .resize(65, 65)
-                    .centerCrop()
                     .into(profileimage);
         }
 
@@ -83,13 +65,22 @@ public class firebaseutils {
         useremail.setText(profileEmail);
     }
 
-    public static void setuserfirstdata(String userid,String username){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("users");
-        Map<String,Object> data = new HashMap<>();
-        data.put("user_name",username);
-        data.put("user_bio","Para adicionar uma bio edite o prefil");
-        myRef.child(userid).updateChildren(data);
+    public static void setuserfirstdata(final Context context, FirebaseUser user, String username){
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+        user=auth.getCurrentUser();
+        UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
+        builder.setDisplayName(username);
+        if (user !=null){
+            user.updateProfile(builder.build()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (!task.isSuccessful()){
+                        Toast.makeText(context,"Ocorreu um erro",Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
+
     }
 
     public static void checklike(String id, final LikeButton likeButton){
