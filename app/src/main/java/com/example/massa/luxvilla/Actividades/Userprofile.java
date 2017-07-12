@@ -1,5 +1,6 @@
 package com.example.massa.luxvilla.Actividades;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -91,6 +92,9 @@ public class Userprofile extends AppCompatActivity {
         switch (item.getItemId()){
             case android.R.id.home:
                 onBackPressed();
+                break;
+            case R.id.editprofile:
+                startActivity(new Intent(Userprofile.this,Editprofile.class));
                 break;
         }
         return super.onOptionsItemSelected(item);
