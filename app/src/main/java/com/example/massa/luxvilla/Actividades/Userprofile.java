@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -37,12 +39,7 @@ public class Userprofile extends AppCompatActivity {
         toolbarLayout=(CollapsingToolbarLayout)findViewById(R.id.tbprofile);
         toolbar=(Toolbar)findViewById(R.id.barprofileactivity);
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        setSupportActionBar(toolbar);
         profileimage=(CircleImageView) findViewById(R.id.imgprofile);
         mAuth=FirebaseAuth.getInstance();
         user=mAuth.getCurrentUser();
@@ -63,5 +60,22 @@ public class Userprofile extends AppCompatActivity {
                 profileimage.setImageDrawable(ContextCompat.getDrawable(Userprofile.this,R.drawable.logo));
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

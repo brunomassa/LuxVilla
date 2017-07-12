@@ -81,7 +81,7 @@
             android:theme="@style/login" />
         <activity
             android:name=".Actividades.Userprofile"
-            android:theme="@style/Infocasa" />
+            android:theme="@style/profile" />
         <activity
             android:name=".Actividades.settings"
             android:label="@string/defenicoes"
