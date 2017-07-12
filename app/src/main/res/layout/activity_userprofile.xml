@@ -10,7 +10,8 @@
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_height="270dp"
+        android:id="@+id/appBar"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:fitsSystemWindows="true"
         style="@style/Infocasa"
@@ -18,7 +19,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/tbprofile"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="256dp"
             style="@style/Infocasa"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:minHeight="?attr/actionBarSize"
@@ -48,7 +49,23 @@
                 app:layout_collapseMode="pin"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/profiletabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="bottom"
+            app:layout_collapseMode="pin"/>
+
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/profilevpgr"
+        android:background="#E5E4E2"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>
 

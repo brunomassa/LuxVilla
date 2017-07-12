@@ -2,7 +2,12 @@ package com.example.massa.luxvilla.Actividades;
 
 import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +18,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.massa.luxvilla.R;
+import com.example.massa.luxvilla.separadores.separadorlikes;
+import com.example.massa.luxvilla.separadores.separadorsobre;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
@@ -30,6 +37,9 @@ public class Userprofile extends AppCompatActivity {
     Uri profilePhotoUrl;
     CollapsingToolbarLayout toolbarLayout;
     Toolbar toolbar;
+    ViewPager vwpgr;
+    TabLayout tbs;
+    final int SEPARADOR_SOBRE=0,SEPARADOR_LIKES=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +70,13 @@ public class Userprofile extends AppCompatActivity {
                 profileimage.setImageDrawable(ContextCompat.getDrawable(Userprofile.this,R.drawable.nouserimage));
             }
         }
+        tbs=(TabLayout)findViewById(R.id.profiletabs);
+        tbs.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
+        vwpgr=(ViewPager)findViewById(R.id.profilevpgr);
+        adaptadortabs adaptador=new adaptadortabs(getSupportFragmentManager());
+        vwpgr.setAdapter(adaptador);
+        tbs.setupWithViewPager(vwpgr);
+
     }
 
     @Override
@@ -77,5 +94,34 @@ public class Userprofile extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class adaptadortabs extends FragmentPagerAdapter{
+
+        public adaptadortabs(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position){
+                case SEPARADOR_SOBRE:
+                    return new separadorsobre();
+                case SEPARADOR_LIKES:
+                    return new separadorlikes();
+            }
+            return null;
+        }
+
+        public CharSequence getPageTitle(int position){
+            String[] tabsname={"SOBRE","LIKES"};
+
+            return tabsname[position];
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
     }
 }
