@@ -10,7 +10,7 @@
     android:fitsSystemWindows="false">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_height="270dp"
+        android:layout_height="256dp"
         android:layout_width="match_parent"
         android:fitsSystemWindows="false"
         style="@style/Infocasa"
