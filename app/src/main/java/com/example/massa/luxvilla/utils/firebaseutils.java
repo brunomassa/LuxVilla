@@ -86,6 +86,30 @@ public class firebaseutils {
         useremail.setText(profileEmail);
     }
 
+    public static void setbio(final TextView bio){
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+        FirebaseUser user=auth.getCurrentUser();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        if (user !=null){
+            DatabaseReference myRef = database.getReference("users").child(user.getUid()).child("user_bio");
+
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()){
+                        bio.setText(dataSnapshot.getValue(String.class));
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+
     public static void setuserfirstdata(final Context context, FirebaseUser user, String username){
         FirebaseAuth auth=FirebaseAuth.getInstance();
         user=auth.getCurrentUser();

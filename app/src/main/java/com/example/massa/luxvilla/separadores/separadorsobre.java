@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.massa.luxvilla.R;
+import com.example.massa.luxvilla.utils.firebaseutils;
 
 /**
  * Use the {@link separadorsobre#newInstance} factory method to
@@ -23,6 +25,7 @@ public class separadorsobre extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    TextView textViewbio;
 
     public separadorsobre() {
         // Required empty public constructor
@@ -59,6 +62,11 @@ public class separadorsobre extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_separadorsobre, container, false);
+        View view= inflater.inflate(R.layout.fragment_separadorsobre, container, false);
+
+        textViewbio=(TextView) view.findViewById(R.id.txtbio);
+        firebaseutils.setbio(textViewbio);
+
+        return view;
     }
 }
