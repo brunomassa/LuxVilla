@@ -26,14 +26,13 @@
             app:contentScrim="?attr/colorPrimary"
             >
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgprofile"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_alignParentTop="true"
-                android:scaleType="centerCrop"
+                android:layout_marginTop="35dp"
+                android:layout_gravity="center_horizontal"
                 android:fitsSystemWindows="false"
                 app:layout_collapseMode="parallax"
                 />

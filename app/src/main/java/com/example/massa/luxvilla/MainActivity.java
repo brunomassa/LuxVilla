@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
     AppBarLayout appBarLayout;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
+    TextView tvusername;
+    TextView tvusermail;
+    CircleImageView ivprofile;
 
 
     @Override
@@ -242,11 +245,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         View headerLayout = navigationView.getHeaderView(0);
-        CircleImageView ivprofile=(CircleImageView) headerLayout.findViewById(R.id.profileimage);
-        TextView tvusername=(TextView) headerLayout.findViewById(R.id.textviewusername);
-        TextView tvusermail=(TextView) headerLayout.findViewById(R.id.textviewusermail);
-
-        firebaseutils.getuserdata(MainActivity.this,tvusername,tvusermail, ivprofile);
+        ivprofile=(CircleImageView) headerLayout.findViewById(R.id.profileimage);
+        tvusername=(TextView) headerLayout.findViewById(R.id.textviewusername);
+        tvusermail=(TextView) headerLayout.findViewById(R.id.textviewusermail);
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -371,8 +372,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        //TODO: if display name not automaticaly updates
-
+        firebaseutils.getuserdata(MainActivity.this,tvusername,tvusermail, ivprofile);
     }
 
     public void onBackPressed() {

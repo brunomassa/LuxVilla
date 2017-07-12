@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.widget.TextView;
@@ -43,11 +44,7 @@ import static android.content.ContentValues.TAG;
 public class firebaseutils {
 
     public static void getuserdata(final Context context, final TextView username, TextView useremail, final CircleImageView profileimage){
-        String providerId = "";
-        String profileUid = "";
-        String profileDisplayName = "";
         String profileEmail = "";
-        Uri profilePhotoUrl = null;
 
         FirebaseAuth auth=FirebaseAuth.getInstance();
         FirebaseUser user=auth.getCurrentUser();
@@ -83,9 +80,6 @@ public class firebaseutils {
 
                 }
             });
-
-            providerId=user.getProviderId();
-            profileUid=user.getUid();
             profileEmail=user.getEmail();
         }
 
