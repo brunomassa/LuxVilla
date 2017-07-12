@@ -57,7 +57,7 @@ public class Userprofile extends AppCompatActivity {
                         .fit()
                         .into(profileimage);
             }else{
-                profileimage.setImageDrawable(ContextCompat.getDrawable(Userprofile.this,R.drawable.logo));
+                profileimage.setImageDrawable(ContextCompat.getDrawable(Userprofile.this,R.drawable.nouserimage));
             }
         }
     }
@@ -65,7 +65,7 @@ public class Userprofile extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
 
         return true;
     }
