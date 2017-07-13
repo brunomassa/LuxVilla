@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -126,6 +127,48 @@ public class firebaseutils {
             });
         }
 
+    }
+
+    public static void updateuserbio(String userbio, final LinearLayout linearLayout){
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+        FirebaseUser user=auth.getCurrentUser();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        if (user !=null) {
+            DatabaseReference myRef = database.getReference("users").child(user.getUid()).child("user_bio");
+
+            myRef.setValue(userbio).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Snackbar.make(linearLayout,"Lamentamos mas ocorreu um erro",Snackbar.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
+
+    public static void updateusername(String username, final LinearLayout linearLayout){
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+        FirebaseUser user=auth.getCurrentUser();
+        UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
+        builder.setDisplayName(username);
+        if (user !=null){
+            user.updateProfile(builder.build()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Snackbar.make(linearLayout,"Lamentamos mas ocorreu um erro",Snackbar.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     public static void checklike(String id, final LikeButton likeButton){

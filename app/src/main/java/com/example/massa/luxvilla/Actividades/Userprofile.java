@@ -2,6 +2,7 @@ package com.example.massa.luxvilla.Actividades;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -18,9 +19,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.massa.luxvilla.MainActivity;
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.separadores.separadorlikes;
 import com.example.massa.luxvilla.separadores.separadorsobre;
+import com.example.massa.luxvilla.utils.firebaseutils;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
@@ -99,10 +104,46 @@ public class Userprofile extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    public void onResume(){
+        super.onResume();
+
+        if (user !=null){
+            user.reload().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    FirebaseAuth auth=FirebaseAuth.getInstance();
+                    FirebaseUser user=auth.getCurrentUser();
+                    if (user !=null){
+                        for (UserInfo userdata: user.getProviderData()) {
+                            profileDisplayName=userdata.getDisplayName();
+                            toolbarLayout.setTitle(profileDisplayName);
+                            profilePhotoUrl=userdata.getPhotoUrl();
+
+                        }
+                        if (profilePhotoUrl !=null){
+                            String image=profilePhotoUrl.toString();
+                            Picasso.with(Userprofile.this)
+                                    .load(image)
+                                    .fit()
+                                    .into(profileimage);
+                        }else{
+                            profileimage.setImageDrawable(ContextCompat.getDrawable(Userprofile.this,R.drawable.nouserimage));
+                        }
+                    }
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        }
+    }
 
     private class adaptadortabs extends FragmentPagerAdapter{
 
-        public adaptadortabs(FragmentManager fm) {
+        adaptadortabs(FragmentManager fm) {
             super(fm);
         }
 
