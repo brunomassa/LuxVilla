@@ -13,17 +13,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
-import com.example.massa.luxvilla.MainActivity;
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.separadores.separadorlikes;
 import com.example.massa.luxvilla.separadores.separadorsobre;
-import com.example.massa.luxvilla.utils.firebaseutils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,8 +27,6 @@ import com.google.firebase.auth.UserInfo;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.content.ContentValues.TAG;
 
 public class Userprofile extends AppCompatActivity {
     CircleImageView profileimage;
@@ -77,7 +70,7 @@ public class Userprofile extends AppCompatActivity {
             }
         }
         tbs=(TabLayout)findViewById(R.id.profiletabs);
-        tbs.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
+        tbs.setSelectedTabIndicatorColor(ContextCompat.getColor(Userprofile.this,R.color.colorAccent));
         vwpgr=(ViewPager)findViewById(R.id.profilevpgr);
         adaptadortabs adaptador=new adaptadortabs(getSupportFragmentManager());
         vwpgr.setAdapter(adaptador);

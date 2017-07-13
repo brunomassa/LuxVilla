@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
@@ -64,10 +65,6 @@ public class separadorbraga extends Fragment implements RecyclerViewOnClickListe
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    private VolleySingleton volleySingleton;
     private ImageLoader imageLoader;
     private RequestQueue requestQueue;
     private ArrayList<todascasas> casas=new ArrayList<>();
@@ -107,12 +104,12 @@ public class separadorbraga extends Fragment implements RecyclerViewOnClickListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        volleySingleton=VolleySingleton.getInstancia(getActivity());
-        requestQueue=volleySingleton.getRequestQueue();
+        VolleySingleton volleySingleton = VolleySingleton.getInstancia(getActivity());
+        requestQueue= volleySingleton.getRequestQueue();
         ctxtodas=getContext();
     }
 
@@ -168,7 +165,6 @@ public class separadorbraga extends Fragment implements RecyclerViewOnClickListe
 
                         casas.add(0,casasadd);
                     }
-                    //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {
                     progressBar.setVisibility(View.GONE);
@@ -178,8 +174,6 @@ public class separadorbraga extends Fragment implements RecyclerViewOnClickListe
             }
 
         }
-
-        //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
         return casas;
     }
 
@@ -197,36 +191,40 @@ public class separadorbraga extends Fragment implements RecyclerViewOnClickListe
         TelephonyManager manager = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         if(manager.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE){
             //tablet
-            final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+            final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
             switch (rotation) {
                 case Surface.ROTATION_0:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
                     break;
                 case Surface.ROTATION_90:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),4,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 4, GridLayoutManager.VERTICAL, false));
                     break;
                 case Surface.ROTATION_180:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
                     break;
                 default:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),4,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 4, GridLayoutManager.VERTICAL, false));
+                    break;
+                case Surface.ROTATION_270:
                     break;
             }
         }else{
             //phone
-            final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+            final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
             switch (rotation) {
                 case Surface.ROTATION_0:
                     recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
                     break;
                 case Surface.ROTATION_90:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
                     break;
                 case Surface.ROTATION_180:
                     recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
                     break;
                 default:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
+                    break;
+                case Surface.ROTATION_270:
                     break;
             }
         }
@@ -244,7 +242,7 @@ public class separadorbraga extends Fragment implements RecyclerViewOnClickListe
             recyclerViewtodas.setAdapter(adaptadoroffline);
         }
 
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark));
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark),ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark),ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

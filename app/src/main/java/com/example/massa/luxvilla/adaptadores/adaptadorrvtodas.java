@@ -1,7 +1,6 @@
 package com.example.massa.luxvilla.adaptadores;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
@@ -10,20 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.example.massa.luxvilla.MainActivity;
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.network.VolleySingleton;
-import com.example.massa.luxvilla.sqlite.BDAdapter;
 import com.example.massa.luxvilla.utils.firebaseutils;
 import com.example.massa.luxvilla.utils.todascasas;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.like.IconType;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
@@ -35,15 +29,15 @@ import java.util.ArrayList;
  */
 public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhtodas> {
 
-    ArrayList<todascasas> casas=new ArrayList<>();
+    private ArrayList<todascasas> casas=new ArrayList<>();
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     public static Context ctx;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     String PREFSNAME = "FAVS";
-    String id;
-    int favflag;
+    private String id;
+    private int favflag;
 
     public  adaptadorrvtodas(Context context){
         layoutInflater= LayoutInflater.from(context);
@@ -147,7 +141,7 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
         private TextView txtPrecocasa;
         private LikeButton favoriteButton;
 
-        public vhtodas(final View itemView) {
+        vhtodas(final View itemView) {
             super(itemView);
 
             imgcasa = (ImageView) itemView.findViewById(R.id.imgcasa);

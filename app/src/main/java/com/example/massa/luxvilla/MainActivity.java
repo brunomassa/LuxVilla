@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -18,6 +19,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -27,9 +29,7 @@ import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.massa.luxvilla.Actividades.Loginactivity;
 import com.example.massa.luxvilla.Actividades.Userprofile;
@@ -100,14 +100,14 @@ public class MainActivity extends AppCompatActivity {
         searchViewpr.setVoice(true);
         searchViewpr.setTextStyle(1);
         searchViewpr.setCursorDrawable(R.drawable.cursor);
-        searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
+        searchViewpr.setIconColor(ContextCompat.getColor(MainActivity.this,R.color.colorPrimary));
         searchViewpr.setShouldClearOnClose(true);
 
         drawerLayout=(DrawerLayout)findViewById(R.id.drawerll);
         navigationView=(NavigationView)findViewById(R.id.navigationview);
 
         tbs=(TabLayout)findViewById(R.id.tabs);
-        tbs.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
+        tbs.setSelectedTabIndicatorColor(ContextCompat.getColor(MainActivity.this,R.color.colorAccent));
         vwpgr= (ViewPager) findViewById(R.id.vpgr);
         adapter=new BDAdapter(this);
 
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
             adaptadorpaginas adaptador=new adaptadorpaginas(getSupportFragmentManager());
             vwpgr.setAdapter(adaptador);
 
-            vwpgr.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            vwpgr.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent defenicoes = new Intent(Settings.ACTION_WIFI_SETTINGS);
                                 startActivity(defenicoes);
                             }
-                        }).setActionTextColor(getResources().getColor(R.color.colorAccent)).show();
+                        }).setActionTextColor(ContextCompat.getColor(MainActivity.this,R.color.colorAccent)).show();
                     }
                 }
 
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        sugestions=new ArrayList<SearchItem>();
+        sugestions= new ArrayList<>();
         msearchHistoryTable=new SearchHistoryTable(MainActivity.this);
         msearchHistoryTable.setHistorySize(3);
         searchViewpr.setOnQueryTextListener(new com.lapism.searchview.SearchView.OnQueryTextListener() {
@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         final SearchAdapter searchAdapter=new SearchAdapter(MainActivity.this,sugestions);
-        searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
+        searchAdapter.addOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 TextView textView = (TextView) view.findViewById(R.id.textView_item_text);
@@ -252,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.navigation_item_1:
                         vwpgr.setCurrentItem(0);

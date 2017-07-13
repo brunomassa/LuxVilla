@@ -3,14 +3,11 @@ package com.example.massa.luxvilla.Actividades;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -110,7 +107,7 @@ public class Signupactivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         progressDialog.dismiss();
-                        firebaseutils.setuserfirstdata(Signupactivity.this,authResult.getUser(),username.getText().toString().trim());
+                        firebaseutils.setuserfirstdata(Signupactivity.this, username.getText().toString().trim());
                         startActivity(new Intent(Signupactivity.this, MainActivity.class));
                     }
                 }).addOnFailureListener(new OnFailureListener() {

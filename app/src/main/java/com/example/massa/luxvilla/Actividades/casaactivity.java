@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -36,9 +37,6 @@ public class casaactivity extends AppCompatActivity {
     String imgurlcasa;
     String infocasa;
     String idcasa;
-    private VolleySingleton volleySingleton;
-    private ImageLoader imageLoader;
-    private RequestQueue requestQueue;
     Toolbar toolbarinfocasa;
     ImageView imageViewinfocasa;
     TextView textViewinfocasa;
@@ -95,9 +93,9 @@ public class casaactivity extends AppCompatActivity {
 
         textViewinfocasa=(TextView)findViewById(R.id.txtinfocasaactivity);
 
-        volleySingleton=VolleySingleton.getInstancia(casaactivity.this);
-        requestQueue=volleySingleton.getRequestQueue();
-        imageLoader=volleySingleton.getImageLoader();
+        VolleySingleton volleySingleton = VolleySingleton.getInstancia(casaactivity.this);
+        RequestQueue requestQueue = volleySingleton.getRequestQueue();
+        ImageLoader imageLoader = volleySingleton.getImageLoader();
 
         if (isNetworkAvailable(casaactivity.this)) {
 
@@ -115,8 +113,8 @@ public class casaactivity extends AppCompatActivity {
 
         }else {
             imageViewinfocasa.setImageResource(R.drawable.logo);
-            imgtoolbar.setExpandedTitleColor(getResources().getColor(android.R.color.black));
-            imgtoolbar.setCollapsedTitleTextColor(getResources().getColor(android.R.color.black));
+            imgtoolbar.setExpandedTitleColor(ContextCompat.getColor(casaactivity.this,android.R.color.black));
+            imgtoolbar.setCollapsedTitleTextColor(ContextCompat.getColor(casaactivity.this,android.R.color.black));
         }
 
 
@@ -132,12 +130,6 @@ public class casaactivity extends AppCompatActivity {
         favflag=sharedPreferences.getInt(idcasa, 0);
 
         firebaseutils.checklike(idcasa,favoriteButton);
-
-        /*if (favflag==0){
-            favoriteButton.setLiked(false);
-        }else {
-            favoriteButton.setLiked(true);
-        }*/
 
 
         favoriteButton.setOnLikeListener(new OnLikeListener() {
@@ -204,5 +196,4 @@ public class casaactivity extends AppCompatActivity {
         super.onDestroy();
 
     }
-
 }

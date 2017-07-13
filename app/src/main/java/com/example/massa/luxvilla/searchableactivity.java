@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -54,7 +55,6 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
     private adaptadorrvtodas adaptador;
     private RequestQueue requestQueue;
     private ArrayList<todascasas> casas=new ArrayList<>();
-    private VolleySingleton volleySingleton;
     SwipeRefreshLayout swipeRefreshLayout;
     static String query=null;
     static ArrayList<listacasas> ids=new ArrayList();
@@ -75,8 +75,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         query = intent.getStringExtra("query");
 
 
-
-        volleySingleton = VolleySingleton.getInstancia(searchableactivity.this);
+        VolleySingleton volleySingleton = VolleySingleton.getInstancia(searchableactivity.this);
         requestQueue = volleySingleton.getRequestQueue();
         ctxtodas = searchableactivity.this;
 
@@ -89,7 +88,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         }
         searchViewpr.setVoice(true);
         searchViewpr.setArrowOnly(true);
-        searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
+        searchViewpr.setIconColor(ContextCompat.getColor(searchableactivity.this,R.color.colorPrimary));
         searchViewpr.setCursorDrawable(R.drawable.cursor);
 
         searchViewpr.setOnOpenCloseListener(new com.lapism.searchview.SearchView.OnOpenCloseListener() {
@@ -123,7 +122,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
             }
         });
 
-        sugestions = new ArrayList<SearchItem>();
+        sugestions = new ArrayList<>();
         msearchHistoryTable = new SearchHistoryTable(searchableactivity.this);
         searchViewpr.setOnQueryTextListener(new com.lapism.searchview.SearchView.OnQueryTextListener() {
             @Override
@@ -151,7 +150,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
             }
         });
         SearchAdapter searchAdapter = new SearchAdapter(searchableactivity.this, sugestions);
-        searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
+        searchAdapter.addOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 TextView textView = (TextView) view.findViewById(R.id.textView_item_text);
@@ -187,7 +186,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         }
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipesearch);
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark));
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(searchableactivity.this,R.color.colorPrimaryDark),ContextCompat.getColor(searchableactivity.this,R.color.colorPrimaryDark),ContextCompat.getColor(searchableactivity.this,R.color.colorPrimaryDark));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

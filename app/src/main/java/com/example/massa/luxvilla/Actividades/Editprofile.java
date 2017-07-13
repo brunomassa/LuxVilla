@@ -1,6 +1,5 @@
 package com.example.massa.luxvilla.Actividades;
 
-import android.net.Uri;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import com.example.massa.luxvilla.utils.firebaseutils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
-import com.squareup.picasso.Picasso;
 
 public class Editprofile extends AppCompatActivity {
     Toolbar toolbar;

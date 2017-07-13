@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -29,13 +28,13 @@ import java.util.List;
 public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtodasoffline.vhoffline> {
 
     private LayoutInflater inflater;
-    List<listasql> dados= Collections.emptyList();
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-    String PREFSNAME = "FAVS";
-    String id;
-    int favflag;
-    public static Context ctx;
+    private List<listasql> dados= Collections.emptyList();
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private String PREFSNAME = "FAVS";
+    private String id;
+    private int favflag;
+    private static Context ctx;
 
     public adaptadorrvtodasoffline(Context c,List<listasql> dados){
         inflater=LayoutInflater.from(c);
@@ -47,8 +46,7 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
     @Override
     public vhoffline onCreateViewHolder(ViewGroup parent, int viewType) {
         View view=inflater.inflate(R.layout.itencasas, parent, false);
-        vhoffline holder=new vhoffline(view);
-        return holder;
+        return new vhoffline(view);
     }
 
     @Override
@@ -111,12 +109,6 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
         });
 
         firebaseutils.checklike(id,holder.favoriteButton);
-
-        /*if (favflag==0){
-            holder.favoriteButton.setLiked(false);
-        }else {
-            holder.favoriteButton.setLiked(true);
-        }*/
     }
 
     @Override
@@ -124,13 +116,13 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
         return dados.size();
     }
 
-    public class vhoffline extends RecyclerView.ViewHolder{
+    class vhoffline extends RecyclerView.ViewHolder{
         private ImageView imgcasa;
         private TextView txtLocalcasa;
         private TextView txtPrecocasa;
         private LikeButton favoriteButton;
 
-        public vhoffline(View itemView) {
+        vhoffline(View itemView) {
             super(itemView);
 
             imgcasa=(ImageView)itemView.findViewById(R.id.imgcasa);

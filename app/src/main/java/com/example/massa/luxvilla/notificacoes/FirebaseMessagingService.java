@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.example.massa.luxvilla.Actividades.casaactivity;
@@ -89,7 +90,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 .setContentTitle("Nova casa")
                 .setContentText(messageBody)
                 .setAutoCancel(true)
-                .setColor(getResources().getColor(R.color.colorPrimary))
+                .setColor(ContextCompat.getColor(FirebaseMessagingService.this,R.color.colorPrimary))
                 .setSound(defaultSoundUri)
                 .setPriority(2)
                 .setContentIntent(pendingIntent);

@@ -1,13 +1,9 @@
 package com.example.massa.luxvilla.utils;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,10 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.like.LikeButton;
 import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -111,9 +103,9 @@ public class firebaseutils {
         }
     }
 
-    public static void setuserfirstdata(final Context context, FirebaseUser user, String username){
+    public static void setuserfirstdata(final Context context, String username){
         FirebaseAuth auth=FirebaseAuth.getInstance();
-        user=auth.getCurrentUser();
+        FirebaseUser user = auth.getCurrentUser();
         UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
         builder.setDisplayName(username);
         if (user !=null){

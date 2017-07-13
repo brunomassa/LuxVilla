@@ -64,9 +64,6 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private ImageLoader imageLoader;
     private RequestQueue requestQueue;
     private ArrayList<todascasas> casas=new ArrayList<>();
@@ -106,8 +103,8 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
         VolleySingleton volleySingleton = VolleySingleton.getInstancia(getActivity());
         requestQueue= volleySingleton.getRequestQueue();
@@ -166,7 +163,6 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
 
                         casas.add(0,casasadd);
                     }
-                    //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {
                     progressBar.setVisibility(View.GONE);
@@ -177,7 +173,6 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
 
         }
 
-        //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
         return casas;
     }
 
@@ -195,7 +190,7 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
         TelephonyManager manager = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         if(manager.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE){
             //tablet
-            final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+            final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
             switch (rotation) {
                 case Surface.ROTATION_0:
                     recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
@@ -214,7 +209,7 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
             }
         }else{
             //phone
-            final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+            final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
             switch (rotation) {
                 case Surface.ROTATION_0:
                     recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
