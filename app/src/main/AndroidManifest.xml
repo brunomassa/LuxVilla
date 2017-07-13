@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:name=".LuxVilla"
+        android:name=".Application.LuxVilla"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -23,9 +23,9 @@
             android:authorities="com.example.massa.luxvilla.sugestoes.SearchSugestionsProvider" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".Actividades.MainActivity"
             android:theme="@style/Main" />
-        <activity android:name=".searchableactivity">
+        <activity android:name=".Actividades.searchableactivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -36,7 +36,7 @@
         </activity>
         <activity
             android:name=".Actividades.casaactivity"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".Actividades.MainActivity"
             android:theme="@style/Infocasa">
             <intent-filter>
                 <action android:name="casaactivity" />
@@ -46,7 +46,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.massa.luxvilla.MainActivity" />
+                android:value="com.example.massa.luxvilla.Actividades.MainActivity" />
         </activity>
 
         <service android:name=".notificacoes.FirebaseMessagingService">

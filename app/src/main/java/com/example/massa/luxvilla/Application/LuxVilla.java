@@ -1,4 +1,4 @@
-package com.example.massa.luxvilla;
+package com.example.massa.luxvilla.Application;
 
 import android.app.Application;
 

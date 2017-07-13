@@ -1,4 +1,4 @@
-package com.example.massa.luxvilla;
+package com.example.massa.luxvilla.Actividades;
 
 
 import android.content.Context;
@@ -31,9 +31,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.massa.luxvilla.Actividades.Loginactivity;
-import com.example.massa.luxvilla.Actividades.Userprofile;
-import com.example.massa.luxvilla.Actividades.settings;
+import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.separadores.separadoraveiro;
 import com.example.massa.luxvilla.separadores.separadorbraga;
 import com.example.massa.luxvilla.separadores.separadorporto;

@@ -22,7 +22,6 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.example.massa.luxvilla.MainActivity;
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.network.VolleySingleton;
 import com.example.massa.luxvilla.utils.firebaseutils;

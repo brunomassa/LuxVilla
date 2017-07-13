@@ -1,4 +1,4 @@
-package com.example.massa.luxvilla;
+package com.example.massa.luxvilla.Actividades;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,8 +28,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.example.massa.luxvilla.Actividades.casaactivity;
-import com.example.massa.luxvilla.Actividades.settings;
+import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodas;
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodasoffline;
 import com.example.massa.luxvilla.network.VolleySingleton;

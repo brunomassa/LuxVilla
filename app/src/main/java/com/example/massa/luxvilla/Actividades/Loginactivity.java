@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.massa.luxvilla.MainActivity;
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.utils.mailcheck;
 import com.google.android.gms.auth.api.Auth;

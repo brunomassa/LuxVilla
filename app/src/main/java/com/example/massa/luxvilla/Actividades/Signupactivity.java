@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.example.massa.luxvilla.MainActivity;
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.utils.firebaseutils;
 import com.example.massa.luxvilla.utils.mailcheck;
