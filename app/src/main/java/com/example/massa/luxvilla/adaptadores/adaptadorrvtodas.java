@@ -45,7 +45,13 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
 
     public void setCasas(ArrayList<todascasas> cs){
         this.casas=cs;
-        notifyItemChanged(0,casas.size());
+        notifyDataSetChanged();
+    }
+
+    public void removeAt(int position) {
+        casas.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, casas.size());
     }
 
     @Override

@@ -40,6 +40,7 @@ import com.example.massa.luxvilla.network.VolleySingleton;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
 import com.example.massa.luxvilla.utils.NetworkCheck;
 import com.example.massa.luxvilla.utils.RecyclerViewOnClickListenerHack;
+import com.example.massa.luxvilla.utils.firebaseutils;
 import com.example.massa.luxvilla.utils.keys;
 import com.example.massa.luxvilla.utils.listacasas;
 import com.example.massa.luxvilla.utils.listasql;
@@ -160,16 +161,6 @@ public class separadorlikes extends Fragment implements RecyclerViewOnClickListe
                     cs.info=info;
                     cs.idcs=id;
 
-
-                    String locsql=adapter.verlocais(id);
-                    String precsql=adapter.verprecos(id);
-                    String infossql=adapter.verinfos(id);
-                    if (!local.equalsIgnoreCase(locsql) && !preco.equalsIgnoreCase(precsql) && !info.equalsIgnoreCase(infossql)){
-                        long longid=adapter.inserirdados(local,preco,info);
-                        if (longid <= 0) {
-                            Toast.makeText(getActivity(), "Ocorreu um erro, tente novamente mais tarde", Toast.LENGTH_LONG).show();
-                        }
-                    }
                     casas.add(0,casasadd);
                     ids.add(0,cs);
 

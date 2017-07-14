@@ -86,16 +86,8 @@ public class settings extends AppCompatActivity {
                     boolean switched = ((SwitchPreference) preference)
                             .isChecked();
                     if (switched){
-                        sharedPreferences=getActivity().getSharedPreferences(NOTIFICATION, 0);
-                        editor=sharedPreferences.edit();
-                        editor.putInt("enabled", 1);
-                        editor.apply();
                         FirebaseMessaging.getInstance().unsubscribeFromTopic("todos");
                     }else{
-                        sharedPreferences=getActivity().getSharedPreferences(NOTIFICATION, 0);
-                        editor=sharedPreferences.edit();
-                        editor.putInt("enabled", 0);
-                        editor.apply();
                         FirebaseMessaging.getInstance().subscribeToTopic("todos");
                     }
                     return true;

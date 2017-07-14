@@ -26,6 +26,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.like.LikeButton;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.ListIterator;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.content.ContentValues.TAG;
@@ -181,6 +184,30 @@ public class firebaseutils {
                     likeButton.setLiked(true);
                 }else{
                     likeButton.setLiked(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public static void addonlylikes(String id, int position){
+        String uid="";
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+        FirebaseUser user=auth.getCurrentUser();
+        if (user != null){
+            uid=user.getUid();
+        }
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("users").child(uid).child("likes");
+        myRef.orderByKey().equalTo("heart"+id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()){
+
                 }
             }
 

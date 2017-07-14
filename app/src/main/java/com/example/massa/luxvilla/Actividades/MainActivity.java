@@ -10,6 +10,8 @@ import android.graphics.drawable.Icon;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
+import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -30,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.separadores.separadoraveiro;
@@ -60,9 +63,7 @@ public class MainActivity extends AppCompatActivity {
     final int SEPARADOR_BRAGA=2;
     final int SEPARADOR_PORTO=3;
     BDAdapter adapter;
-    SharedPreferences sharedPreferences,sharedPreferenceslikes;
-    final String ISNOTIFICATIONON="notificationsenabled";
-    final String LIKES = "FAVS";
+    SharedPreferences sharedPreferencesnotification;
     com.lapism.searchview.SearchView searchViewpr;
     List<SearchItem> sugestions;
     SearchHistoryTable msearchHistoryTable;
@@ -83,12 +84,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferenceslikes=getSharedPreferences(LIKES,0);
-
-        sharedPreferences=getSharedPreferences(ISNOTIFICATIONON, 0);
-        int flagenabled=sharedPreferences.getInt("enabled",0);
-
-        if (flagenabled==0){
+        sharedPreferencesnotification= PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        boolean notificationstate=sharedPreferencesnotification.getBoolean(getResources().getString(R.string.notificaçãoes),true);
+        if (notificationstate){
             FirebaseMessaging.getInstance().subscribeToTopic("todos");
         }else{
             FirebaseMessaging.getInstance().unsubscribeFromTopic("todos");

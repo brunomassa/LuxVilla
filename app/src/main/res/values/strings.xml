@@ -17,4 +17,6 @@
     <string name="editdone">Feito!</string>
     <string name="username">User name</string>
     <string name="userbio">User bio</string>
+    <string name="notificationsenabled">Notificações activadas</string>
+    <string name="notificationsdesabled">Notificações desactivadas</string>
 </resources>
