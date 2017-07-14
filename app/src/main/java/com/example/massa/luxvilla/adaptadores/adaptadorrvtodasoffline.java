@@ -29,11 +29,7 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
 
     private LayoutInflater inflater;
     private List<listasql> dados= Collections.emptyList();
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-    private String PREFSNAME = "FAVS";
     private String id;
-    private int favflag;
     private static Context ctx;
 
     public adaptadorrvtodasoffline(Context c,List<listasql> dados){
@@ -61,9 +57,7 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
         holder.imgcasa.setImageResource(R.drawable.logo);
         holder.txtPrecocasa.setText(offlinedata.Prec);
 
-        sharedPreferences=ctx.getSharedPreferences(PREFSNAME, 0);
         id=offlinedata.Id;
-        favflag=sharedPreferences.getInt(id, 0);
 
         holder.favoriteButton.setIcon(IconType.Heart);
         holder.favoriteButton.setIconSizeDp(25);
@@ -76,34 +70,13 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
         holder.favoriteButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                id=offlinedata.Id;
-                favflag=sharedPreferences.getInt(id, 0);
-
-                sharedPreferences=ctx.getSharedPreferences(PREFSNAME, 0);
-                editor=sharedPreferences.edit();
-                editor.putInt(id, 1);
-                editor.apply();
-                favflag=sharedPreferences.getInt(id,0);
-
                 firebaseutils.setlike(id);
-
                 holder.favoriteButton.setLiked(true);
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-
-                id=offlinedata.Id;
-                favflag=sharedPreferences.getInt(id, 0);
-
-                sharedPreferences=ctx.getSharedPreferences(PREFSNAME,0);
-                editor =sharedPreferences.edit();
-                editor.putInt(String.valueOf(id),0);
-                editor.apply();
-                favflag=sharedPreferences.getInt(String.valueOf(id),0);
-
                 firebaseutils.removelike(id);
-
                 holder.favoriteButton.setLiked(false);
             }
         });

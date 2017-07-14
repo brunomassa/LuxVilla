@@ -60,8 +60,9 @@ public class MainActivity extends AppCompatActivity {
     final int SEPARADOR_BRAGA=2;
     final int SEPARADOR_PORTO=3;
     BDAdapter adapter;
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences,sharedPreferenceslikes;
     final String ISNOTIFICATIONON="notificationsenabled";
+    final String LIKES = "FAVS";
     com.lapism.searchview.SearchView searchViewpr;
     List<SearchItem> sugestions;
     SearchHistoryTable msearchHistoryTable;
@@ -81,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharedPreferenceslikes=getSharedPreferences(LIKES,0);
 
         sharedPreferences=getSharedPreferences(ISNOTIFICATIONON, 0);
         int flagenabled=sharedPreferences.getInt("enabled",0);

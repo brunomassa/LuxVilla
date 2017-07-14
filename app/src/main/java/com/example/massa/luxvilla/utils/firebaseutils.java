@@ -1,6 +1,7 @@
 package com.example.massa.luxvilla.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -163,7 +164,7 @@ public class firebaseutils {
         }
     }
 
-    public static void checklike(String id, final LikeButton likeButton){
+    public static void checklike(final String id, final LikeButton likeButton){
         String uid="";
         FirebaseAuth auth=FirebaseAuth.getInstance();
         FirebaseUser user=auth.getCurrentUser();

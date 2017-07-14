@@ -170,9 +170,7 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
                     String infossql=adapter.verinfos(id);
                     if (!local.equalsIgnoreCase(locsql) && !preco.equalsIgnoreCase(precsql) && !info.equalsIgnoreCase(infossql)){
                         long longid=adapter.inserirdados(local,preco,info);
-                        if (longid>0){
-                            Toast.makeText(getActivity(), "Casa adicionada ao modo offline", Toast.LENGTH_LONG).show();
-                        }else {
+                        if (longid <= 0) {
                             Toast.makeText(getActivity(), "Ocorreu um erro, tente novamente mais tarde", Toast.LENGTH_LONG).show();
                         }
                     }
