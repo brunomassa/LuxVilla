@@ -1,14 +1,12 @@
 package com.example.massa.luxvilla.adaptadores;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -70,14 +68,12 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
             public void liked(LikeButton likeButton) {
                 firebaseutils.setlike(offlinedata.Id);
                 holder.favoriteButton.setLiked(true);
-                Toast.makeText(ctx,offlinedata.Id,Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
                 firebaseutils.removelike(offlinedata.Id);
                 holder.favoriteButton.setLiked(false);
-                Toast.makeText(ctx,offlinedata.Id,Toast.LENGTH_LONG).show();
             }
         });
 

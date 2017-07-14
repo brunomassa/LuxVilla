@@ -11,7 +11,6 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -32,7 +31,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.separadores.separadoraveiro;
@@ -63,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
     final int SEPARADOR_BRAGA=2;
     final int SEPARADOR_PORTO=3;
     BDAdapter adapter;
-    SharedPreferences sharedPreferencesnotification;
+    final String PREFSNAME = "FAVS";
+    SharedPreferences sharedPreferencesnotification, sharedPreferenceslikes;
     com.lapism.searchview.SearchView searchViewpr;
     List<SearchItem> sugestions;
     SearchHistoryTable msearchHistoryTable;
@@ -83,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharedPreferenceslikes=MainActivity.this.getSharedPreferences(PREFSNAME, 0);
 
         sharedPreferencesnotification= PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         boolean notificationstate=sharedPreferencesnotification.getBoolean(getResources().getString(R.string.notificaçãoes),true);
@@ -270,10 +271,10 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(it);
                         break;
                     case R.id.navigation_subheader_profile:
-                        //TODO: profile
                         startActivity(new Intent(MainActivity.this, Userprofile.class));
                         break;
                     case R.id.navigation_subheader_signout:
+                        sharedPreferenceslikes.edit().clear().apply();
                         FirebaseAuth.getInstance().signOut();
                         startActivity(new Intent(MainActivity.this,Loginactivity.class));
                         finish();
