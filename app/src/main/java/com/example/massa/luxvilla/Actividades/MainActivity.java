@@ -1,4 +1,4 @@
-package com.example.massa.luxvilla;
+package com.example.massa.luxvilla.Actividades;
 
 
 import android.content.Context;
@@ -10,7 +10,9 @@ import android.graphics.drawable.Icon;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -18,6 +20,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -29,12 +32,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.massa.luxvilla.Actividades.SettingsActivity;
+import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.separadores.separadoraveiro;
 import com.example.massa.luxvilla.separadores.separadorbraga;
 import com.example.massa.luxvilla.separadores.separadorporto;
 import com.example.massa.luxvilla.separadores.separadortodas;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
+import com.example.massa.luxvilla.utils.firebaseutils;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.lapism.searchview.SearchAdapter;
 import com.lapism.searchview.SearchHistoryTable;
@@ -45,6 +50,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends AppCompatActivity {
 
     ViewPager vwpgr;
@@ -54,14 +61,17 @@ public class MainActivity extends AppCompatActivity {
     final int SEPARADOR_BRAGA=2;
     final int SEPARADOR_PORTO=3;
     BDAdapter adapter;
-    SharedPreferences sharedPreferences;
-    final String ISNOTIFICATIONON="notificationsenabled";
+    final String PREFSNAME = "FAVS";
+    SharedPreferences sharedPreferencesnotification, sharedPreferenceslikes;
     com.lapism.searchview.SearchView searchViewpr;
     List<SearchItem> sugestions;
     SearchHistoryTable msearchHistoryTable;
     AppBarLayout appBarLayout;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
+    TextView tvusername;
+    TextView tvusermail;
+    CircleImageView ivprofile;
 
 
     @Override
@@ -73,10 +83,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferences=getSharedPreferences(ISNOTIFICATIONON, 0);
-        int flagenabled=sharedPreferences.getInt("enabled",0);
+        sharedPreferenceslikes=MainActivity.this.getSharedPreferences(PREFSNAME, 0);
 
-        if (flagenabled==0){
+        sharedPreferencesnotification= PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        boolean notificationstate=sharedPreferencesnotification.getBoolean(getResources().getString(R.string.notificaçãoes),true);
+        if (notificationstate){
             FirebaseMessaging.getInstance().subscribeToTopic("todos");
         }else{
             FirebaseMessaging.getInstance().unsubscribeFromTopic("todos");
@@ -89,14 +100,14 @@ public class MainActivity extends AppCompatActivity {
         searchViewpr.setVoice(true);
         searchViewpr.setTextStyle(1);
         searchViewpr.setCursorDrawable(R.drawable.cursor);
-        searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
+        searchViewpr.setIconColor(ContextCompat.getColor(MainActivity.this,R.color.colorPrimary));
         searchViewpr.setShouldClearOnClose(true);
 
         drawerLayout=(DrawerLayout)findViewById(R.id.drawerll);
         navigationView=(NavigationView)findViewById(R.id.navigationview);
 
         tbs=(TabLayout)findViewById(R.id.tabs);
-        tbs.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
+        tbs.setSelectedTabIndicatorColor(ContextCompat.getColor(MainActivity.this,R.color.colorAccent));
         vwpgr= (ViewPager) findViewById(R.id.vpgr);
         adapter=new BDAdapter(this);
 
@@ -113,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
             adaptadorpaginas adaptador=new adaptadorpaginas(getSupportFragmentManager());
             vwpgr.setAdapter(adaptador);
 
-            vwpgr.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            vwpgr.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -147,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent defenicoes = new Intent(Settings.ACTION_WIFI_SETTINGS);
                                 startActivity(defenicoes);
                             }
-                        }).setActionTextColor(getResources().getColor(R.color.colorAccent)).show();
+                        }).setActionTextColor(ContextCompat.getColor(MainActivity.this,R.color.colorAccent)).show();
                     }
                 }
 
@@ -158,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        sugestions=new ArrayList<SearchItem>();
+        sugestions= new ArrayList<>();
         msearchHistoryTable=new SearchHistoryTable(MainActivity.this);
         msearchHistoryTable.setHistorySize(3);
         searchViewpr.setOnQueryTextListener(new com.lapism.searchview.SearchView.OnQueryTextListener() {
@@ -182,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         final SearchAdapter searchAdapter=new SearchAdapter(MainActivity.this,sugestions);
-        searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
+        searchAdapter.addOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 TextView textView = (TextView) view.findViewById(R.id.textView_item_text);
@@ -233,10 +244,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        View headerLayout = navigationView.getHeaderView(0);
+        ivprofile=(CircleImageView) headerLayout.findViewById(R.id.profileimage);
+        tvusername=(TextView) headerLayout.findViewById(R.id.textviewusername);
+        tvusermail=(TextView) headerLayout.findViewById(R.id.textviewusermail);
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.navigation_item_1:
                         vwpgr.setCurrentItem(0);
@@ -251,8 +267,17 @@ public class MainActivity extends AppCompatActivity {
                         vwpgr.setCurrentItem(3);
                         break;
                     case R.id.navigation_subheader_1:
-                        Intent it=new Intent(MainActivity.this, SettingsActivity.class);
+                        Intent it=new Intent(MainActivity.this, settings.class);
                         startActivity(it);
+                        break;
+                    case R.id.navigation_subheader_profile:
+                        startActivity(new Intent(MainActivity.this, Userprofile.class));
+                        break;
+                    case R.id.navigation_subheader_signout:
+                        sharedPreferenceslikes.edit().clear().apply();
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(MainActivity.this,Loginactivity.class));
+                        finish();
                         break;
                 }
                 drawerLayout.closeDrawers();
@@ -344,6 +369,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        firebaseutils.getuserdata(MainActivity.this,tvusername,tvusermail, ivprofile);
+    }
+
     public void onBackPressed() {
 
         if (drawerLayout.isDrawerOpen(navigationView)){
@@ -358,5 +389,4 @@ public class MainActivity extends AppCompatActivity {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
-
 }

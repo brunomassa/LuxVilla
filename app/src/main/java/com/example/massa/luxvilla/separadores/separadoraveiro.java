@@ -4,12 +4,12 @@ package com.example.massa.luxvilla.separadores;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
@@ -24,6 +24,7 @@ import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
@@ -63,9 +64,6 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private ImageLoader imageLoader;
     private RequestQueue requestQueue;
     private ArrayList<todascasas> casas=new ArrayList<>();
@@ -76,6 +74,7 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
     static BDAdapter adapter;
     private adaptadorrvtodasoffline adaptadoroffline;
     static Context ctxtodas;
+    ProgressBar progressBar;
 
 
     public separadoraveiro() {
@@ -104,8 +103,8 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
         VolleySingleton volleySingleton = VolleySingleton.getInstancia(getActivity());
         requestQueue= volleySingleton.getRequestQueue();
@@ -114,16 +113,20 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
 
     private void sendjsonRequest(){
 
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET,"http://brunoferreira.esy.es/resultado.json",null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET,"http://brunoferreira.esy.es/serverdata.php",null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 casas=parsejsonResponse(response);
                 adaptador.setCasas(casas);
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
                 Snackbar.make(recyclerViewtodas,"Falha ao ligar ao servidor",Snackbar.LENGTH_LONG).show();
 
             }
@@ -160,16 +163,16 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
 
                         casas.add(0,casasadd);
                     }
-                    //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {
+                    progressBar.setVisibility(View.GONE);
+                    swipeRefreshLayout.setVisibility(View.VISIBLE);
                     Snackbar.make(recyclerViewtodas, "Falha ao ligar ao servidor", Snackbar.LENGTH_LONG).show();
                 }
             }
 
         }
 
-        //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
         return casas;
     }
 
@@ -180,41 +183,47 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
         View view= inflater.inflate(R.layout.fragment_separadoraveiro, container, false);
 
         recyclerViewtodas=(RecyclerView)view.findViewById(R.id.rvaveiro);
+        progressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
+        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipeaveiro);
 
 
         TelephonyManager manager = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         if(manager.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE){
             //tablet
-            final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+            final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
             switch (rotation) {
                 case Surface.ROTATION_0:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
                     break;
                 case Surface.ROTATION_90:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),4,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 4, GridLayoutManager.VERTICAL, false));
                     break;
                 case Surface.ROTATION_180:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
                     break;
                 default:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),4,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 4, GridLayoutManager.VERTICAL, false));
+                    break;
+                case Surface.ROTATION_270:
                     break;
             }
         }else{
             //phone
-            final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+            final int rotation = ((WindowManager) ctxtodas.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
             switch (rotation) {
                 case Surface.ROTATION_0:
                     recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
                     break;
                 case Surface.ROTATION_90:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
                     break;
                 case Surface.ROTATION_180:
                     recyclerViewtodas.setLayoutManager(new LinearLayoutManager(getActivity()));
                     break;
                 default:
-                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+                    recyclerViewtodas.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
+                    break;
+                case Surface.ROTATION_270:
                     break;
             }
         }
@@ -226,12 +235,13 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
 
             sendjsonRequest();
         } else {
+            progressBar.setVisibility(View.GONE);
+            swipeRefreshLayout.setVisibility(View.VISIBLE);
             adaptadoroffline=new adaptadorrvtodasoffline(getActivity(),getdados());
             recyclerViewtodas.setAdapter(adaptadoroffline);
         }
 
-        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipeaveiro);
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark));
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark),ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark),ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

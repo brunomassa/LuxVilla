@@ -12,16 +12,15 @@ import android.widget.Toast;
  */
 public class BDAdapter {
 
-    BDCore core;
+    private BDCore core;
     static Context ctx;
-   public String loc;
-   public String prec;
-   public String inf;
-    public int favflag;
+   private String loc;
+   private String prec;
+   private String inf;
 
     public BDAdapter(Context context){
         core=new BDCore(context);
-        this.ctx=context;
+        ctx=context;
     }
 
     public Long inserirdados(String local, String preco, String info){
@@ -32,9 +31,8 @@ public class BDAdapter {
         contentValues.put(BDCore.TABLE_PRECO,preco);
         contentValues.put(BDCore.TABLE_INFO, info);
         contentValues.put(BDCore.TABLE_FAV, 0);
-        Long id=sqLiteDatabase.insert(BDCore.TABLE_NAME, null, contentValues);
 
-        return id;
+        return sqLiteDatabase.insert(BDCore.TABLE_NAME, null, contentValues);
     }
 
     public String verlocais(String ID){
@@ -51,6 +49,7 @@ public class BDAdapter {
             //Toast.makeText(ctx,loc+" "+prec+" "+inf+" ",Toast.LENGTH_LONG).show();
 
         }
+        cursor.close();
         return loc;
     }
 
@@ -69,6 +68,7 @@ public class BDAdapter {
             //Toast.makeText(ctx,loc+" "+prec+" "+inf+" ",Toast.LENGTH_LONG).show();
 
         }
+        cursor.close();
         return prec;
     }
 
@@ -100,14 +100,14 @@ public class BDAdapter {
 
 
             }
+            cursor.close();
         }catch (Exception ex){
             Toast.makeText(ctx,ex.toString(),Toast.LENGTH_LONG).show();
         }
-
         return cnt;
     }
 
-    static class BDCore extends SQLiteOpenHelper {
+    private static class BDCore extends SQLiteOpenHelper {
         private static final String BD_NAME="dbcasas";
         private static final int BD_VERSION=4;
         private static final String TABLE_NAME="casa";
@@ -118,7 +118,7 @@ public class BDAdapter {
         private static final String TABLE_FAV="fav";
         Context context;
 
-        public BDCore(Context context) {
+        BDCore(Context context) {
             super(context, BD_NAME, null, BD_VERSION);
             this.context=context;
         }

@@ -1,8 +1,8 @@
 package com.example.massa.luxvilla.separadores;
 
-
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,12 +26,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.massa.luxvilla.Actividades.casaactivity;
 import com.example.massa.luxvilla.R;
@@ -54,17 +54,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link separadorporto#newInstance} factory method to
+ * Use the {@link separadorlikes#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class separadorporto extends Fragment implements RecyclerViewOnClickListenerHack {
+public class separadorlikes extends Fragment implements RecyclerViewOnClickListenerHack {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private ImageLoader imageLoader;
     private RequestQueue requestQueue;
     private ArrayList<todascasas> casas=new ArrayList<>();
     RecyclerView recyclerViewtodas;
@@ -75,9 +73,12 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
     private adaptadorrvtodasoffline adaptadoroffline;
     static Context ctxtodas;
     ProgressBar progressBar;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    String PREFSNAME = "FAVS";
+    int favflag;
 
-
-    public separadorporto() {
+    public separadorlikes() {
         // Required empty public constructor
     }
 
@@ -87,11 +88,11 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment separadorporto.
+     * @return A new instance of fragment separadorlikes.
      */
     // TODO: Rename and change types and number of parameters
-    public static separadorporto newInstance(String param1, String param2) {
-        separadorporto fragment = new separadorporto();
+    public static separadorlikes newInstance(String param1, String param2) {
+        separadorlikes fragment = new separadorlikes();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -110,6 +111,7 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
         VolleySingleton volleySingleton = VolleySingleton.getInstancia(getActivity());
         requestQueue= volleySingleton.getRequestQueue();
         ctxtodas=getContext();
+        sharedPreferences=getActivity().getSharedPreferences(PREFSNAME, 0);
     }
 
     private void sendjsonRequest(){
@@ -121,6 +123,7 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
                 adaptador.setCasas(casas);
                 progressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setVisibility(View.VISIBLE);
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -137,8 +140,12 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
 
     private ArrayList<todascasas> parsejsonResponse(JSONArray array){
         ArrayList<todascasas> casas=new ArrayList<>();
+
         ids.clear();
         if (array != null){
+
+            adapter=new BDAdapter(getActivity());
+
             for (int i=0;i<array.length();i++){
                 try {
                     JSONObject casaexata=array.getJSONObject(i);
@@ -147,8 +154,10 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
                     String preco=casaexata.getString(keys.allkeys.KEY_PRECO);
                     String imgurl=casaexata.getString(keys.allkeys.KEY_IMGURL);
                     String info=casaexata.getString(keys.allkeys.KEY_INFO);
-                    if (local.equalsIgnoreCase("Porto")) {
-                        todascasas casasadd = new todascasas();
+
+                    favflag=sharedPreferences.getInt(id, 0);
+                    if (favflag==1){
+                        todascasas casasadd=new todascasas();
                         casasadd.setLOCAL(local);
                         casasadd.setPRECO(preco);
                         casasadd.setIMGURL(imgurl);
@@ -159,15 +168,15 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
                         cs.IMGurl=imgurl;
                         cs.info=info;
                         cs.idcs=id;
-                        ids.add(0,cs);
 
                         casas.add(0,casasadd);
+                        ids.add(0,cs);
                     }
 
                 } catch (JSONException e) {
                     progressBar.setVisibility(View.GONE);
                     swipeRefreshLayout.setVisibility(View.VISIBLE);
-                    Snackbar.make(recyclerViewtodas, "Falha ao ligar ao servidor", Snackbar.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Falha ao ligar ao servidor", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -179,12 +188,11 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_separadorporto, container, false);
+        View view= inflater.inflate(R.layout.fragment_separadorlikes, container, false);
 
-        recyclerViewtodas=(RecyclerView)view.findViewById(R.id.rvporto);
+        recyclerViewtodas=(RecyclerView)view.findViewById(R.id.rvlikes);
         progressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
-        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipeporto);
-
+        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipelikes);
 
         TelephonyManager manager = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         if(manager.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE){
@@ -240,6 +248,8 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
             recyclerViewtodas.setAdapter(adaptadoroffline);
         }
 
+
+        //SWIPE
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark),ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark),ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -264,6 +274,36 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
         return view;
     }
 
+    public static List<listasql> getdados(){
+
+        List<listasql>dados=new ArrayList<>();
+
+        adapter=new BDAdapter(ctxtodas);
+        int colunas=adapter.numerodecolunas();
+        ids.clear();
+
+
+        for(int i=0;i<colunas;i++){
+            listasql txtexato=new listasql();
+            String locsqloffline=adapter.verlocais(String.valueOf(i+1));
+            String precsqloffline=adapter.verprecos(String.valueOf(i + 1));
+            String infossqloffline=adapter.verinfos(String.valueOf(i + 1));
+            String id=String.valueOf(i+1);
+            txtexato.Loc=locsqloffline;
+            txtexato.Prec=precsqloffline;
+            txtexato.Inf=infossqloffline;
+            txtexato.Id=id;
+            dados.add(0,txtexato);
+            listacasas cs=new listacasas();
+            cs.Local=locsqloffline;
+            cs.Preço=precsqloffline;
+            cs.info=infossqloffline;
+            cs.idcs=id;
+            ids.add(0,cs);
+        }
+        return dados;
+    }
+
     @Override
     public void onClickListener(View view, int position) {
         List<listacasas> casas;
@@ -284,12 +324,10 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
         }
     }
 
-
     @Override
     public void onLongPressClickListener(View view, int position) {
 
     }
-
 
     private static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {
         private Context mContext;
@@ -318,6 +356,8 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
                         float w = ((RelativeLayout) ((CardView) cv).getChildAt(0)).getChildAt(3).getWidth();
                         float y;// = ((RelativeLayout) ((CardView) cv).getChildAt(0)).getChildAt(3).getY();
                         float h = ((RelativeLayout) ((CardView) cv).getChildAt(0)).getChildAt(3).getHeight();
+
+
 
                         Rect rect = new Rect();
                         ((RelativeLayout) ((CardView) cv).getChildAt(0)).getChildAt(3).getGlobalVisibleRect(rect);
@@ -350,38 +390,5 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
 
         @Override
         public void onRequestDisallowInterceptTouchEvent(boolean b) {}
-    }
-
-    public static List<listasql> getdados(){
-
-        List<listasql>dados=new ArrayList<>();
-
-        adapter=new BDAdapter(ctxtodas);
-        int colunas=adapter.numerodecolunas();
-        ids.clear();
-
-
-        for(int i=0;i<colunas;i++){
-            listasql txtexato=new listasql();
-            String locsqloffline=adapter.verlocais(String.valueOf(i+1));
-            String precsqloffline=adapter.verprecos(String.valueOf(i + 1));
-            String infossqloffline=adapter.verinfos(String.valueOf(i + 1));
-            String id=String.valueOf(i + 1);
-            if (locsqloffline.equalsIgnoreCase("Porto")){
-                txtexato.Loc=locsqloffline;
-                txtexato.Prec=precsqloffline;
-                txtexato.Inf=infossqloffline;
-                txtexato.Id=id;
-                dados.add(0,txtexato);
-                listacasas cs=new listacasas();
-                cs.Local=locsqloffline;
-                cs.Preço=precsqloffline;
-                cs.info=infossqloffline;
-                cs.idcs=id;
-                ids.add(0,cs);
-            }
-
-        }
-        return dados;
     }
 }

@@ -1,25 +1,21 @@
 package com.example.massa.luxvilla.adaptadores;
 
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.example.massa.luxvilla.MainActivity;
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.network.VolleySingleton;
-import com.example.massa.luxvilla.sqlite.BDAdapter;
+import com.example.massa.luxvilla.utils.firebaseutils;
 import com.example.massa.luxvilla.utils.todascasas;
 import com.like.IconType;
 import com.like.LikeButton;
@@ -32,15 +28,10 @@ import java.util.ArrayList;
  */
 public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhtodas> {
 
-    ArrayList<todascasas> casas=new ArrayList<>();
+    private ArrayList<todascasas> casas=new ArrayList<>();
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     public static Context ctx;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-    String PREFSNAME = "FAVS";
-    String id;
-    int favflag;
 
     public  adaptadorrvtodas(Context context){
         layoutInflater= LayoutInflater.from(context);
@@ -52,7 +43,13 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
 
     public void setCasas(ArrayList<todascasas> cs){
         this.casas=cs;
-        notifyItemChanged(0,casas.size());
+        notifyDataSetChanged();
+    }
+
+    public void removeAt(int position) {
+        casas.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, casas.size());
     }
 
     @Override
@@ -85,9 +82,6 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
                 }
             });
         }
-        sharedPreferences=ctx.getSharedPreferences(PREFSNAME, 0);
-        id=casaexata.getID();
-        favflag=sharedPreferences.getInt(id, 0);
         holder.favoriteButton.setIcon(IconType.Heart);
         holder.favoriteButton.setIconSizeDp(25);
         holder.favoriteButton.setCircleEndColorRes(R.color.colorAccent);
@@ -98,37 +92,17 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
         holder.favoriteButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                id=casaexata.getID();
-                favflag=sharedPreferences.getInt(id, 0);
-
-                sharedPreferences=ctx.getSharedPreferences(PREFSNAME, 0);
-                editor=sharedPreferences.edit();
-                editor.putInt(id, 1);
-                editor.apply();
-                favflag=sharedPreferences.getInt(id,0);
+                firebaseutils.setlike(casaexata.getID());
                 holder.favoriteButton.setLiked(true);
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-
-                id=casaexata.getID();
-                favflag=sharedPreferences.getInt(id, 0);
-
-                sharedPreferences=ctx.getSharedPreferences(PREFSNAME,0);
-                editor =sharedPreferences.edit();
-                editor.putInt(String.valueOf(id),0);
-                editor.apply();
-                favflag=sharedPreferences.getInt(String.valueOf(id),0);
+                firebaseutils.removelike(casaexata.getID());
                 holder.favoriteButton.setLiked(false);
             }
         });
-
-        if (favflag==0){
-            holder.favoriteButton.setLiked(false);
-        }else {
-            holder.favoriteButton.setLiked(true);
-        }
+        firebaseutils.checklike(ctx,casaexata.getID(),holder.favoriteButton);
     }
 
     @Override
@@ -143,7 +117,7 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
         private TextView txtPrecocasa;
         private LikeButton favoriteButton;
 
-        public vhtodas(final View itemView) {
+        vhtodas(final View itemView) {
             super(itemView);
 
             imgcasa = (ImageView) itemView.findViewById(R.id.imgcasa);

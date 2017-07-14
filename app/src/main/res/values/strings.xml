@@ -6,6 +6,17 @@
     <string name="app_hint">Procurar casas</string>
     <string name="busca">Procurar casas</string>
     <string name="clearhistory">Limpar histórico</string>
-    <string name="defenicoes">Defeniçoões</string>
+    <string name="clear_info">Limpar todo o hestórico de pesquisa</string>
+    <string name="defenicoes">Defenições</string>
+    <string name="notificaçãoes">Notificações</string>
     <string name="nao_activado">Não activado</string>
+    <string name="App_Version">Versão 4.0</string>
+    <string name="sobre">Sobre</string>
+    <string name="editprofile">Editar perfil</string>
+    <string name="nouserbio">Um pequeno texto sobre si.</string>
+    <string name="editdone">Feito!</string>
+    <string name="username">User name</string>
+    <string name="userbio">User bio</string>
+    <string name="notificationsenabled">Notificações activadas</string>
+    <string name="notificationsdesabled">Notificações desactivadas</string>
 </resources>

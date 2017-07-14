@@ -9,11 +9,11 @@
         android:shortcutShortLabel="@string/busca">
         <intent
             android:action="android.intent.action.MAIN"
-            android:targetClass="com.example.massa.luxvilla.MainActivity"
+            android:targetClass="com.example.massa.luxvilla.Actividades.MainActivity"
             android:targetPackage="com.example.massa.luxvilla"/>
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="com.example.massa.luxvilla.MainActivity"
+            android:targetClass="com.example.massa.luxvilla.Actividades.MainActivity"
             android:targetPackage="com.example.massa.luxvilla"/>
     </shortcut>
 

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,9 +22,9 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.example.massa.luxvilla.MainActivity;
 import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.network.VolleySingleton;
+import com.example.massa.luxvilla.utils.firebaseutils;
 import com.like.IconType;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
@@ -35,9 +36,6 @@ public class casaactivity extends AppCompatActivity {
     String imgurlcasa;
     String infocasa;
     String idcasa;
-    private VolleySingleton volleySingleton;
-    private ImageLoader imageLoader;
-    private RequestQueue requestQueue;
     Toolbar toolbarinfocasa;
     ImageView imageViewinfocasa;
     TextView textViewinfocasa;
@@ -94,9 +92,9 @@ public class casaactivity extends AppCompatActivity {
 
         textViewinfocasa=(TextView)findViewById(R.id.txtinfocasaactivity);
 
-        volleySingleton=VolleySingleton.getInstancia(casaactivity.this);
-        requestQueue=volleySingleton.getRequestQueue();
-        imageLoader=volleySingleton.getImageLoader();
+        VolleySingleton volleySingleton = VolleySingleton.getInstancia(casaactivity.this);
+        RequestQueue requestQueue = volleySingleton.getRequestQueue();
+        ImageLoader imageLoader = volleySingleton.getImageLoader();
 
         if (isNetworkAvailable(casaactivity.this)) {
 
@@ -114,8 +112,8 @@ public class casaactivity extends AppCompatActivity {
 
         }else {
             imageViewinfocasa.setImageResource(R.drawable.logo);
-            imgtoolbar.setExpandedTitleColor(getResources().getColor(android.R.color.black));
-            imgtoolbar.setCollapsedTitleTextColor(getResources().getColor(android.R.color.black));
+            imgtoolbar.setExpandedTitleColor(ContextCompat.getColor(casaactivity.this,android.R.color.black));
+            imgtoolbar.setCollapsedTitleTextColor(ContextCompat.getColor(casaactivity.this,android.R.color.black));
         }
 
 
@@ -130,11 +128,7 @@ public class casaactivity extends AppCompatActivity {
         sharedPreferences=getSharedPreferences(PREFSNAME, 0);
         favflag=sharedPreferences.getInt(idcasa, 0);
 
-        if (favflag==0){
-            favoriteButton.setLiked(false);
-        }else {
-            favoriteButton.setLiked(true);
-        }
+        firebaseutils.checklike(casaactivity.this,idcasa,favoriteButton);
 
 
         favoriteButton.setOnLikeListener(new OnLikeListener() {
@@ -147,6 +141,9 @@ public class casaactivity extends AppCompatActivity {
                 editor.putInt(idcasa, 1);
                 editor.apply();
                 favflag = sharedPreferences.getInt(idcasa, 0);
+
+                firebaseutils.setlike(idcasa);
+
                 favoriteButton.setLiked(true);
             }
 
@@ -160,6 +157,9 @@ public class casaactivity extends AppCompatActivity {
                 editor.putInt(String.valueOf(idcasa), 0);
                 editor.apply();
                 favflag = sharedPreferences.getInt(String.valueOf(idcasa), 0);
+
+                firebaseutils.removelike(idcasa);
+
                 favoriteButton.setLiked(false);
             }
         });
@@ -195,5 +195,4 @@ public class casaactivity extends AppCompatActivity {
         super.onDestroy();
 
     }
-
 }

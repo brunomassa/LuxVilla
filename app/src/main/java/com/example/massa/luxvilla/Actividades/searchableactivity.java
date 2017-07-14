@@ -1,52 +1,38 @@
-package com.example.massa.luxvilla;
+package com.example.massa.luxvilla.Actividades;
 
-import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.SearchRecentSuggestions;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.example.massa.luxvilla.Actividades.SettingsActivity;
-import com.example.massa.luxvilla.Actividades.casaactivity;
+import com.example.massa.luxvilla.R;
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodas;
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodasoffline;
 import com.example.massa.luxvilla.network.VolleySingleton;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
-import com.example.massa.luxvilla.sugestoes.SearchSugestionsProvider;
 import com.example.massa.luxvilla.utils.RecyclerViewOnClickListenerHack;
 import com.example.massa.luxvilla.utils.keys;
 import com.example.massa.luxvilla.utils.listacasas;
@@ -60,18 +46,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class searchableactivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
     private RecyclerView rvc1;
     private adaptadorrvtodas adaptador;
     private RequestQueue requestQueue;
     private ArrayList<todascasas> casas=new ArrayList<>();
-    private VolleySingleton volleySingleton;
     SwipeRefreshLayout swipeRefreshLayout;
     static String query=null;
     static ArrayList<listacasas> ids=new ArrayList();
@@ -92,8 +74,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         query = intent.getStringExtra("query");
 
 
-
-        volleySingleton = VolleySingleton.getInstancia(searchableactivity.this);
+        VolleySingleton volleySingleton = VolleySingleton.getInstancia(searchableactivity.this);
         requestQueue = volleySingleton.getRequestQueue();
         ctxtodas = searchableactivity.this;
 
@@ -106,7 +87,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         }
         searchViewpr.setVoice(true);
         searchViewpr.setArrowOnly(true);
-        searchViewpr.setIconColor(getResources().getColor(R.color.colorPrimary));
+        searchViewpr.setIconColor(ContextCompat.getColor(searchableactivity.this,R.color.colorPrimary));
         searchViewpr.setCursorDrawable(R.drawable.cursor);
 
         searchViewpr.setOnOpenCloseListener(new com.lapism.searchview.SearchView.OnOpenCloseListener() {
@@ -129,19 +110,6 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
             }
         });
 
-        /*searchViewpr.setOnOpenCloseListener(new com.lapism.searchview.SearchView.OnOpenCloseListener() {
-            @Override
-            public void onClose() {
-                searchViewpr.setHint(query);
-                searchViewpr.setTextStyle(1);
-            }
-
-            @Override
-            public void onOpen() {
-                searchViewpr.setHint(getResources().getString(R.string.app_hint));
-                searchViewpr.setTextStyle(0);
-            }
-        });*/
         searchViewpr.setOnMenuClickListener(new com.lapism.searchview.SearchView.OnMenuClickListener() {
             @Override
             public void onMenuClick() {
@@ -153,7 +121,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
             }
         });
 
-        sugestions = new ArrayList<SearchItem>();
+        sugestions = new ArrayList<>();
         msearchHistoryTable = new SearchHistoryTable(searchableactivity.this);
         searchViewpr.setOnQueryTextListener(new com.lapism.searchview.SearchView.OnQueryTextListener() {
             @Override
@@ -181,7 +149,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
             }
         });
         SearchAdapter searchAdapter = new SearchAdapter(searchableactivity.this, sugestions);
-        searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
+        searchAdapter.addOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 TextView textView = (TextView) view.findViewById(R.id.textView_item_text);
@@ -217,7 +185,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         }
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipesearch);
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorPrimaryDark));
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(searchableactivity.this,R.color.colorPrimaryDark),ContextCompat.getColor(searchableactivity.this,R.color.colorPrimaryDark),ContextCompat.getColor(searchableactivity.this,R.color.colorPrimaryDark));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -242,7 +210,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
 
     private void sendjsonRequest(){
 
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET,"http://brunoferreira.esy.es/resultado.json",null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET,"http://brunoferreira.esy.es/serverdata.php",null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 casas=parsejsonResponse(response);
@@ -434,7 +402,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
 
         switch (item.getItemId()){
             case R.id.defenicoes:
-                Intent it=new Intent(searchableactivity.this, SettingsActivity.class);
+                Intent it=new Intent(searchableactivity.this, settings.class);
                 startActivity(it);
                 break;
             case R.id.procura:
