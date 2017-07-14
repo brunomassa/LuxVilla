@@ -2,6 +2,7 @@ package com.example.massa.luxvilla.separadores;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,7 +41,6 @@ import com.example.massa.luxvilla.network.VolleySingleton;
 import com.example.massa.luxvilla.sqlite.BDAdapter;
 import com.example.massa.luxvilla.utils.NetworkCheck;
 import com.example.massa.luxvilla.utils.RecyclerViewOnClickListenerHack;
-import com.example.massa.luxvilla.utils.firebaseutils;
 import com.example.massa.luxvilla.utils.keys;
 import com.example.massa.luxvilla.utils.listacasas;
 import com.example.massa.luxvilla.utils.listasql;
@@ -73,6 +73,10 @@ public class separadorlikes extends Fragment implements RecyclerViewOnClickListe
     private adaptadorrvtodasoffline adaptadoroffline;
     static Context ctxtodas;
     ProgressBar progressBar;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    String PREFSNAME = "FAVS";
+    int favflag;
 
     public separadorlikes() {
         // Required empty public constructor
@@ -107,6 +111,7 @@ public class separadorlikes extends Fragment implements RecyclerViewOnClickListe
         VolleySingleton volleySingleton = VolleySingleton.getInstancia(getActivity());
         requestQueue= volleySingleton.getRequestQueue();
         ctxtodas=getContext();
+        sharedPreferences=getActivity().getSharedPreferences(PREFSNAME, 0);
     }
 
     private void sendjsonRequest(){
@@ -149,20 +154,24 @@ public class separadorlikes extends Fragment implements RecyclerViewOnClickListe
                     String preco=casaexata.getString(keys.allkeys.KEY_PRECO);
                     String imgurl=casaexata.getString(keys.allkeys.KEY_IMGURL);
                     String info=casaexata.getString(keys.allkeys.KEY_INFO);
-                    todascasas casasadd=new todascasas();
-                    casasadd.setLOCAL(local);
-                    casasadd.setPRECO(preco);
-                    casasadd.setIMGURL(imgurl);
-                    casasadd.setID(id);
-                    listacasas cs=new listacasas();
-                    cs.Local=local;
-                    cs.Preço=preco;
-                    cs.IMGurl=imgurl;
-                    cs.info=info;
-                    cs.idcs=id;
 
-                    casas.add(0,casasadd);
-                    ids.add(0,cs);
+                    favflag=sharedPreferences.getInt(id, 0);
+                    if (favflag==1){
+                        todascasas casasadd=new todascasas();
+                        casasadd.setLOCAL(local);
+                        casasadd.setPRECO(preco);
+                        casasadd.setIMGURL(imgurl);
+                        casasadd.setID(id);
+                        listacasas cs=new listacasas();
+                        cs.Local=local;
+                        cs.Preço=preco;
+                        cs.IMGurl=imgurl;
+                        cs.info=info;
+                        cs.idcs=id;
+
+                        casas.add(0,casasadd);
+                        ids.add(0,cs);
+                    }
 
                 } catch (JSONException e) {
                     progressBar.setVisibility(View.GONE);

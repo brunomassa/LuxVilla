@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -33,7 +34,6 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     public static Context ctx;
-    private String id;
 
     public  adaptadorrvtodas(Context context){
         layoutInflater= LayoutInflater.from(context);
@@ -84,7 +84,6 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
                 }
             });
         }
-        id=casaexata.getID();
         holder.favoriteButton.setIcon(IconType.Heart);
         holder.favoriteButton.setIconSizeDp(25);
         holder.favoriteButton.setCircleEndColorRes(R.color.colorAccent);
@@ -95,17 +94,17 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
         holder.favoriteButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                firebaseutils.setlike(id);
+                firebaseutils.setlike(casaexata.getID());
                 holder.favoriteButton.setLiked(true);
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                firebaseutils.removelike(id);
+                firebaseutils.removelike(casaexata.getID());
                 holder.favoriteButton.setLiked(false);
             }
         });
-        firebaseutils.checklike(id,holder.favoriteButton);
+        firebaseutils.checklike(ctx,casaexata.getID(),holder.favoriteButton);
     }
 
     @Override

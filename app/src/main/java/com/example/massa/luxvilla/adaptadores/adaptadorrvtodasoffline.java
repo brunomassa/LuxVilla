@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -29,7 +30,6 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
 
     private LayoutInflater inflater;
     private List<listasql> dados= Collections.emptyList();
-    private String id;
     private static Context ctx;
 
     public adaptadorrvtodasoffline(Context c,List<listasql> dados){
@@ -57,8 +57,6 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
         holder.imgcasa.setImageResource(R.drawable.logo);
         holder.txtPrecocasa.setText(offlinedata.Prec);
 
-        id=offlinedata.Id;
-
         holder.favoriteButton.setIcon(IconType.Heart);
         holder.favoriteButton.setIconSizeDp(25);
         holder.favoriteButton.setCircleEndColorRes(R.color.colorAccent);
@@ -70,18 +68,20 @@ public class adaptadorrvtodasoffline extends RecyclerView.Adapter<adaptadorrvtod
         holder.favoriteButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                firebaseutils.setlike(id);
+                firebaseutils.setlike(offlinedata.Id);
                 holder.favoriteButton.setLiked(true);
+                Toast.makeText(ctx,offlinedata.Id,Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                firebaseutils.removelike(id);
+                firebaseutils.removelike(offlinedata.Id);
                 holder.favoriteButton.setLiked(false);
+                Toast.makeText(ctx,offlinedata.Id,Toast.LENGTH_LONG).show();
             }
         });
 
-        firebaseutils.checklike(id,holder.favoriteButton);
+        firebaseutils.checklike(ctx,offlinedata.Id,holder.favoriteButton);
     }
 
     @Override

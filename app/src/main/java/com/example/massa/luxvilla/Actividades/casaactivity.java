@@ -128,7 +128,7 @@ public class casaactivity extends AppCompatActivity {
         sharedPreferences=getSharedPreferences(PREFSNAME, 0);
         favflag=sharedPreferences.getInt(idcasa, 0);
 
-        firebaseutils.checklike(idcasa,favoriteButton);
+        firebaseutils.checklike(casaactivity.this,idcasa,favoriteButton);
 
 
         favoriteButton.setOnLikeListener(new OnLikeListener() {

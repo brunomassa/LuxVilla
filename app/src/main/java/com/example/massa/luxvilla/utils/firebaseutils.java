@@ -26,12 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.like.LikeButton;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.ListIterator;
-
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.content.ContentValues.TAG;
 
 
 /**
@@ -167,7 +162,8 @@ public class firebaseutils {
         }
     }
 
-    public static void checklike(final String id, final LikeButton likeButton){
+    public static void checklike(final Context ctx, final String id, final LikeButton likeButton){
+        final String PREFSNAME = "FAVS";
         String uid="";
         FirebaseAuth auth=FirebaseAuth.getInstance();
         FirebaseUser user=auth.getCurrentUser();
@@ -181,33 +177,19 @@ public class firebaseutils {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
+                    SharedPreferences sharedPreferences=ctx.getSharedPreferences(PREFSNAME, 0);
+                    SharedPreferences.Editor editor;
+                    editor=sharedPreferences.edit();
+                    editor.putInt(id, 1);
+                    editor.apply();
                     likeButton.setLiked(true);
                 }else{
+                    SharedPreferences sharedPreferences=ctx.getSharedPreferences(PREFSNAME, 0);
+                    SharedPreferences.Editor editor;
+                    editor=sharedPreferences.edit();
+                    editor.putInt(id, 0);
+                    editor.apply();
                     likeButton.setLiked(false);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    public static void addonlylikes(String id, int position){
-        String uid="";
-        FirebaseAuth auth=FirebaseAuth.getInstance();
-        FirebaseUser user=auth.getCurrentUser();
-        if (user != null){
-            uid=user.getUid();
-        }
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("users").child(uid).child("likes");
-        myRef.orderByKey().equalTo("heart"+id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
-
                 }
             }
 
