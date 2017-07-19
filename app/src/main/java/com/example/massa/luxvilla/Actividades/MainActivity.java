@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     final int SEPARADOR_PORTO=3;
     BDAdapter adapter;
     final String PREFSNAME = "FAVS";
-    SharedPreferences sharedPreferencesnotification, sharedPreferenceslikes;
+    SharedPreferences sharedPreferencesapp, sharedPreferenceslikes;
     com.lapism.searchview.SearchView searchViewpr;
     List<SearchItem> sugestions;
     SearchHistoryTable msearchHistoryTable;
@@ -83,13 +83,12 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+        searchViewpr=(com.lapism.searchview.SearchView)findViewById(R.id.searchViewp);
 
         sharedPreferenceslikes=MainActivity.this.getSharedPreferences(PREFSNAME, 0);
 
-        sharedPreferencesnotification= PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        boolean notificationstate=sharedPreferencesnotification.getBoolean(getResources().getString(R.string.notificaçãoes),true);
+        sharedPreferencesapp= PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        boolean notificationstate=sharedPreferencesapp.getBoolean(getResources().getString(R.string.notificaçãoes),true);
         if (notificationstate){
             FirebaseMessaging.getInstance().subscribeToTopic("todos");
         }else{
@@ -97,14 +96,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        searchViewpr=(com.lapism.searchview.SearchView)findViewById(R.id.searchViewp);
+
         searchViewpr.setHint("LuxVilla: Todas");
         searchViewpr.setTextSize(18);
         searchViewpr.setVoice(true);
         searchViewpr.setTextStyle(1);
         searchViewpr.setCursorDrawable(R.drawable.cursor);
-        searchViewpr.setIconColor(ContextCompat.getColor(MainActivity.this,R.color.colorPrimary));
         searchViewpr.setShouldClearOnClose(true);
+
+        boolean nightmode=sharedPreferencesapp.getBoolean(getResources().getString(R.string.night_mode),false);
+        if (nightmode){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            searchViewpr.setTheme(SearchView.THEME_DARK);
+            searchViewpr.setIconColor(ContextCompat.getColor(MainActivity.this,R.color.colorsearchicons));
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            searchViewpr.setTheme(SearchView.THEME_LIGHT);
+            searchViewpr.setIconColor(ContextCompat.getColor(MainActivity.this,R.color.colorsearchicons));
+        }
 
         drawerLayout=(DrawerLayout)findViewById(R.id.drawerll);
         navigationView=(NavigationView)findViewById(R.id.navigationview);
@@ -376,6 +385,9 @@ public class MainActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         firebaseutils.getuserdata(MainActivity.this,tvusername,tvusermail, ivprofile);
+        if (drawerLayout.isDrawerOpen(navigationView)) {
+            drawerLayout.closeDrawer(navigationView);
+        }
     }
 
     public void onBackPressed() {

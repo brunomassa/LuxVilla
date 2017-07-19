@@ -16,6 +16,13 @@
         android:summaryOff="@string/notificationsdesabled"
         android:icon="@drawable/ic_notifications_black_24dp"/>
 
+    <SwitchPreference
+        android:key="@string/night_mode"
+        android:title="@string/night_mode"
+        android:defaultValue="false"
+        android:summaryOn="@string/night_mode_state_on"
+        android:summaryOff="@string/night_mode_state_off"/>
+
     <Preference
         android:key="@string/sobre"
         android:title="@string/sobre"

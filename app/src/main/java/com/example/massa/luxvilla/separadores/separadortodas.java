@@ -109,6 +109,7 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
         VolleySingleton volleySingleton = VolleySingleton.getInstancia(getActivity());
         requestQueue= volleySingleton.getRequestQueue();
         ctxtodas=getContext();
+        adapter=new BDAdapter(ctxtodas);
 
     }
 
@@ -142,7 +143,7 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
         ids.clear();
         if (array != null){
 
-            adapter=new BDAdapter(getActivity());
+
 
             for (int i=0;i<array.length();i++){
                 try {

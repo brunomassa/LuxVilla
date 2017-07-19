@@ -8,4 +8,5 @@
     <color name="background">#303030</color>
     <color name="text_primary">#FFF</color>
     <color name="text_secondary">#FFF</color>
+    <color name="colorsearchicons">#FFF</color>
 </resources>

@@ -19,4 +19,7 @@
     <string name="userbio">User bio</string>
     <string name="notificationsenabled">Notificações activadas</string>
     <string name="notificationsdesabled">Notificações desactivadas</string>
+    <string name="night_mode">Modo noturno</string>
+    <string name="night_mode_state_on">Modo noturno activado</string>
+    <string name="night_mode_state_off">Modo noturno desactivado</string>
 </resources>

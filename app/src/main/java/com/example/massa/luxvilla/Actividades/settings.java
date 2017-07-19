@@ -8,6 +8,7 @@ import android.preference.SwitchPreference;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -53,12 +54,9 @@ public class settings extends AppCompatActivity {
     public static class UserPreferenceFragment extends PreferenceFragment {
 
         Preference preferenceclear, preferencesobre;
-        SwitchPreference switchPreferencenotifications;
+        SwitchPreference switchPreferencenotifications,switchPreferencenightmode;
         SearchHistoryTable msearchHistoryTable;
         List<SearchItem> sugestions;
-        SharedPreferences sharedPreferences;
-        final String NOTIFICATION="notificationsenabled";
-        SharedPreferences.Editor editor;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +88,22 @@ public class settings extends AppCompatActivity {
                     }else{
                         FirebaseMessaging.getInstance().subscribeToTopic("todos");
                     }
+                    return true;
+                }
+            });
+
+            switchPreferencenightmode=(SwitchPreference) getPreferenceScreen().findPreference(getResources().getString(R.string.night_mode));
+            switchPreferencenightmode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object o) {
+                    boolean switched = ((SwitchPreference) preference)
+                            .isChecked();
+                    if (switched){
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    }else{
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    }
+                    getActivity().onBackPressed();
                     return true;
                 }
             });

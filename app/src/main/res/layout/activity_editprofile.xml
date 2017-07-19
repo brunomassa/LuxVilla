@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context="com.example.massa.luxvilla.Actividades.Editprofile">
 
     <android.support.v7.widget.Toolbar
@@ -49,9 +50,7 @@
         <android.support.design.widget.TextInputLayout
             android:id="@+id/text_input_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:passwordToggleContentDescription="ver password"
-            app:passwordToggleEnabled="true">
+            android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/edittextbio"
                 android:layout_width="match_parent"
