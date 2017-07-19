@@ -16,7 +16,8 @@
 
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="2dp"
-    android:background="#fff">
+    card_view:cardBackgroundColor="@color/card_background"
+    android:background="@color/card_background">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +37,7 @@
             android:paddingLeft="16dp"
             android:paddingTop="16dp"
             android:textSize="24sp"
-            android:textColor="#000"
+            android:textColor="@color/text_primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgcasa"/>
@@ -45,7 +46,7 @@
             android:paddingLeft="16dp"
             android:paddingBottom="16dp"
             android:textSize="14sp"
-            android:textColor="#000"
+            android:textColor="@color/text_primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtlocalcasa"/>

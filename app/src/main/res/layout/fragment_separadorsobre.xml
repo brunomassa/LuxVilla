@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.massa.luxvilla.separadores.separadorsobre">
+    tools:context="com.example.massa.luxvilla.separadores.separadorsobre"
+    android:background="@color/background">
 
     <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         card_view:cardCornerRadius="4dp"
-        android:background="#fff">
+        card_view:cardBackgroundColor="@color/card_background"
+        android:background="@color/card_background">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,7 +27,7 @@
                 android:id="@+id/txtbio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
+                android:textColor="@color/text_primary"
                 android:textAlignment="center"
                 android:enabled="true"
                 android:textIsSelectable="true"

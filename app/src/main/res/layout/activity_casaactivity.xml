@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.massa.luxvilla.Actividades.casaactivity"
-    android:background="#E5E4E2"
+    android:background="@color/background"
     style="@style/Infocasa"
     android:fitsSystemWindows="false">
 
@@ -68,7 +68,8 @@
             android:layout_height="match_parent"
             android:layout_margin="8dp"
             card_view:cardCornerRadius="4dp"
-            android:background="#fff">
+            card_view:cardBackgroundColor="@color/card_background"
+            android:background="@color/card_background">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -81,7 +82,7 @@
                 android:id="@+id/txtinfocasaactivity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="#000"
+                android:textColor="@color/text_primary"
                 android:enabled="true"
                 android:textIsSelectable="true"
                 android:focusable="true"

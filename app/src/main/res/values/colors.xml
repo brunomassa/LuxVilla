@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#3d121c</color>
     <color name="colorAccent">#FF4081</color>
     <color name="black_trans80">#14000000</color>
+    <color name="card_background">#FFF</color>
+    <color name="background">#FAFAFA</color>
+    <color name="text_primary">#000</color>
+    <color name="text_secondary">#000</color>
 </resources>

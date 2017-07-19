@@ -62,7 +62,7 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/profilevpgr"
-        android:background="#E5E4E2"
+        android:background="#FAFAFA"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
