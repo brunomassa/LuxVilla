@@ -21,7 +21,8 @@
         android:title="@string/night_mode"
         android:defaultValue="false"
         android:summaryOn="@string/night_mode_state_on"
-        android:summaryOff="@string/night_mode_state_off"/>
+        android:summaryOff="@string/night_mode_state_off"
+        android:icon="@mipmap/ic_brightness_2_black_24dp"/>
 
     <Preference
         android:key="@string/sobre"
