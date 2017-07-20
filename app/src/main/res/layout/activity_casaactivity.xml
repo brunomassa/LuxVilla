@@ -22,8 +22,7 @@
             style="@style/Infocasa"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:minHeight="?attr/actionBarSize"
-            app:statusBarScrim="?attr/colorPrimaryDark"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="@color/colorPrimary"
             >
 
             <ImageView
