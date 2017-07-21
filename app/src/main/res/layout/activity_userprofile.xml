@@ -23,7 +23,7 @@
             style="@style/Infocasa"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:minHeight="?attr/actionBarSize"
-            app:statusBarScrim="?attr/colorPrimary"
+            app:statusBarScrim="?attr/colorPrimaryDark"
             app:contentScrim="?attr/colorPrimary"
             android:fitsSystemWindows="true">
 

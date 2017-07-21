@@ -3,8 +3,10 @@ package com.example.massa.luxvilla.Actividades;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.os.Build;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,8 @@ import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,6 +45,7 @@ public class casaactivity extends AppCompatActivity {
     ImageView imageViewinfocasa;
     TextView textViewinfocasa;
     ViewGroup mRoot;
+    AppBarLayout appBarLayout;
     CollapsingToolbarLayout imgtoolbar;
     LikeButton favoriteButton;
     SharedPreferences sharedPreferences;
@@ -49,6 +54,7 @@ public class casaactivity extends AppCompatActivity {
     String PREFSNAME = "FAVS";
     final String ISOPENAPP="appstate";
     int favflag;
+    int nightModeFlags;
 
 
     @Override
@@ -61,6 +67,10 @@ public class casaactivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_casaactivity);
 
+        nightModeFlags =
+                casaactivity.this.getResources().getConfiguration().uiMode &
+                        Configuration.UI_MODE_NIGHT_MASK;
+
         isappopen=getSharedPreferences(ISOPENAPP, 0);
         editor=isappopen.edit();
         editor.putInt("open", 1);
@@ -72,6 +82,7 @@ public class casaactivity extends AppCompatActivity {
         infocasa=getIntent().getStringExtra("infocs");
         idcasa=getIntent().getStringExtra("csid");
 
+        appBarLayout=(AppBarLayout)findViewById(R.id.infocasaappbar);
         toolbarinfocasa=(Toolbar)findViewById(R.id.barinfocasaactivity);
         toolbarinfocasa.setTitle(localcasa);
         if (isNetworkAvailable(casaactivity.this)){
@@ -113,8 +124,21 @@ public class casaactivity extends AppCompatActivity {
 
         }else {
             imageViewinfocasa.setImageResource(R.drawable.logo);
-            imgtoolbar.setExpandedTitleColor(ContextCompat.getColor(casaactivity.this,android.R.color.black));
-            imgtoolbar.setCollapsedTitleTextColor(ContextCompat.getColor(casaactivity.this,android.R.color.black));
+            switch (nightModeFlags) {
+                case Configuration.UI_MODE_NIGHT_YES:
+                    imgtoolbar.setExpandedTitleColor(ContextCompat.getColor(casaactivity.this,android.R.color.black));
+                    imgtoolbar.setCollapsedTitleTextColor(ContextCompat.getColor(casaactivity.this,android.R.color.white));
+                    break;
+                case Configuration.UI_MODE_NIGHT_NO:
+                    imgtoolbar.setExpandedTitleColor(ContextCompat.getColor(casaactivity.this,android.R.color.black));
+                    imgtoolbar.setCollapsedTitleTextColor(ContextCompat.getColor(casaactivity.this,android.R.color.black));
+                    break;
+            }
+            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                Window window = getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                imgtoolbar.setStatusBarScrimColor(ContextCompat.getColor(casaactivity.this,R.color.colorPrimary));
+            }
         }
 
 
