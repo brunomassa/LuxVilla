@@ -135,11 +135,6 @@ public class casaactivity extends AppCompatActivity {
                     imgtoolbar.setCollapsedTitleTextColor(ContextCompat.getColor(casaactivity.this,android.R.color.black));
                     break;
             }
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-                Window window = getWindow();
-                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                imgtoolbar.setStatusBarScrimColor(ContextCompat.getColor(casaactivity.this,R.color.colorPrimary));
-            }
         }
 
 
