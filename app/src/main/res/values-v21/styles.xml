@@ -89,4 +89,9 @@
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
+
+    <style name="buttons_login_signup" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>

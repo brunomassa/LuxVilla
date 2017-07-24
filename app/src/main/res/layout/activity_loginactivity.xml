@@ -63,8 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="LOG IN"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColor="@android:color/white"
+            style="@style/buttons_login_signup"
             android:layout_gravity="center"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
@@ -73,9 +72,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SIGN UP"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColor="@android:color/white"
             android:layout_gravity="center"
+            style="@style/buttons_login_signup"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
         <RelativeLayout
