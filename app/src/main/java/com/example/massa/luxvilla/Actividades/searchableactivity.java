@@ -2,16 +2,19 @@ package com.example.massa.luxvilla.Actividades;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +44,7 @@ import com.example.massa.luxvilla.utils.todascasas;
 import com.lapism.searchview.SearchAdapter;
 import com.lapism.searchview.SearchHistoryTable;
 import com.lapism.searchview.SearchItem;
+import com.lapism.searchview.SearchView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,11 +68,14 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
     com.lapism.searchview.SearchView searchViewpr;
     List<SearchItem> sugestions;
     SearchHistoryTable msearchHistoryTable;
+    SharedPreferences sharedPreferencesapp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchableactivity);
+        sharedPreferencesapp= PreferenceManager.getDefaultSharedPreferences(searchableactivity.this);
+        boolean nightmode=sharedPreferencesapp.getBoolean(getResources().getString(R.string.night_mode),false);
         intent = getIntent();
         if (intent!=null)
         query = intent.getStringExtra("query");
@@ -85,9 +92,18 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
             searchViewpr.setHint(R.string.app_hint);
             searchViewpr.open(true);
         }
+
+        if (nightmode){
+            searchViewpr.setTheme(SearchView.THEME_DARK);
+            searchViewpr.setBackgroundColor(ContextCompat.getColor(searchableactivity.this,R.color.card_background));
+            searchViewpr.setIconColor(ContextCompat.getColor(searchableactivity.this,R.color.colorsearchicons));
+        }else{
+            searchViewpr.setTheme(SearchView.THEME_LIGHT);
+            searchViewpr.setIconColor(ContextCompat.getColor(searchableactivity.this,R.color.colorsearchicons));
+        }
+
         searchViewpr.setVoice(true);
         searchViewpr.setArrowOnly(true);
-        searchViewpr.setIconColor(ContextCompat.getColor(searchableactivity.this,R.color.colorPrimary));
         searchViewpr.setCursorDrawable(R.drawable.cursor);
 
         searchViewpr.setOnOpenCloseListener(new com.lapism.searchview.SearchView.OnOpenCloseListener() {

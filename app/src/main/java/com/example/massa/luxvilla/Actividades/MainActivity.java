@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         if (nightmode){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             searchViewpr.setTheme(SearchView.THEME_DARK);
+            searchViewpr.setBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.card_background));
             searchViewpr.setIconColor(ContextCompat.getColor(MainActivity.this,R.color.colorsearchicons));
         }else{
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
