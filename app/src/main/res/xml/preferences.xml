@@ -5,28 +5,24 @@
         android:enabled="true"
         android:key="@string/clearhistory"
         android:title="@string/clearhistory"
-        android:summary="@string/clear_info"
-        android:icon="@mipmap/ic_delete_black_24dp"/>
+        android:summary="@string/clear_info"/>
 
     <SwitchPreference
         android:key="@string/notificaçãoes"
         android:title="@string/notificaçãoes"
         android:defaultValue="true"
         android:summaryOn="@string/notificationsenabled"
-        android:summaryOff="@string/notificationsdesabled"
-        android:icon="@drawable/ic_notifications_black_24dp"/>
+        android:summaryOff="@string/notificationsdesabled"/>
 
     <SwitchPreference
         android:key="@string/night_mode"
         android:title="@string/night_mode"
         android:defaultValue="false"
         android:summaryOn="@string/night_mode_state_on"
-        android:summaryOff="@string/night_mode_state_off"
-        android:icon="@mipmap/ic_brightness_2_black_24dp"/>
+        android:summaryOff="@string/night_mode_state_off"/>
 
     <Preference
         android:key="@string/sobre"
         android:title="@string/sobre"
-        android:summary="@string/App_Version"
-        android:icon="@mipmap/ic_info_outline_black_24dp" />
+        android:summary="@string/App_Version"/>
 </PreferenceScreen>
