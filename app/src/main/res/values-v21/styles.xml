@@ -6,13 +6,6 @@
             <item name="colorPrimary">@color/colorPrimary</item>
             <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
             <item name="colorAccent">@color/colorAccent</item>
-            <item name="android:windowContentTransitions">true</item>
-            <item name="android:windowActivityTransitions">true</item>
-            <item name="android:textColorPrimary">@android:color/black</item>
-            <item name="android:textColorSecondary">@android:color/white</item>
-            <item name="actionMenuTextColor">@android:color/black</item>
-            <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-            <item name="android:windowDisablePreview">true</item>
 </style>
 
     <style name="Main" parent="Theme.AppCompat.Light.NoActionBar">
@@ -29,7 +22,6 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <style name="Infocasa" parent="Theme.AppCompat.Light.NoActionBar">
@@ -51,8 +43,6 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <style name="editprofile" parent="Theme.AppCompat.Light.NoActionBar">
@@ -93,5 +83,11 @@
     <style name="buttons_login_signup" parent="Widget.AppCompat.Button.Colored">
         <item name="android:colorButtonNormal">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowBackground">@drawable/splashscreen</item>
     </style>
 </resources>
