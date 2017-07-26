@@ -391,6 +391,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+                super.recreate();
+            }
+    }
+
     public void onBackPressed() {
 
         if (drawerLayout.isDrawerOpen(navigationView)){

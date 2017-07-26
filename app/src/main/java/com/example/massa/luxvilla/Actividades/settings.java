@@ -2,6 +2,7 @@ package com.example.massa.luxvilla.Actividades;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
@@ -54,7 +55,8 @@ public class settings extends AppCompatActivity {
     public static class UserPreferenceFragment extends PreferenceFragment {
 
         Preference preferenceclear, preferencesobre;
-        SwitchPreference switchPreferencenotifications,switchPreferencenightmode;
+        SwitchPreference switchPreferencenightmode;
+        CheckBoxPreference switchPreferencenotifications;
         SearchHistoryTable msearchHistoryTable;
         List<SearchItem> sugestions;
 
@@ -77,7 +79,7 @@ public class settings extends AppCompatActivity {
                 }
             });
 
-            switchPreferencenotifications=(SwitchPreference)getPreferenceScreen().findPreference(getResources().getString(R.string.notificaçãoes));
+            switchPreferencenotifications=(CheckBoxPreference)getPreferenceScreen().findPreference(getResources().getString(R.string.notificaçãoes));
             switchPreferencenotifications.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object o) {

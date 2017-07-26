@@ -43,6 +43,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlNormal">#fff</item>
+        <item name="colorControlActivated">#FFF</item>
+        <item name="colorControlHighlight">#fff</item>
+        <item name="android:textColorHint">#fff</item>
+        <item name="android:textColorPrimary">#fff</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>>
         <item name="android:windowDisablePreview">true</item>
