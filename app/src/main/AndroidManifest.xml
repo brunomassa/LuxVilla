@@ -24,7 +24,8 @@
         <activity
             android:name=".Actividades.MainActivity"
             android:theme="@style/Main" />
-        <activity android:name=".Actividades.searchableactivity">
+        <activity android:name=".Actividades.searchableactivity"
+            android:theme="@style/search">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>

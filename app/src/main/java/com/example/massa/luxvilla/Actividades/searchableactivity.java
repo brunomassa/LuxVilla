@@ -105,6 +105,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         searchViewpr.setVoice(true);
         searchViewpr.setArrowOnly(true);
         searchViewpr.setCursorDrawable(R.drawable.cursor);
+        searchViewpr.setShouldClearOnClose(true);
 
         searchViewpr.setOnOpenCloseListener(new com.lapism.searchview.SearchView.OnOpenCloseListener() {
             @Override

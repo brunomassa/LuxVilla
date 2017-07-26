@@ -24,6 +24,13 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
+    <style name="search" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <style name="ThemeOverlay.AppCompat.navTheme">
         <item name="colorPrimary">@color/colorAccent</item>
 
