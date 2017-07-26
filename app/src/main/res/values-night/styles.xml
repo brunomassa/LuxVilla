@@ -13,15 +13,15 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@android:color/black</item>
-        <item name="android:textColorSecondary">@color/secondary_text_default_material_light</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_material_dark</item>
+        <item name="android:textColorSecondary">@color/secondary_text_default_material_dark</item>
         <item name="actionMenuTextColor">@android:color/black</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowDisablePreview">true</item>
     </style>
 
-    <style name="Infocasa" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <style name="Infocasa" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowActionBarOverlay">true</item>
@@ -48,6 +48,11 @@
         <item name="android:windowDisablePreview">true</item>
     </style>
 
+    <style name="ThemeOverlay.AppCompat.navTheme">
+        <item name="colorPrimary">@color/colorAccent</item>
+
+    </style>
+
     <style name="settings" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -59,6 +64,12 @@
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowDisablePreview">true</item>
+    </style>
+
+    <style name="sobre" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="profile" parent="Theme.AppCompat.Light.NoActionBar">

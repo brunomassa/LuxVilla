@@ -85,7 +85,9 @@
             android:name=".Actividades.settings"
             android:label="@string/defenicoes"
             android:theme="@style/settings" />
-        <activity android:name=".Actividades.Sobre" />
+        <activity android:name=".Actividades.Sobre"
+            android:label="Sobre"
+            android:theme="@style/sobre"/>
         <activity android:name=".Actividades.Editprofile"
             android:theme="@style/editprofile"></activity>
     </application>
