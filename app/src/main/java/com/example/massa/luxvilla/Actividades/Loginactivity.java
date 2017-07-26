@@ -2,11 +2,15 @@ package com.example.massa.luxvilla.Actividades;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.View;
@@ -33,9 +37,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.lapism.searchview.SearchView;
 
 public class Loginactivity extends AppCompatActivity {
 
+    SharedPreferences sharedPreferencesapp;
     LinearLayout linearLayout;
     TextInputLayout textInputLayoutmail, textInputLayoutpassword;
     EditText email, password;
@@ -52,6 +58,13 @@ public class Loginactivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.login);
+        sharedPreferencesapp= PreferenceManager.getDefaultSharedPreferences(Loginactivity.this);
+        boolean nightmode=sharedPreferencesapp.getBoolean(getResources().getString(R.string.night_mode),false);
+        if (nightmode){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
         super.onCreate(savedInstanceState);
 
         user=FirebaseAuth.getInstance().getCurrentUser();
