@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:text="A registar..."
-            android:textColor="#000"/>
+            android:textColor="@color/secondary_text_default_material_light"/>
         <ProgressBar
             android:id="@+id/progressBarsigin"
             android:indeterminate="true"

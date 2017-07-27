@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:text="A entrar..."
-            android:textColor="#000"/>
+            android:textColor="@color/secondary_text_default_material_light"/>
 
         <ProgressBar
             android:id="@+id/progressBarsigin"
