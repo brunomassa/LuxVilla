@@ -1,13 +1,11 @@
 package com.example.massa.luxvilla.Actividades;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
@@ -37,7 +35,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.lapism.searchview.SearchView;
 
 public class Loginactivity extends AppCompatActivity {
 
@@ -46,7 +43,7 @@ public class Loginactivity extends AppCompatActivity {
     TextInputLayout textInputLayoutmail, textInputLayoutpassword;
     EditText email, password;
     AppCompatButton btnsigin,btnsugup;
-    ProgressDialog progressDialog;
+    LinearLayout layoutprogressbar;
     SignInButton signInButton;
 
     FirebaseAuth firebaseAuth;
@@ -86,7 +83,7 @@ public class Loginactivity extends AppCompatActivity {
         btnsugup=(AppCompatButton)findViewById(R.id.signupbutton);
         signInButton=(SignInButton)findViewById(R.id.googlesignin);
 
-        progressDialog=new ProgressDialog(this);
+        layoutprogressbar=(LinearLayout)findViewById(R.id.linearLayoutprogressbar);
 
         btnsigin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,20 +105,24 @@ public class Loginactivity extends AppCompatActivity {
                     return;
                 }
 
-                progressDialog.setMessage("A entrar...");
-                progressDialog.show();
+
+                linearLayout.setVisibility(View.GONE);
+                layoutprogressbar.setVisibility(View.VISIBLE);
 
                 firebaseAuth.signInWithEmailAndPassword(email.getText().toString().trim(),
                         password.getText().toString().trim()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        progressDialog.dismiss();
                         startActivity(new Intent(Loginactivity.this,MainActivity.class));
                         finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+
+                        linearLayout.setVisibility(View.VISIBLE);
+                        layoutprogressbar.setVisibility(View.GONE);
+
                         if (e instanceof FirebaseAuthException) {
                             String errorcode=((FirebaseAuthException) e).getErrorCode();
 
@@ -133,8 +134,6 @@ public class Loginactivity extends AppCompatActivity {
                                 Snackbar.make(linearLayout,"Utilizador não encontrado.", Snackbar.LENGTH_LONG).show();
                             }
                         }
-
-                        progressDialog.dismiss();
                     }
                 });
             }
@@ -168,6 +167,9 @@ public class Loginactivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                linearLayout.setVisibility(View.GONE);
+                layoutprogressbar.setVisibility(View.VISIBLE);
+
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
@@ -186,6 +188,8 @@ public class Loginactivity extends AppCompatActivity {
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
+                linearLayout.setVisibility(View.VISIBLE);
+                layoutprogressbar.setVisibility(View.GONE);
                 Snackbar.make(linearLayout,"Ocorreu um erro ao conectar", Snackbar.LENGTH_LONG).show();
             }
         }

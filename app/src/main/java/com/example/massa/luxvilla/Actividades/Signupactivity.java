@@ -1,6 +1,5 @@
 package com.example.massa.luxvilla.Actividades;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -26,7 +25,7 @@ public class Signupactivity extends AppCompatActivity {
     TextInputLayout textInputLayoutusername, textInputLayoutmail, textInputLayoutpassword, textInputLayoutconfirmpassword;
     EditText username, email, password, confirmpassword;
     AppCompatButton btnsugup;
-    ProgressDialog progressDialog;
+    LinearLayout layoutprogressbar;
 
     FirebaseAuth firebaseAuth;
 
@@ -48,7 +47,7 @@ public class Signupactivity extends AppCompatActivity {
         confirmpassword=(EditText)findViewById(R.id.edittextconfirmpassword);
         btnsugup=(AppCompatButton)findViewById(R.id.signupbutton);
 
-        progressDialog=new ProgressDialog(this);
+        layoutprogressbar=(LinearLayout)findViewById(R.id.linearLayoutprogressbar);
 
         btnsugup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,21 +97,21 @@ public class Signupactivity extends AppCompatActivity {
                     textInputLayoutconfirmpassword.setError("");
                 }
 
-                progressDialog.setMessage("A criar utilizador...");
-                progressDialog.show();
+                linearLayout.setVisibility(View.GONE);
+                layoutprogressbar.setVisibility(View.VISIBLE);
 
                 firebaseAuth.createUserWithEmailAndPassword(email.getText().toString().trim(),
                         password.getText().toString().trim()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        progressDialog.dismiss();
                         firebaseutils.setuserfirstdata(Signupactivity.this, username.getText().toString().trim());
                         startActivity(new Intent(Signupactivity.this, MainActivity.class));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
+                        linearLayout.setVisibility(View.VISIBLE);
+                        layoutprogressbar.setVisibility(View.GONE);
                     }
                 });
             }
