@@ -73,10 +73,10 @@ public class separadorlikes extends Fragment implements RecyclerViewOnClickListe
     private adaptadorrvtodasoffline adaptadoroffline;
     static Context ctxtodas;
     ProgressBar progressBar;
-    SharedPreferences sharedPreferences;
+    static SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String PREFSNAME = "FAVS";
-    int favflag;
+    static int favflag;
 
     public separadorlikes() {
         // Required empty public constructor
@@ -289,17 +289,21 @@ public class separadorlikes extends Fragment implements RecyclerViewOnClickListe
             String precsqloffline=adapter.verprecos(String.valueOf(i + 1));
             String infossqloffline=adapter.verinfos(String.valueOf(i + 1));
             String id=String.valueOf(i+1);
-            txtexato.Loc=locsqloffline;
-            txtexato.Prec=precsqloffline;
-            txtexato.Inf=infossqloffline;
-            txtexato.Id=id;
-            dados.add(0,txtexato);
-            listacasas cs=new listacasas();
-            cs.Local=locsqloffline;
-            cs.Preço=precsqloffline;
-            cs.info=infossqloffline;
-            cs.idcs=id;
-            ids.add(0,cs);
+
+            favflag=sharedPreferences.getInt(id, 0);
+            if (favflag==1){
+                txtexato.Loc=locsqloffline;
+                txtexato.Prec=precsqloffline;
+                txtexato.Inf=infossqloffline;
+                txtexato.Id=id;
+                dados.add(0,txtexato);
+                listacasas cs=new listacasas();
+                cs.Local=locsqloffline;
+                cs.Preço=precsqloffline;
+                cs.info=infossqloffline;
+                cs.idcs=id;
+                ids.add(0,cs);
+            }
         }
         return dados;
     }
