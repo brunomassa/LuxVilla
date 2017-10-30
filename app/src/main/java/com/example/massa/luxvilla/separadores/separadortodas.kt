@@ -3,6 +3,7 @@ package com.example.massa.luxvilla.separadores
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -61,7 +62,7 @@ class separadortodas : Fragment(), RecyclerViewOnClickListenerHack {
 
     }
 
-    private fun sendjsonRequest() {
+     fun sendjsonRequest() {
 
         val jsonArrayRequest = JsonArrayRequest(Request.Method.GET, "http://brunoferreira.esy.es/serverdata.php", null, Response.Listener { response ->
             casas = parsejsonResponse(response)
@@ -128,7 +129,6 @@ class separadortodas : Fragment(), RecyclerViewOnClickListenerHack {
         }
         return casas
     }
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment

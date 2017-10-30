@@ -15,7 +15,7 @@ import android.provider.Settings
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
@@ -40,7 +40,6 @@ import com.lapism.searchview.SearchItem
 import com.lapism.searchview.SearchView
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.header.*
 import java.util.*
 
 /**
@@ -283,7 +282,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private inner class adaptadorpaginas internal constructor(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+    private inner class adaptadorpaginas internal constructor(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment? {
 
