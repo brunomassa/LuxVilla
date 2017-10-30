@@ -31,7 +31,7 @@ class casaactivity : AppCompatActivity() {
 
     internal var localcasa: String = ""
     internal var precocasa: String = ""
-    internal var imgurlcasa: String = ""
+    internal var imgurlcasa: String? = ""
     internal var infocasa: String = ""
     internal var idcasa: String = ""
     internal var sharedPreferences: SharedPreferences? = null

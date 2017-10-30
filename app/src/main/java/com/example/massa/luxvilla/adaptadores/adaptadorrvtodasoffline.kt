@@ -15,6 +15,7 @@ import com.example.massa.luxvilla.utils.listasql
 import com.like.IconType
 import com.like.LikeButton
 import com.like.OnLikeListener
+import kotlinx.android.synthetic.main.itencasas.view.*
 
 /**
  * Created by massa on 27/10/2017.
@@ -82,10 +83,10 @@ class adaptadorrvtodasoffline(c: Context, dados: List<listasql>) : RecyclerView.
 
         init {
 
-            imgcasa = itemView.findViewById<View>(R.id.imgcasa) as ImageView
-            txtLocalcasa = itemView.findViewById<View>(R.id.txtlocalcasa) as TextView
-            txtPrecocasa = itemView.findViewById<View>(R.id.txtprecocasa) as TextView
-            favoriteButton = itemView.findViewById<View>(R.id.favbutton) as LikeButton
+            imgcasa = itemView.imgcasa
+            txtLocalcasa = itemView.txtlocalcasa
+            txtPrecocasa = itemView.txtprecocasa
+            favoriteButton = itemView.favbutton
         }
     }
 

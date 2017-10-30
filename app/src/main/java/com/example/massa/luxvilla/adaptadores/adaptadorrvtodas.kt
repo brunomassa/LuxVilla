@@ -18,6 +18,7 @@ import com.like.IconType
 import com.like.LikeButton
 import com.like.OnLikeListener
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.itencasas.view.*
 import java.util.ArrayList
 
 /**
@@ -100,10 +101,10 @@ class adaptadorrvtodas(context: Context) : RecyclerView.Adapter<adaptadorrvtodas
 
         init {
 
-            imgcasa = itemView.findViewById<View>(R.id.imgcasa) as ImageView
-            txtLocalcasa = itemView.findViewById<View>(R.id.txtlocalcasa) as TextView
-            txtPrecocasa = itemView.findViewById<View>(R.id.txtprecocasa) as TextView
-            favoriteButton = itemView.findViewById<View>(R.id.favbutton) as LikeButton
+            imgcasa = itemView.imgcasa
+            txtLocalcasa = itemView.txtlocalcasa
+            txtPrecocasa = itemView.txtprecocasa
+            favoriteButton = itemView.favbutton
 
 
         }
