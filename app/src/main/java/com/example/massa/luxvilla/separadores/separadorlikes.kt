@@ -18,7 +18,6 @@ import android.support.v7.widget.RecyclerView
 import android.telephony.TelephonyManager
 import android.view.*
 import android.widget.RelativeLayout
-import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -31,12 +30,9 @@ import com.example.massa.luxvilla.network.VolleySingleton
 import com.example.massa.luxvilla.sqlite.BDAdapter
 import com.example.massa.luxvilla.utils.*
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_separadorlikes.*
-import kotlinx.android.synthetic.main.fragment_separadorlikes.view.*
 import kotlinx.android.synthetic.main.layout_separadores.*
 import kotlinx.android.synthetic.main.layout_separadores.view.*
 import org.json.JSONArray
-import org.json.JSONException
 import java.util.*
 
 /**

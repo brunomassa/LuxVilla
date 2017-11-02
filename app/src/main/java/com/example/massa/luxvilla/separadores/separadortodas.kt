@@ -3,7 +3,6 @@ package com.example.massa.luxvilla.separadores
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -32,12 +31,9 @@ import com.example.massa.luxvilla.network.VolleySingleton
 import com.example.massa.luxvilla.sqlite.BDAdapter
 import com.example.massa.luxvilla.utils.*
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_separadortodas.*
-import kotlinx.android.synthetic.main.fragment_separadortodas.view.*
 import kotlinx.android.synthetic.main.layout_separadores.*
 import kotlinx.android.synthetic.main.layout_separadores.view.*
 import org.json.JSONArray
-import org.json.JSONException
 import java.util.*
 
 /**

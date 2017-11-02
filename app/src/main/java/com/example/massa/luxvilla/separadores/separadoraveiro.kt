@@ -30,12 +30,9 @@ import com.example.massa.luxvilla.network.VolleySingleton
 import com.example.massa.luxvilla.sqlite.BDAdapter
 import com.example.massa.luxvilla.utils.*
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_separadoraveiro.*
-import kotlinx.android.synthetic.main.fragment_separadoraveiro.view.*
 import kotlinx.android.synthetic.main.layout_separadores.*
 import kotlinx.android.synthetic.main.layout_separadores.view.*
 import org.json.JSONArray
-import org.json.JSONException
 import java.util.*
 
 /**
