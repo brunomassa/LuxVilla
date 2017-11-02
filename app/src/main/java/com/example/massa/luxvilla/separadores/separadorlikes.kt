@@ -82,25 +82,28 @@ class separadorlikes : Fragment(), RecyclerViewOnClickListenerHack {
 
     private fun parsejsonResponse(array: JSONArray?): ArrayList<casas> {
         val gson = Gson()
-        val data : List<Todascasas> = Arrays.asList(gson.fromJson(array.toString(), Todascasas::class.java))
+        val data : List<Todascasas> = gson.fromJson(array.toString(), Array<Todascasas>::class.java).toList()
         val casas = ArrayList<casas>()
         ids.clear()
         if (array != null) {
 
             for (todascasas : Todascasas in data){
-                val casadata = com.example.massa.luxvilla.utils.casas()
-                casadata.id=todascasas.id
-                casadata.local=todascasas.local
-                casadata.preco=todascasas.preco
-                casadata.imgurl=todascasas.imgurl
-                val cs = listacasas()
-                cs.Local = todascasas.local
-                cs.Preço = todascasas.preco
-                cs.IMGurl = todascasas.imgurl
-                cs.info = todascasas.infocasa
-                cs.idcs = todascasas.id
-                separadortodas.ids.add(cs)
-                casas.add(casadata)
+                favflag=sharedPreferences!!.getInt(todascasas.id, 0);
+                if (favflag==1){
+                    val casadata = com.example.massa.luxvilla.utils.casas()
+                    casadata.id=todascasas.id
+                    casadata.local=todascasas.local
+                    casadata.preco=todascasas.preco
+                    casadata.imgurl=todascasas.imgurl
+                    val cs = listacasas()
+                    cs.Local = todascasas.local
+                    cs.Preço = todascasas.preco
+                    cs.IMGurl = todascasas.imgurl
+                    cs.info = todascasas.infocasa
+                    cs.idcs = todascasas.id
+                    ids.add(0,cs)
+                    casas.add(0,casadata)
+                }
 
             }
 
