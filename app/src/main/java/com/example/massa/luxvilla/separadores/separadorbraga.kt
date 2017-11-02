@@ -29,11 +29,12 @@ import com.example.massa.luxvilla.adaptadores.adaptadorrvtodasoffline
 import com.example.massa.luxvilla.network.VolleySingleton
 import com.example.massa.luxvilla.sqlite.BDAdapter
 import com.example.massa.luxvilla.utils.*
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_separadorbraga.*
 import kotlinx.android.synthetic.main.fragment_separadorbraga.view.*
 import org.json.JSONArray
 import org.json.JSONException
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by massa on 27/10/2017.
@@ -44,7 +45,7 @@ class separadorbraga : Fragment(), RecyclerViewOnClickListenerHack {
 
     private val imageLoader: ImageLoader? = null
     private var requestQueue: RequestQueue? = null
-    private var casas = ArrayList<todascasas>()
+    private var casas = ArrayList<casas>()
     private var adaptador: adaptadorrvtodas? = null
     private var adaptadoroffline: adaptadorrvtodasoffline? = null
 
@@ -76,39 +77,30 @@ class separadorbraga : Fragment(), RecyclerViewOnClickListenerHack {
         requestQueue!!.add(jsonArrayRequest)
     }
 
-    private fun parsejsonResponse(array: JSONArray?): ArrayList<todascasas> {
-        val casas = ArrayList<todascasas>()
+    private fun parsejsonResponse(array: JSONArray?): ArrayList<casas> {
+        val gson = Gson()
+        val data : List<Todascasas> = gson.fromJson(array.toString(), Array<Todascasas>::class.java).toList()
+        val casas = ArrayList<casas>()
+        var local : String? = null
         ids.clear()
         if (array != null) {
-            for (i in 2..4) {
-                try {
-                    val casaexata = array.getJSONObject(i)
-                    val id = casaexata.getString(keys.allkeys.KEY_ID)
-                    val local = casaexata.getString(keys.allkeys.KEY_LOCAL)
-                    val preco = casaexata.getString(keys.allkeys.KEY_PRECO)
-                    val imgurl = casaexata.getString(keys.allkeys.KEY_IMGURL)
-                    val info = casaexata.getString(keys.allkeys.KEY_INFO)
-                    if (local.equals("Braga", ignoreCase = true)) {
-                        val casasadd = todascasas()
-                        casasadd.local = local
-                        casasadd.preco = preco
-                        casasadd.imgurl = imgurl
-                        casasadd.id = id
-                        val cs = listacasas()
-                        cs.Local = local
-                        cs.Preço = preco
-                        cs.IMGurl = imgurl
-                        cs.info = info
-                        cs.idcs = id
-                        ids.add(0, cs)
 
-                        casas.add(0, casasadd)
-                    }
-
-                } catch (e: JSONException) {
-                    progress_bar.visibility = View.GONE
-                    swipebraga.visibility = View.VISIBLE
-                    Snackbar.make(rvbraga, "Falha ao ligar ao servidor", Snackbar.LENGTH_LONG).show()
+            for (todascasas : Todascasas in data){
+                local=todascasas.local
+                if (local.equals("Braga", ignoreCase = true)){
+                    val casadata = com.example.massa.luxvilla.utils.casas()
+                    casadata.id=todascasas.id
+                    casadata.local=todascasas.local
+                    casadata.preco=todascasas.preco
+                    casadata.imgurl=todascasas.imgurl
+                    val cs = listacasas()
+                    cs.Local = todascasas.local
+                    cs.Preço = todascasas.preco
+                    cs.IMGurl = todascasas.imgurl
+                    cs.info = todascasas.infocasa
+                    cs.idcs = todascasas.id
+                    ids.add(0,cs)
+                    casas.add(0,casadata)
                 }
 
             }

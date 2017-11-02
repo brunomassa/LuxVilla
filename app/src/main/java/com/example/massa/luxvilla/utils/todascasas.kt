@@ -1,34 +1,12 @@
 package com.example.massa.luxvilla.utils
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * Created by massa on 27/10/2017.
  */
-class todascasas {
-
-    var id: String? = null
-    var local: String? = null
-    var preco: String? = null
-    var imgurl: String? = null
-
-
-    constructor() {
-
-    }
-
-    constructor(local: String,
-                preco: String,
-                imgurl: String,
-                id: String) {
-        this.local = local
-        this.preco = preco
-        this.imgurl = imgurl
-        this.id = id
-    }
-
-    override fun toString(): String {
-        return ("ID: " + id
-                + "\nLOCAL: " + local
-                + "\nPRECO: " + preco
-                + "\nIMGURL: " + imgurl)
-    }
-}
+data class Todascasas( @SerializedName("id") var id: String? = null,
+                       @SerializedName("local") var local: String? = null,
+                       @SerializedName("preco") var preco: String? = null,
+                       @SerializedName("imgURL") var imgurl: String? = null,
+                       @SerializedName("infocasa") var infocasa: String? = null)

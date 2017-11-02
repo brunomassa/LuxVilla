@@ -12,8 +12,8 @@ import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.example.massa.luxvilla.R
 import com.example.massa.luxvilla.network.VolleySingleton
+import com.example.massa.luxvilla.utils.casas
 import com.example.massa.luxvilla.utils.firebaseutils
-import com.example.massa.luxvilla.utils.todascasas
 import com.like.IconType
 import com.like.LikeButton
 import com.like.OnLikeListener
@@ -26,7 +26,7 @@ import java.util.ArrayList
  */
 class adaptadorrvtodas(context: Context) : RecyclerView.Adapter<adaptadorrvtodas.vhtodas>() {
 
-    private var casas = ArrayList<todascasas>()
+    private var casas = ArrayList<casas>()
     private val layoutInflater: LayoutInflater
     private val imageLoader: ImageLoader
 
@@ -38,7 +38,7 @@ class adaptadorrvtodas(context: Context) : RecyclerView.Adapter<adaptadorrvtodas
 
     }
 
-    fun setCasas(cs: ArrayList<todascasas>) {
+    fun setCasas(cs: ArrayList<casas>) {
         this.casas = cs
         notifyDataSetChanged()
     }

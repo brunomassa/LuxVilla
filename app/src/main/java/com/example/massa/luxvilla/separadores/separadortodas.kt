@@ -16,6 +16,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.telephony.TelephonyManager
+import android.util.Log
 import android.view.*
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -30,11 +31,12 @@ import com.example.massa.luxvilla.adaptadores.adaptadorrvtodasoffline
 import com.example.massa.luxvilla.network.VolleySingleton
 import com.example.massa.luxvilla.sqlite.BDAdapter
 import com.example.massa.luxvilla.utils.*
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_separadortodas.*
 import kotlinx.android.synthetic.main.fragment_separadortodas.view.*
 import org.json.JSONArray
 import org.json.JSONException
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by massa on 27/10/2017.
@@ -44,7 +46,7 @@ import java.util.ArrayList
 class separadortodas : Fragment(), RecyclerViewOnClickListenerHack {
 
     private var requestQueue: RequestQueue? = null
-    private var casas = ArrayList<todascasas>()
+    private var casas = ArrayList<casas>()
     private var adaptador: adaptadorrvtodas? = null
     private var adaptadoroffline: adaptadorrvtodasoffline? = null
 
@@ -65,7 +67,7 @@ class separadortodas : Fragment(), RecyclerViewOnClickListenerHack {
      fun sendjsonRequest() {
 
         val jsonArrayRequest = JsonArrayRequest(Request.Method.GET, "http://brunoferreira.esy.es/serverdata.php", null, Response.Listener { response ->
-            casas = parsejsonResponse(response)
+            casas=parsejsonResponse(response)
             adaptador!!.setCasas(casas)
             progress_bar.visibility = View.GONE
             swipe.visibility = View.VISIBLE
@@ -78,51 +80,46 @@ class separadortodas : Fragment(), RecyclerViewOnClickListenerHack {
         requestQueue!!.add(jsonArrayRequest)
     }
 
-    private fun parsejsonResponse(array: JSONArray?): ArrayList<todascasas> {
-        val casas = ArrayList<todascasas>()
-
+    private fun parsejsonResponse(array: JSONArray?): ArrayList<casas> {
+        val gson = Gson()
+        val data : List<Todascasas> = gson.fromJson(array.toString(), Array<Todascasas>::class.java).toList()
+        val casas = ArrayList<casas>()
         ids.clear()
         if (array != null) {
 
+            for (todascasas : Todascasas in data){
+                val casadata = com.example.massa.luxvilla.utils.casas()
+                casadata.id=todascasas.id
+                casadata.local=todascasas.local
+                casadata.preco=todascasas.preco
+                casadata.imgurl=todascasas.imgurl
+                val cs = listacasas()
+                cs.Local = todascasas.local
+                cs.Preço = todascasas.preco
+                cs.IMGurl = todascasas.imgurl
+                cs.info = todascasas.infocasa
+                cs.idcs = todascasas.id
 
-            for (i in 0 until array.length()) {
-                try {
-                    val casaexata = array.getJSONObject(i)
-                    val id = casaexata.getString(keys.allkeys.KEY_ID)
-                    val local = casaexata.getString(keys.allkeys.KEY_LOCAL)
-                    val preco = casaexata.getString(keys.allkeys.KEY_PRECO)
-                    val imgurl = casaexata.getString(keys.allkeys.KEY_IMGURL)
-                    val info = casaexata.getString(keys.allkeys.KEY_INFO)
-                    val casasadd = todascasas()
-                    casasadd.local = local
-                    casasadd.preco = preco
-                    casasadd.imgurl = imgurl
-                    casasadd.id = id
-                    val cs = listacasas()
-                    cs.Local = local
-                    cs.Preço = preco
-                    cs.IMGurl = imgurl
-                    cs.info = info
-                    cs.idcs = id
+                val locsql = adapter!!.verlocais(todascasas.id)
+                val precsql = adapter!!.verprecos(todascasas.id)
+                val infossql = adapter!!.verinfos(todascasas.id)
 
+                if (!todascasas.local.equals(locsql, ignoreCase = true) &&
+                        !todascasas.preco.equals(precsql, ignoreCase = true) &&
+                        !todascasas.infocasa.equals(infossql, ignoreCase = true)) {
 
-                    val locsql = adapter!!.verlocais(id)
-                    val precsql = adapter!!.verprecos(id)
-                    val infossql = adapter!!.verinfos(id)
-                    if (!local.equals(locsql, ignoreCase = true) && !preco.equals(precsql, ignoreCase = true) && !info.equals(infossql, ignoreCase = true)) {
-                        val longid = adapter!!.inserirdados(local, preco, info)!!
-                        if (longid <= 0) {
-                            Toast.makeText(activity, "Ocorreu um erro, tente novamente mais tarde", Toast.LENGTH_LONG).show()
-                        }
+                    val longid = adapter!!.inserirdados(todascasas.local, todascasas.preco, todascasas.infocasa)!!
+
+                    if (longid <= 0) {
+
+                        Toast.makeText(activity, "Ocorreu um erro, tente novamente mais tarde", Toast.LENGTH_LONG).show()
+
                     }
-                    casas.add(0, casasadd)
-                    ids.add(0, cs)
 
-                } catch (e: JSONException) {
-                    progress_bar.visibility = View.GONE
-                    swipe.visibility = View.VISIBLE
-                    Toast.makeText(activity, "Falha ao ligar ao servidor", Toast.LENGTH_LONG).show()
                 }
+
+                ids.add(0,cs)
+                casas.add(0,casadata)
 
             }
 

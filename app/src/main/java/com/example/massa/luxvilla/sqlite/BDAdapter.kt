@@ -21,7 +21,7 @@ class BDAdapter(context: Context) {
         ctx = context
     }
 
-    fun inserirdados(local: String, preco: String, info: String): Long? {
+    fun inserirdados(local: String?, preco: String?, info: String?): Long? {
 
         val sqLiteDatabase = core.writableDatabase
         val contentValues = ContentValues()
@@ -33,7 +33,7 @@ class BDAdapter(context: Context) {
         return sqLiteDatabase.insert(BDCore.TABLE_NAME, null, contentValues)
     }
 
-    fun verlocais(ID: String): String? {
+    fun verlocais(ID: String?): String? {
         val sqLiteDatabase = core.writableDatabase
         val colunas = arrayOf(BDCore.TABLE_LOCAL, BDCore.TABLE_PRECO, BDCore.TABLE_INFO)
         val cursor = sqLiteDatabase.query(BDCore.TABLE_NAME, colunas, BDCore.TABLE_ID + "='" + ID + "'", null, null, null, null)
@@ -50,7 +50,7 @@ class BDAdapter(context: Context) {
         return loc
     }
 
-    fun verprecos(ID: String): String? {
+    fun verprecos(ID: String?): String? {
         val sqLiteDatabase = core.writableDatabase
         val colunas = arrayOf(BDCore.TABLE_LOCAL, BDCore.TABLE_PRECO, BDCore.TABLE_INFO)
         val cursor = sqLiteDatabase.query(BDCore.TABLE_NAME, colunas, BDCore.TABLE_ID + "='" + ID + "'", null, null, null, null)
@@ -68,7 +68,7 @@ class BDAdapter(context: Context) {
         return prec
     }
 
-    fun verinfos(ID: String): String? {
+    fun verinfos(ID: String?): String? {
         val sqLiteDatabase = core.writableDatabase
         val colunas = arrayOf(BDCore.TABLE_LOCAL, BDCore.TABLE_PRECO, BDCore.TABLE_INFO)
         val cursor = sqLiteDatabase.query(BDCore.TABLE_NAME, colunas, BDCore.TABLE_ID + "='" + ID + "'", null, null, null, null)

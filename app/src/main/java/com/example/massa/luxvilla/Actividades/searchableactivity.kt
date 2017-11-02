@@ -27,8 +27,10 @@ import com.example.massa.luxvilla.R
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodas
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodasoffline
 import com.example.massa.luxvilla.network.VolleySingleton
+import com.example.massa.luxvilla.separadores.separadoraveiro
 import com.example.massa.luxvilla.sqlite.BDAdapter
 import com.example.massa.luxvilla.utils.*
+import com.google.gson.Gson
 import com.lapism.searchview.SearchAdapter
 import com.lapism.searchview.SearchHistoryTable
 import com.lapism.searchview.SearchItem
@@ -45,7 +47,7 @@ class searchableactivity : AppCompatActivity(), RecyclerViewOnClickListenerHack 
     private var rvc1: RecyclerView? = null
     private var adaptador: adaptadorrvtodas? = null
     private var requestQueue: RequestQueue? = null
-    private var casas = ArrayList<todascasas>()
+    private var casas = ArrayList<casas>()
     private var adaptadoroffline: adaptadorrvtodasoffline? = null
     internal var intent: Intent? = null
     internal var sugestions: MutableList<SearchItem>? = null
@@ -201,73 +203,44 @@ class searchableactivity : AppCompatActivity(), RecyclerViewOnClickListenerHack 
         requestQueue!!.add(jsonArrayRequest)
     }
 
-    private fun parsejsonResponse(array: JSONArray?): ArrayList<todascasas> {
-        val casas = ArrayList<todascasas>()
-        ids.clear()
+    private fun parsejsonResponse(array: JSONArray?): ArrayList<casas> {
+        val gson = Gson()
+        val data : List<Todascasas> = gson.fromJson(array.toString(), Array<Todascasas>::class.java).toList()
+        val casas = ArrayList<casas>()
         var loclowercase: String
         var querylowercase: String
         var preclowercase: String
         var infolowercase: String
+        ids.clear()
         if (array != null) {
-            for (i in 0 until array.length()) {
-                try {
-                    val casaexata = array.getJSONObject(i)
-                    val id = casaexata.getString(keys.allkeys.KEY_ID)
-                    val local = casaexata.getString(keys.allkeys.KEY_LOCAL)
-                    val preco = casaexata.getString(keys.allkeys.KEY_PRECO)
-                    val imgurl = casaexata.getString(keys.allkeys.KEY_IMGURL)
-                    val info = casaexata.getString(keys.allkeys.KEY_INFO)
 
-                    if (query != null) {
-                        loclowercase = local.toLowerCase()
-                        preclowercase = preco.toLowerCase()
-                        infolowercase = info.toLowerCase()
-                        querylowercase = query!!.toLowerCase()
-                        if (loclowercase.contains(querylowercase) || preclowercase.contains(querylowercase) || infolowercase.contains(querylowercase)) {
-                            val casasadd = todascasas()
-                            casasadd.local = local
-                            casasadd.preco = preco
-                            casasadd.imgurl = imgurl
-                            casasadd.id = id
-                            val cs = listacasas()
-                            cs.Local = local
-                            cs.Preço = preco
-                            cs.IMGurl = imgurl
-                            cs.info = info
-                            cs.idcs = id
-                            ids.add(0, cs)
-
-                            casas.add(0, casasadd)
-                        }
-                    } else {
-                        val casasadd = todascasas()
-                        casasadd.local = local
-                        casasadd.preco = preco
-                        casasadd.imgurl = imgurl
-                        casasadd.id = id
-                        val cs = listacasas()
-                        cs.Local = local
-                        cs.Preço = preco
-                        cs.IMGurl = imgurl
-                        cs.info = info
-                        cs.idcs = id
-                        ids.add(0, cs)
-
-                        casas.add(0, casasadd)
-                    }
-
-
-                    //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
-
-                } catch (ignored: JSONException) {
-
+            for (todascasas : Todascasas in data){
+                loclowercase = todascasas.local!!.toLowerCase()
+                preclowercase = todascasas.preco!!.toLowerCase()
+                infolowercase = todascasas.infocasa!!.toLowerCase()
+                querylowercase = query!!.toLowerCase()
+                if (loclowercase.contains(querylowercase) ||
+                        preclowercase.contains(querylowercase) ||
+                        infolowercase.contains(querylowercase)){
+                    val casadata = com.example.massa.luxvilla.utils.casas()
+                    casadata.id=todascasas.id
+                    casadata.local=todascasas.local
+                    casadata.preco=todascasas.preco
+                    casadata.imgurl=todascasas.imgurl
+                    val cs = listacasas()
+                    cs.Local = todascasas.local
+                    cs.Preço = todascasas.preco
+                    cs.IMGurl = todascasas.imgurl
+                    cs.info = todascasas.infocasa
+                    cs.idcs = todascasas.id
+                    ids.add(0,cs)
+                    casas.add(0,casadata)
                 }
+
 
             }
 
         }
-
-        //Toast.makeText(getActivity(),casas.toString(),Toast.LENGTH_LONG).show();
         return casas
     }
 
