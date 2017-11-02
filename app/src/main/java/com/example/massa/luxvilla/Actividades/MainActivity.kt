@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             val adaptador = adaptadorpaginas(supportFragmentManager)
             vpgr.adapter = adaptador
-            vpgr.offscreenPageLimit = 2
+            vpgr.offscreenPageLimit = 4
             vpgr.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                 override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
