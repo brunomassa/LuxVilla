@@ -32,6 +32,8 @@ import com.example.massa.luxvilla.utils.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_separadorporto.*
 import kotlinx.android.synthetic.main.fragment_separadorporto.view.*
+import kotlinx.android.synthetic.main.layout_separadores.*
+import kotlinx.android.synthetic.main.layout_separadores.view.*
 import org.json.JSONArray
 import org.json.JSONException
 import java.util.*
@@ -67,11 +69,11 @@ class separadorporto : Fragment(), RecyclerViewOnClickListenerHack {
             casas = parsejsonResponse(response)
             adaptador!!.setCasas(casas)
             progress_bar.visibility = View.GONE
-            swipeporto.visibility = View.VISIBLE
+            swipe.visibility = View.VISIBLE
         }, Response.ErrorListener {
             progress_bar.visibility = View.GONE
-            swipeporto.visibility = View.VISIBLE
-            Snackbar.make(rvporto, "Falha ao ligar ao servidor", Snackbar.LENGTH_LONG).show()
+            swipe.visibility = View.VISIBLE
+            Snackbar.make(rvcasas, "Falha ao ligar ao servidor", Snackbar.LENGTH_LONG).show()
         })
 
         requestQueue!!.add(jsonArrayRequest)
@@ -119,56 +121,56 @@ class separadorporto : Fragment(), RecyclerViewOnClickListenerHack {
             //tablet
             val rotation = (ctxtodas?.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.rotation
             when (rotation) {
-                Surface.ROTATION_0 -> view.rvporto.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
-                Surface.ROTATION_90 -> view.rvporto.layoutManager = GridLayoutManager(activity, 4, GridLayoutManager.VERTICAL, false)
-                Surface.ROTATION_180 -> view.rvporto.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
+                Surface.ROTATION_0 -> view.rvcasas.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
+                Surface.ROTATION_90 -> view.rvcasas.layoutManager = GridLayoutManager(activity, 4, GridLayoutManager.VERTICAL, false)
+                Surface.ROTATION_180 -> view.rvcasas.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
                 Surface.ROTATION_270 -> {
                 }
-                else -> view.rvporto.layoutManager = GridLayoutManager(activity, 4, GridLayoutManager.VERTICAL, false)
+                else -> view.rvcasas.layoutManager = GridLayoutManager(activity, 4, GridLayoutManager.VERTICAL, false)
             }
         } else {
             //phone
             val rotation = (ctxtodas?.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.rotation
             when (rotation) {
-                Surface.ROTATION_0 -> view.rvporto.layoutManager = LinearLayoutManager(activity)
-                Surface.ROTATION_90 -> view.rvporto.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
-                Surface.ROTATION_180 -> view.rvporto.layoutManager = LinearLayoutManager(activity)
+                Surface.ROTATION_0 -> view.rvcasas.layoutManager = LinearLayoutManager(activity)
+                Surface.ROTATION_90 -> view.rvcasas.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
+                Surface.ROTATION_180 -> view.rvcasas.layoutManager = LinearLayoutManager(activity)
                 Surface.ROTATION_270 -> {
                 }
-                else -> view.rvporto.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
+                else -> view.rvcasas.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
             }
         }
 
         if (NetworkCheck.isNetworkAvailable(activity)) {
 
             adaptador = adaptadorrvtodas(activity)
-            view.rvporto.adapter = adaptador
+            view.rvcasas.adapter = adaptador
 
             sendjsonRequest()
         } else {
             view.progress_bar.visibility = View.GONE
-            view.swipeporto.visibility = View.VISIBLE
+            view.swipe.visibility = View.VISIBLE
             adaptadoroffline = adaptadorrvtodasoffline(activity, getdados())
-            view.rvporto.adapter = adaptadoroffline
+            view.rvcasas.adapter = adaptadoroffline
         }
 
-        view.swipeporto.setColorSchemeColors(ContextCompat.getColor(activity, R.color.colorPrimaryDark), ContextCompat.getColor(activity, R.color.colorPrimaryDark), ContextCompat.getColor(activity, R.color.colorPrimaryDark))
-        view.swipeporto.setOnRefreshListener {
+        view.swipe.setColorSchemeColors(ContextCompat.getColor(activity, R.color.colorPrimaryDark), ContextCompat.getColor(activity, R.color.colorPrimaryDark), ContextCompat.getColor(activity, R.color.colorPrimaryDark))
+        view.swipe.setOnRefreshListener {
             if (NetworkCheck.isNetworkAvailable(activity)) {
 
                 adaptador = adaptadorrvtodas(activity)
-                view.rvporto.adapter = adaptador
+                view.rvcasas.adapter = adaptador
 
                 sendjsonRequest()
             } else {
                 adaptadoroffline = adaptadorrvtodasoffline(activity, getdados())
-                view.rvporto.adapter = adaptadoroffline
+                view.rvcasas.adapter = adaptadoroffline
             }
 
-            view.swipeporto.isRefreshing = false
+            view.swipe.isRefreshing = false
         }
 
-        view.rvporto.addOnItemTouchListener(RecyclerViewTouchListener(activity, view.rvporto, this))
+        view.rvcasas.addOnItemTouchListener(RecyclerViewTouchListener(activity, view.rvcasas, this))
 
         return view
     }

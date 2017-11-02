@@ -34,6 +34,8 @@ import com.example.massa.luxvilla.utils.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_separadortodas.*
 import kotlinx.android.synthetic.main.fragment_separadortodas.view.*
+import kotlinx.android.synthetic.main.layout_separadores.*
+import kotlinx.android.synthetic.main.layout_separadores.view.*
 import org.json.JSONArray
 import org.json.JSONException
 import java.util.*
@@ -74,7 +76,7 @@ class separadortodas : Fragment(), RecyclerViewOnClickListenerHack {
         }, Response.ErrorListener {
             progress_bar.visibility = View.GONE
             swipe.visibility = View.VISIBLE
-            Snackbar.make(rvtodas, "Falha ao ligar ao servidor", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(rvcasas, "Falha ao ligar ao servidor", Snackbar.LENGTH_LONG).show()
         })
 
         requestQueue!!.add(jsonArrayRequest)
@@ -136,23 +138,23 @@ class separadortodas : Fragment(), RecyclerViewOnClickListenerHack {
             //tablet
             val rotation = (ctxtodas?.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.rotation
             when (rotation) {
-                Surface.ROTATION_0 -> view.rvtodas.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
-                Surface.ROTATION_90 -> view.rvtodas.layoutManager = GridLayoutManager(activity, 4, GridLayoutManager.VERTICAL, false)
-                Surface.ROTATION_180 -> view.rvtodas.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
+                Surface.ROTATION_0 -> view.rvcasas.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
+                Surface.ROTATION_90 -> view.rvcasas.layoutManager = GridLayoutManager(activity, 4, GridLayoutManager.VERTICAL, false)
+                Surface.ROTATION_180 -> view.rvcasas.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
                 Surface.ROTATION_270 -> {
                 }
-                else -> view.rvtodas.layoutManager = GridLayoutManager(activity, 4, GridLayoutManager.VERTICAL, false)
+                else -> view.rvcasas.layoutManager = GridLayoutManager(activity, 4, GridLayoutManager.VERTICAL, false)
             }
         } else {
             //phone
             val rotation = (ctxtodas?.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.rotation
             when (rotation) {
-                Surface.ROTATION_0 -> view.rvtodas.layoutManager = LinearLayoutManager(activity)
-                Surface.ROTATION_90 -> view.rvtodas.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
-                Surface.ROTATION_180 -> view.rvtodas.layoutManager = LinearLayoutManager(activity)
+                Surface.ROTATION_0 -> view.rvcasas.layoutManager = LinearLayoutManager(activity)
+                Surface.ROTATION_90 -> view.rvcasas.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
+                Surface.ROTATION_180 -> view.rvcasas.layoutManager = LinearLayoutManager(activity)
                 Surface.ROTATION_270 -> {
                 }
-                else -> view.rvtodas.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
+                else -> view.rvcasas.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
             }
         }
 
@@ -163,14 +165,14 @@ class separadortodas : Fragment(), RecyclerViewOnClickListenerHack {
         if (NetworkCheck.isNetworkAvailable(activity)) {
 
             adaptador = adaptadorrvtodas(activity)
-            view.rvtodas.adapter = adaptador
+            view.rvcasas.adapter = adaptador
 
             sendjsonRequest()
         } else {
             view.progress_bar.visibility = View.GONE
             view.swipe.visibility = View.VISIBLE
             adaptadoroffline = adaptadorrvtodasoffline(activity, getdados())
-            view.rvtodas.adapter = adaptadoroffline
+            view.rvcasas.adapter = adaptadoroffline
         }
 
 
@@ -180,18 +182,18 @@ class separadortodas : Fragment(), RecyclerViewOnClickListenerHack {
             if (NetworkCheck.isNetworkAvailable(activity)) {
 
                 adaptador = adaptadorrvtodas(activity)
-                view.rvtodas.adapter = adaptador
+                view.rvcasas.adapter = adaptador
 
                 sendjsonRequest()
             } else {
                 adaptadoroffline = adaptadorrvtodasoffline(activity, getdados())
-                view.rvtodas.adapter = adaptadoroffline
+                view.rvcasas.adapter = adaptadoroffline
             }
 
             view.swipe.isRefreshing = false
         }
 
-        view.rvtodas.addOnItemTouchListener(RecyclerViewTouchListener(activity, view.rvtodas, this))
+        view.rvcasas.addOnItemTouchListener(RecyclerViewTouchListener(activity, view.rvcasas, this))
 
 
 
