@@ -1,5 +1,6 @@
 package com.example.massa.luxvilla.separadores
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
@@ -20,7 +21,6 @@ import android.widget.RelativeLayout
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
-import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.massa.luxvilla.Actividades.casaactivity
 import com.example.massa.luxvilla.R
@@ -42,7 +42,6 @@ import java.util.*
 
 class separadorporto : Fragment(), RecyclerViewOnClickListenerHack {
 
-    private val imageLoader: ImageLoader? = null
     private var requestQueue: RequestQueue? = null
     private var casas = ArrayList<casas>()
     private var adaptador: adaptadorrvtodas? = null
@@ -80,7 +79,7 @@ class separadorporto : Fragment(), RecyclerViewOnClickListenerHack {
         val gson = Gson()
         val data : List<Todascasas> = gson.fromJson(array.toString(), Array<Todascasas>::class.java).toList()
         val casas = ArrayList<casas>()
-        var local : String? = null
+        var local: String?
         ids.clear()
         if (array != null) {
 
@@ -197,7 +196,7 @@ class separadorporto : Fragment(), RecyclerViewOnClickListenerHack {
     }
 
 
-    private class RecyclerViewTouchListener internal constructor(private val mContext: Context, rv: RecyclerView, private val mRecyclerViewOnClickListenerHack: RecyclerViewOnClickListenerHack?) : RecyclerView.OnItemTouchListener {
+    private class RecyclerViewTouchListener internal constructor(mContext: Context, rv: RecyclerView, private val mRecyclerViewOnClickListenerHack: RecyclerViewOnClickListenerHack?) : RecyclerView.OnItemTouchListener {
         private val mGestureDetector: GestureDetector
 
         init {
@@ -255,7 +254,9 @@ class separadorporto : Fragment(), RecyclerViewOnClickListenerHack {
         private val ARG_PARAM1 = "param1"
         private val ARG_PARAM2 = "param2"
         internal var ids: ArrayList<listacasas> = ArrayList()
+        @SuppressLint("StaticFieldLeak")
         internal var adapter: BDAdapter? = null
+        @SuppressLint("StaticFieldLeak")
         internal var ctxtodas: Context? = null
 
         /**

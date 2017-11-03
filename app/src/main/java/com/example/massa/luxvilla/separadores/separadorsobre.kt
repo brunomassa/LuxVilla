@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.massa.luxvilla.R
 import com.example.massa.luxvilla.utils.firebaseutils
-import kotlinx.android.synthetic.main.fragment_separadorsobre.*
 import kotlinx.android.synthetic.main.fragment_separadorsobre.view.*
 
 /**

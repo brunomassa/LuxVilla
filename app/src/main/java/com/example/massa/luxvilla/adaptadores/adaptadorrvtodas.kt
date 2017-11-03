@@ -1,5 +1,6 @@
 package com.example.massa.luxvilla.adaptadores
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -41,12 +42,6 @@ class adaptadorrvtodas(context: Context) : RecyclerView.Adapter<adaptadorrvtodas
     fun setCasas(cs: ArrayList<casas>) {
         this.casas = cs
         notifyDataSetChanged()
-    }
-
-    fun removeAt(position: Int) {
-        casas.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, casas.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): vhtodas {
@@ -115,6 +110,7 @@ class adaptadorrvtodas(context: Context) : RecyclerView.Adapter<adaptadorrvtodas
     }
 
     companion object {
+        @SuppressLint("StaticFieldLeak")
         var ctx: Context? = null
     }
 }

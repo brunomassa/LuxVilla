@@ -1,5 +1,6 @@
 package com.example.massa.luxvilla.sqlite
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -103,7 +104,7 @@ class BDAdapter(context: Context) {
         return cnt
     }
 
-    private class BDCore internal constructor(internal var context: Context) : SQLiteOpenHelper(context, BD_NAME, null, BD_VERSION) {
+    private class BDCore internal constructor(context: Context) : SQLiteOpenHelper(context, BD_NAME, null, BD_VERSION) {
 
         override fun onCreate(db: SQLiteDatabase) {
 
@@ -140,6 +141,7 @@ class BDAdapter(context: Context) {
     }
 
     companion object {
+        @SuppressLint("StaticFieldLeak")
         internal var ctx: Context? = null
     }
 

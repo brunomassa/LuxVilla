@@ -1,5 +1,6 @@
 package com.example.massa.luxvilla.separadores
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
@@ -15,7 +16,6 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.telephony.TelephonyManager
-import android.util.Log
 import android.view.*
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -220,7 +220,7 @@ class separadortodas : Fragment(), RecyclerViewOnClickListenerHack {
 
     }
 
-    private class RecyclerViewTouchListener internal constructor(private val mContext: Context, rv: RecyclerView, private val mRecyclerViewOnClickListenerHack: RecyclerViewOnClickListenerHack?) : RecyclerView.OnItemTouchListener {
+    private class RecyclerViewTouchListener internal constructor(mContext: Context, rv: RecyclerView, private val mRecyclerViewOnClickListenerHack: RecyclerViewOnClickListenerHack?) : RecyclerView.OnItemTouchListener {
         private val mGestureDetector: GestureDetector
 
         init {
@@ -279,7 +279,9 @@ class separadortodas : Fragment(), RecyclerViewOnClickListenerHack {
         private val ARG_PARAM1 = "param1"
         private val ARG_PARAM2 = "param2"
         internal var ids: ArrayList<listacasas> = ArrayList()
+        @SuppressLint("StaticFieldLeak")
         internal var adapter: BDAdapter? = null
+        @SuppressLint("StaticFieldLeak")
         internal var ctxtodas: Context? = null
 
         /**

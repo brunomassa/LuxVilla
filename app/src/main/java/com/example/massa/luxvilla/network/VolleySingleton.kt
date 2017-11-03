@@ -1,5 +1,6 @@
 package com.example.massa.luxvilla.network
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.LruCache
@@ -47,7 +48,9 @@ class VolleySingleton private constructor(context: Context) {
 
     companion object {
 
+        @SuppressLint("StaticFieldLeak")
         var mInstancia: VolleySingleton? = null
+        @SuppressLint("StaticFieldLeak")
         var mContext: Context? = null
 
         @Synchronized

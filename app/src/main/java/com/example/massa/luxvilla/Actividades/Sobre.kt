@@ -2,7 +2,6 @@ package com.example.massa.luxvilla.Actividades
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import com.example.massa.luxvilla.R
@@ -12,7 +11,6 @@ import kotlinx.android.synthetic.main.activity_sobre.*
  * Created by massa on 27/10/2017.
  */
 class Sobre : AppCompatActivity() {
-    internal var barsobre: Toolbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

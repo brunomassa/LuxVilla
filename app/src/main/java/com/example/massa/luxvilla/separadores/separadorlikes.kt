@@ -1,5 +1,6 @@
 package com.example.massa.luxvilla.separadores
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -46,7 +47,6 @@ class separadorlikes : Fragment(), RecyclerViewOnClickListenerHack {
     private var casas = ArrayList<casas>()
     private var adaptador: adaptadorrvtodas? = null
     private var adaptadoroffline: adaptadorrvtodasoffline? = null
-    internal var editor: SharedPreferences.Editor? = null
     internal var PREFSNAME = "FAVS"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +86,7 @@ class separadorlikes : Fragment(), RecyclerViewOnClickListenerHack {
         if (array != null) {
 
             for (todascasas : Todascasas in data){
-                favflag=sharedPreferences!!.getInt(todascasas.id, 0);
+                favflag=sharedPreferences!!.getInt(todascasas.id, 0)
                 if (favflag==1){
                     val casadata = com.example.massa.luxvilla.utils.casas()
                     casadata.id=todascasas.id
@@ -198,7 +198,7 @@ class separadorlikes : Fragment(), RecyclerViewOnClickListenerHack {
 
     }
 
-    private class RecyclerViewTouchListener internal constructor(private val mContext: Context, rv: RecyclerView, private val mRecyclerViewOnClickListenerHack: RecyclerViewOnClickListenerHack?) : RecyclerView.OnItemTouchListener {
+    private class RecyclerViewTouchListener internal constructor(mContext: Context, rv: RecyclerView, private val mRecyclerViewOnClickListenerHack: RecyclerViewOnClickListenerHack?) : RecyclerView.OnItemTouchListener {
         private val mGestureDetector: GestureDetector
 
         init {
@@ -257,7 +257,9 @@ class separadorlikes : Fragment(), RecyclerViewOnClickListenerHack {
         private val ARG_PARAM1 = "param1"
         private val ARG_PARAM2 = "param2"
         internal var ids: ArrayList<listacasas> = ArrayList()
+        @SuppressLint("StaticFieldLeak")
         internal var adapter: BDAdapter? = null
+        @SuppressLint("StaticFieldLeak")
         internal var ctxtodas: Context? = null
         internal var sharedPreferences: SharedPreferences? = null
         internal var favflag: Int = 0

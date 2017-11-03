@@ -13,10 +13,7 @@ import android.transition.ChangeBounds
 import android.transition.Slide
 import android.transition.TransitionManager
 import android.view.View
-import com.android.volley.VolleyError
-import com.android.volley.toolbox.ImageLoader
 import com.example.massa.luxvilla.R
-import com.example.massa.luxvilla.network.VolleySingleton
 import com.example.massa.luxvilla.utils.firebaseutils
 import com.like.IconType
 import com.like.LikeButton
@@ -127,7 +124,7 @@ class casaactivity : AppCompatActivity() {
 
                 sharedPreferences = getSharedPreferences(PREFSNAME, 0)
                 editor = sharedPreferences!!.edit()
-                editor!!.putInt(idcasa.toString(), 0)
+                editor!!.putInt(idcasa, 0)
                 editor!!.apply()
                 favflag = sharedPreferences!!.getInt(idcasa.toString(), 0)
 

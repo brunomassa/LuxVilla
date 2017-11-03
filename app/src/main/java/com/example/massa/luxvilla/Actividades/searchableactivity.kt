@@ -1,5 +1,6 @@
 package com.example.massa.luxvilla.Actividades
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -27,7 +28,6 @@ import com.example.massa.luxvilla.R
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodas
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodasoffline
 import com.example.massa.luxvilla.network.VolleySingleton
-import com.example.massa.luxvilla.separadores.separadoraveiro
 import com.example.massa.luxvilla.sqlite.BDAdapter
 import com.example.massa.luxvilla.utils.*
 import com.google.gson.Gson
@@ -37,7 +37,6 @@ import com.lapism.searchview.SearchItem
 import com.lapism.searchview.SearchView
 import kotlinx.android.synthetic.main.activity_searchableactivity.*
 import org.json.JSONArray
-import org.json.JSONException
 import java.util.ArrayList
 
 /**
@@ -269,7 +268,7 @@ class searchableactivity : AppCompatActivity(), RecyclerViewOnClickListenerHack 
     }
 
 
-    private class RecyclerViewTouchListener internal constructor(private val mContext: Context, rv: RecyclerView, private val mRecyclerViewOnClickListenerHack: RecyclerViewOnClickListenerHack?) : RecyclerView.OnItemTouchListener {
+    private class RecyclerViewTouchListener internal constructor(mContext: Context, rv: RecyclerView, private val mRecyclerViewOnClickListenerHack: RecyclerViewOnClickListenerHack?) : RecyclerView.OnItemTouchListener {
         private val mGestureDetector: GestureDetector
 
         init {
@@ -350,7 +349,9 @@ class searchableactivity : AppCompatActivity(), RecyclerViewOnClickListenerHack 
     companion object {
         internal var query: String? = null
         internal var ids: ArrayList<listacasas> = ArrayList()
+        @SuppressLint("StaticFieldLeak")
         internal var adapter: BDAdapter? = null
+        @SuppressLint("StaticFieldLeak")
         internal var ctxtodas: Context? = null
 
         fun getdados(): List<listasql> {
