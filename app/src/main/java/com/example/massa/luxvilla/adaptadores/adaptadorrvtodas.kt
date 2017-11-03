@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.android.volley.toolbox.ImageLoader
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
+import com.example.massa.luxvilla.Application.LuxVilla
 import com.example.massa.luxvilla.R
 import com.example.massa.luxvilla.network.VolleySingleton
 import com.example.massa.luxvilla.utils.casas
@@ -28,13 +29,10 @@ class adaptadorrvtodas(context: Context) : RecyclerView.Adapter<adaptadorrvtodas
 
     private var casas = ArrayList<casas>()
     private val layoutInflater: LayoutInflater
-    private val imageLoader: ImageLoader
     var ctx: Context? = null
 
     init {
         layoutInflater = LayoutInflater.from(context)
-        val volleySingleton = VolleySingleton.getInstancia(context)
-        imageLoader = volleySingleton.imageLoader
         ctx = context
 
     }

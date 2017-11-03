@@ -23,6 +23,7 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
+import com.example.massa.luxvilla.Application.LuxVilla
 import com.example.massa.luxvilla.R
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodas
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodasoffline
@@ -63,7 +64,7 @@ class searchableactivity : AppCompatActivity(), RecyclerViewOnClickListenerHack 
             query = intent!!.getStringExtra("query")
 
 
-        val volleySingleton = VolleySingleton.getInstancia(this@searchableactivity)
+        val volleySingleton = VolleySingleton.getInstancia(this)
         requestQueue = volleySingleton.requestQueue
 
         if (query != null) {

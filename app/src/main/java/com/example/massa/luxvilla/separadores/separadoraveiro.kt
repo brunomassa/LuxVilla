@@ -22,6 +22,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.massa.luxvilla.Actividades.casaactivity
+import com.example.massa.luxvilla.Application.LuxVilla
 import com.example.massa.luxvilla.R
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodas
 import com.example.massa.luxvilla.adaptadores.adaptadorrvtodasoffline
@@ -53,7 +54,7 @@ class separadoraveiro : Fragment(), RecyclerViewOnClickListenerHack {
             val mParam1 = arguments.getString(ARG_PARAM1)
             val mParam2 = arguments.getString(ARG_PARAM2)
         }
-        val volleySingleton = VolleySingleton.getInstancia(activity)
+        val volleySingleton = VolleySingleton.getInstancia(context)
         requestQueue = volleySingleton.requestQueue
     }
 
