@@ -1,6 +1,5 @@
 package com.example.massa.luxvilla.adaptadores
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -25,6 +24,7 @@ class adaptadorrvtodasoffline(c: Context, dados: List<listasql>) : RecyclerView.
 
     private val inflater: LayoutInflater
     private var dados = emptyList<listasql>()
+    private var ctx: Context? = null
 
     init {
         inflater = LayoutInflater.from(c)
@@ -91,8 +91,5 @@ class adaptadorrvtodasoffline(c: Context, dados: List<listasql>) : RecyclerView.
         }
     }
 
-    companion object {
-        @SuppressLint("StaticFieldLeak")
-        private var ctx: Context? = null
-    }
+    companion object
 }

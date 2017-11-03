@@ -1,6 +1,5 @@
 package com.example.massa.luxvilla.separadores
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -48,6 +47,7 @@ class separadorlikes : Fragment(), RecyclerViewOnClickListenerHack {
     private var adaptador: adaptadorrvtodas? = null
     private var adaptadoroffline: adaptadorrvtodasoffline? = null
     internal var PREFSNAME = "FAVS"
+    internal var adapter: BDAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +58,6 @@ class separadorlikes : Fragment(), RecyclerViewOnClickListenerHack {
 
         val volleySingleton = VolleySingleton.getInstancia(activity)
         requestQueue = volleySingleton.requestQueue
-        ctxtodas = context
         sharedPreferences = activity.getSharedPreferences(PREFSNAME, 0)
     }
 
@@ -117,7 +116,7 @@ class separadorlikes : Fragment(), RecyclerViewOnClickListenerHack {
         val manager = activity.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         if (manager.phoneType == TelephonyManager.PHONE_TYPE_NONE) {
             //tablet
-            val rotation = (ctxtodas?.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.rotation
+            val rotation = (context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.rotation
             when (rotation) {
                 Surface.ROTATION_0 -> view.rvcasas.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
                 Surface.ROTATION_90 -> view.rvcasas.layoutManager = GridLayoutManager(activity, 4, GridLayoutManager.VERTICAL, false)
@@ -128,7 +127,7 @@ class separadorlikes : Fragment(), RecyclerViewOnClickListenerHack {
             }
         } else {
             //phone
-            val rotation = (ctxtodas?.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.rotation
+            val rotation = (context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.rotation
             when (rotation) {
                 Surface.ROTATION_0 -> view.rvcasas.layoutManager = LinearLayoutManager(activity)
                 Surface.ROTATION_90 -> view.rvcasas.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
@@ -251,16 +250,46 @@ class separadorlikes : Fragment(), RecyclerViewOnClickListenerHack {
         override fun onRequestDisallowInterceptTouchEvent(b: Boolean) {}
     }
 
+    fun getdados(): List<listasql> {
+
+        val dados = ArrayList<listasql>()
+
+        adapter = BDAdapter(context!!)
+        val colunas = adapter!!.numerodecolunas()
+        ids.clear()
+
+
+        for (i in 0 until colunas) {
+            val txtexato = listasql()
+            val locsqloffline = adapter!!.verlocais((i + 1).toString())
+            val precsqloffline = adapter!!.verprecos((i + 1).toString())
+            val infossqloffline = adapter!!.verinfos((i + 1).toString())
+            val id = (i + 1).toString()
+
+            favflag = sharedPreferences?.getInt(id, 0)!!
+            if (favflag == 1) {
+                txtexato.Loc = locsqloffline
+                txtexato.Prec = precsqloffline
+                txtexato.Inf = infossqloffline
+                txtexato.Id = id
+                dados.add(0, txtexato)
+                val cs = listacasas()
+                cs.Local = locsqloffline
+                cs.Preço = precsqloffline
+                cs.info = infossqloffline
+                cs.idcs = id
+                ids.add(0, cs)
+            }
+        }
+        return dados
+    }
+
     companion object {
         // TODO: Rename parameter arguments, choose names that match
         // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
         private val ARG_PARAM1 = "param1"
         private val ARG_PARAM2 = "param2"
         internal var ids: ArrayList<listacasas> = ArrayList()
-        @SuppressLint("StaticFieldLeak")
-        internal var adapter: BDAdapter? = null
-        @SuppressLint("StaticFieldLeak")
-        internal var ctxtodas: Context? = null
         internal var sharedPreferences: SharedPreferences? = null
         internal var favflag: Int = 0
 
@@ -282,38 +311,5 @@ class separadorlikes : Fragment(), RecyclerViewOnClickListenerHack {
             return fragment
         }
 
-        fun getdados(): List<listasql> {
-
-            val dados = ArrayList<listasql>()
-
-            adapter = BDAdapter(ctxtodas!!)
-            val colunas = adapter!!.numerodecolunas()
-            ids.clear()
-
-
-            for (i in 0 until colunas) {
-                val txtexato = listasql()
-                val locsqloffline = adapter!!.verlocais((i + 1).toString())
-                val precsqloffline = adapter!!.verprecos((i + 1).toString())
-                val infossqloffline = adapter!!.verinfos((i + 1).toString())
-                val id = (i + 1).toString()
-
-                favflag = sharedPreferences?.getInt(id, 0)!!
-                if (favflag == 1) {
-                    txtexato.Loc = locsqloffline
-                    txtexato.Prec = precsqloffline
-                    txtexato.Inf = infossqloffline
-                    txtexato.Id = id
-                    dados.add(0, txtexato)
-                    val cs = listacasas()
-                    cs.Local = locsqloffline
-                    cs.Preço = precsqloffline
-                    cs.info = infossqloffline
-                    cs.idcs = id
-                    ids.add(0, cs)
-                }
-            }
-            return dados
-        }
     }
 }// Required empty public constructor

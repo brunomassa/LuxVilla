@@ -1,6 +1,5 @@
 package com.example.massa.luxvilla.Actividades
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -52,6 +51,7 @@ class searchableactivity : AppCompatActivity(), RecyclerViewOnClickListenerHack 
     internal var sugestions: MutableList<SearchItem>? = null
     internal var msearchHistoryTable: SearchHistoryTable? = null
     internal var sharedPreferencesapp: SharedPreferences? = null
+    internal var adapter: BDAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +65,6 @@ class searchableactivity : AppCompatActivity(), RecyclerViewOnClickListenerHack 
 
         val volleySingleton = VolleySingleton.getInstancia(this@searchableactivity)
         requestQueue = volleySingleton.requestQueue
-        ctxtodas = this@searchableactivity
 
         if (query != null) {
             searchViewpresult.hint = query
@@ -346,54 +345,52 @@ class searchableactivity : AppCompatActivity(), RecyclerViewOnClickListenerHack 
         return super.onOptionsItemSelected(item)
     }
 
+    fun getdados(): List<listasql> {
+
+        val dados = ArrayList<listasql>()
+
+        adapter = BDAdapter(this@searchableactivity)
+        val colunas = adapter!!.numerodecolunas()
+        ids.clear()
+
+        var loclowercase: String
+        var querylowercase: String
+        var preclowercase: String
+        var infolowercase: String
+
+
+        for (i in 0 until colunas) {
+            val txtexato = listasql()
+            val locsqloffline = adapter!!.verlocais((i + 1).toString())
+            val precsqloffline = adapter!!.verprecos((i + 1).toString())
+            val infossqloffline = adapter!!.verinfos((i + 1).toString())
+            val id = (i + 1).toString()
+
+            loclowercase = locsqloffline!!.toLowerCase()
+            preclowercase = precsqloffline!!.toLowerCase()
+            infolowercase = infossqloffline!!.toLowerCase()
+            querylowercase = query!!.toLowerCase()
+            if (loclowercase.contains(querylowercase) || preclowercase.contains(querylowercase) || infolowercase.contains(querylowercase)) {
+                txtexato.Loc = locsqloffline
+                txtexato.Prec = precsqloffline
+                txtexato.Inf = infossqloffline
+                txtexato.Id = id
+                dados.add(0, txtexato)
+                val cs = listacasas()
+                cs.Local = locsqloffline
+                cs.Preço = precsqloffline
+                cs.info = infossqloffline
+                cs.idcs = id
+                ids.add(0, cs)
+            }
+        }
+        return dados
+    }
+
     companion object {
         internal var query: String? = null
         internal var ids: ArrayList<listacasas> = ArrayList()
-        @SuppressLint("StaticFieldLeak")
-        internal var adapter: BDAdapter? = null
-        @SuppressLint("StaticFieldLeak")
-        internal var ctxtodas: Context? = null
-
-        fun getdados(): List<listasql> {
-
-            val dados = ArrayList<listasql>()
-
-            adapter = BDAdapter(ctxtodas!!)
-            val colunas = adapter!!.numerodecolunas()
-            ids.clear()
-
-            var loclowercase: String
-            var querylowercase: String
-            var preclowercase: String
-            var infolowercase: String
 
 
-            for (i in 0 until colunas) {
-                val txtexato = listasql()
-                val locsqloffline = adapter!!.verlocais((i + 1).toString())
-                val precsqloffline = adapter!!.verprecos((i + 1).toString())
-                val infossqloffline = adapter!!.verinfos((i + 1).toString())
-                val id = (i + 1).toString()
-
-                loclowercase = locsqloffline!!.toLowerCase()
-                preclowercase = precsqloffline!!.toLowerCase()
-                infolowercase = infossqloffline!!.toLowerCase()
-                querylowercase = query!!.toLowerCase()
-                if (loclowercase.contains(querylowercase) || preclowercase.contains(querylowercase) || infolowercase.contains(querylowercase)) {
-                    txtexato.Loc = locsqloffline
-                    txtexato.Prec = precsqloffline
-                    txtexato.Inf = infossqloffline
-                    txtexato.Id = id
-                    dados.add(0, txtexato)
-                    val cs = listacasas()
-                    cs.Local = locsqloffline
-                    cs.Preço = precsqloffline
-                    cs.info = infossqloffline
-                    cs.idcs = id
-                    ids.add(0, cs)
-                }
-            }
-            return dados
-        }
     }
 }

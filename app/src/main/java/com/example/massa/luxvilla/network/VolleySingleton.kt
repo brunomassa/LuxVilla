@@ -15,6 +15,7 @@ import com.android.volley.toolbox.Volley
 class VolleySingleton private constructor(context: Context) {
     private var mrequestQueue: RequestQueue? = null
     val imageLoader: ImageLoader
+    var mContext: Context? = null
 
     val requestQueue: RequestQueue
         get() {
@@ -47,11 +48,8 @@ class VolleySingleton private constructor(context: Context) {
     }
 
     companion object {
-
         @SuppressLint("StaticFieldLeak")
-        var mInstancia: VolleySingleton? = null
-        @SuppressLint("StaticFieldLeak")
-        var mContext: Context? = null
+        private var mInstancia: VolleySingleton? = null
 
         @Synchronized
         fun getInstancia(context: Context): VolleySingleton {

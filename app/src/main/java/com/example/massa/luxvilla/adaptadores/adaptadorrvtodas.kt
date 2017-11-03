@@ -1,6 +1,5 @@
 package com.example.massa.luxvilla.adaptadores
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -30,6 +29,7 @@ class adaptadorrvtodas(context: Context) : RecyclerView.Adapter<adaptadorrvtodas
     private var casas = ArrayList<casas>()
     private val layoutInflater: LayoutInflater
     private val imageLoader: ImageLoader
+    var ctx: Context? = null
 
     init {
         layoutInflater = LayoutInflater.from(context)
@@ -109,8 +109,5 @@ class adaptadorrvtodas(context: Context) : RecyclerView.Adapter<adaptadorrvtodas
         }
     }
 
-    companion object {
-        @SuppressLint("StaticFieldLeak")
-        var ctx: Context? = null
-    }
+    companion object
 }
