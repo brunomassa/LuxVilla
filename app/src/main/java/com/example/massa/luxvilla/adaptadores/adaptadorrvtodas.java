@@ -46,12 +46,6 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
         notifyDataSetChanged();
     }
 
-    public void removeAt(int position) {
-        casas.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, casas.size());
-    }
-
     @Override
     public vhtodas onCreateViewHolder(ViewGroup parent, int viewType) {
         View view=layoutInflater.inflate(R.layout.itencasas, parent, false);
@@ -120,10 +114,10 @@ public class adaptadorrvtodas extends RecyclerView.Adapter<adaptadorrvtodas.vhto
         vhtodas(final View itemView) {
             super(itemView);
 
-            imgcasa = (ImageView) itemView.findViewById(R.id.imgcasa);
-            txtLocalcasa = (TextView) itemView.findViewById(R.id.txtlocalcasa);
-            txtPrecocasa = (TextView) itemView.findViewById(R.id.txtprecocasa);
-            favoriteButton = (LikeButton) itemView.findViewById(R.id.favbutton);
+            imgcasa = itemView.findViewById(R.id.imgcasa);
+            txtLocalcasa = itemView.findViewById(R.id.txtlocalcasa);
+            txtPrecocasa = itemView.findViewById(R.id.txtprecocasa);
+            favoriteButton = itemView.findViewById(R.id.favbutton);
 
 
         }

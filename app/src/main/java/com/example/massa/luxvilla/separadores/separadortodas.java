@@ -195,9 +195,9 @@ public class separadortodas extends Fragment implements RecyclerViewOnClickListe
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_separadortodas, container, false);
 
-        recyclerViewtodas=(RecyclerView)view.findViewById(R.id.rvtodas);
-        progressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
-        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipe);
+        recyclerViewtodas= view.findViewById(R.id.rvtodas);
+        progressBar= view.findViewById(R.id.progress_bar);
+        swipeRefreshLayout= view.findViewById(R.id.swipe);
 
 
 

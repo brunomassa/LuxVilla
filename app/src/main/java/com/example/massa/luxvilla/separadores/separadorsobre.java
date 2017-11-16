@@ -62,7 +62,7 @@ public class separadorsobre extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_separadorsobre, container, false);
 
-        textViewbio=(TextView) view.findViewById(R.id.txtbio);
+        textViewbio= view.findViewById(R.id.txtbio);
         firebaseutils.setbio(textViewbio);
 
         return view;

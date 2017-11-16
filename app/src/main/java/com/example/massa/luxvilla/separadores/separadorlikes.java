@@ -190,9 +190,9 @@ public class separadorlikes extends Fragment implements RecyclerViewOnClickListe
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_separadorlikes, container, false);
 
-        recyclerViewtodas=(RecyclerView)view.findViewById(R.id.rvlikes);
-        progressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
-        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipelikes);
+        recyclerViewtodas= view.findViewById(R.id.rvlikes);
+        progressBar= view.findViewById(R.id.progress_bar);
+        swipeRefreshLayout= view.findViewById(R.id.swipelikes);
 
         TelephonyManager manager = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         if(manager.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE){

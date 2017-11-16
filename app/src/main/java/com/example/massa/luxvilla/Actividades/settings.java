@@ -1,7 +1,6 @@
 package com.example.massa.luxvilla.Actividades;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;

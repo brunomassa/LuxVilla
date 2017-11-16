@@ -30,16 +30,16 @@ public class Editprofile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editprofile);
 
-        toolbar=(Toolbar)findViewById(R.id.barprofileactivity);
+        toolbar= findViewById(R.id.barprofileactivity);
         toolbar.setTitle("Editar perfil");
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
         setSupportActionBar(toolbar);
 
-        linearLayout=(LinearLayout)findViewById(R.id.linearLayouteditprofile);
-        textInputLayoutusername=(TextInputLayout)findViewById(R.id.text_input_username);
+        linearLayout= findViewById(R.id.linearLayouteditprofile);
+        textInputLayoutusername= findViewById(R.id.text_input_username);
 
-        editTextusername=(EditText)findViewById(R.id.edittextusername);
-        editTextuserbio=(EditText)findViewById(R.id.edittextbio);
+        editTextusername= findViewById(R.id.edittextusername);
+        editTextuserbio= findViewById(R.id.edittextbio);
 
         mAuth=FirebaseAuth.getInstance();
 

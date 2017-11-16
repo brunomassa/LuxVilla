@@ -6,6 +6,6 @@ import android.view.View;
  * Created by Bruno Massa on 4/5/15.
  */
 public interface RecyclerViewOnClickListenerHack {
-    public void onClickListener(View view, int position);
-    public void onLongPressClickListener(View view, int position);
+    void onClickListener(View view, int position);
+    void onLongPressClickListener(View view, int position);
 }

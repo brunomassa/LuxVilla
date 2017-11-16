@@ -182,9 +182,9 @@ public class separadoraveiro extends Fragment implements RecyclerViewOnClickList
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_separadoraveiro, container, false);
 
-        recyclerViewtodas=(RecyclerView)view.findViewById(R.id.rvaveiro);
-        progressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
-        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipeaveiro);
+        recyclerViewtodas= view.findViewById(R.id.rvaveiro);
+        progressBar= view.findViewById(R.id.progress_bar);
+        swipeRefreshLayout= view.findViewById(R.id.swipeaveiro);
 
 
         TelephonyManager manager = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);

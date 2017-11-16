@@ -45,11 +45,11 @@ public class Userprofile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userprofile);
 
-        toolbarLayout=(CollapsingToolbarLayout)findViewById(R.id.tbprofile);
-        toolbar=(Toolbar)findViewById(R.id.barprofileactivity);
+        toolbarLayout= findViewById(R.id.tbprofile);
+        toolbar= findViewById(R.id.barprofileactivity);
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
         setSupportActionBar(toolbar);
-        profileimage=(CircleImageView) findViewById(R.id.imgprofile);
+        profileimage= findViewById(R.id.imgprofile);
         mAuth=FirebaseAuth.getInstance();
         user=mAuth.getCurrentUser();
         if (user !=null) {
@@ -69,9 +69,9 @@ public class Userprofile extends AppCompatActivity {
                 profileimage.setImageDrawable(ContextCompat.getDrawable(Userprofile.this,R.drawable.nouserimage));
             }
         }
-        tbs=(TabLayout)findViewById(R.id.profiletabs);
+        tbs= findViewById(R.id.profiletabs);
         tbs.setSelectedTabIndicatorColor(ContextCompat.getColor(Userprofile.this,R.color.colorAccent));
-        vwpgr=(ViewPager)findViewById(R.id.profilevpgr);
+        vwpgr= findViewById(R.id.profilevpgr);
         adaptadortabs adaptador=new adaptadortabs(getSupportFragmentManager());
         vwpgr.setAdapter(adaptador);
         tbs.setupWithViewPager(vwpgr);

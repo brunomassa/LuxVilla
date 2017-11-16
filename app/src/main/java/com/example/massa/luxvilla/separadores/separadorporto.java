@@ -181,9 +181,9 @@ public class separadorporto extends Fragment implements RecyclerViewOnClickListe
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_separadorporto, container, false);
 
-        recyclerViewtodas=(RecyclerView)view.findViewById(R.id.rvporto);
-        progressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
-        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipeporto);
+        recyclerViewtodas= view.findViewById(R.id.rvporto);
+        progressBar= view.findViewById(R.id.progress_bar);
+        swipeRefreshLayout= view.findViewById(R.id.swipeporto);
 
 
         TelephonyManager manager = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);

@@ -99,6 +99,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0, notificationBuilder.build());
+        if (notificationManager != null) {
+            notificationManager.notify(0, notificationBuilder.build());
+        }
     }
 }

@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     BDAdapter adapter;
     final String PREFSNAME = "FAVS";
     SharedPreferences sharedPreferencesapp, sharedPreferenceslikes;
-    com.lapism.searchview.SearchView searchViewpr;
+    SearchView searchViewpr;
     List<SearchItem> sugestions;
     SearchHistoryTable msearchHistoryTable;
     AppBarLayout appBarLayout;
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        searchViewpr=(com.lapism.searchview.SearchView)findViewById(R.id.searchViewp);
+        searchViewpr= findViewById(R.id.searchViewp);
 
         sharedPreferenceslikes=MainActivity.this.getSharedPreferences(PREFSNAME, 0);
 
@@ -116,12 +116,12 @@ public class MainActivity extends AppCompatActivity {
             searchViewpr.setIconColor(ContextCompat.getColor(MainActivity.this,R.color.colorsearchicons));
         }
 
-        drawerLayout=(DrawerLayout)findViewById(R.id.drawerll);
-        navigationView=(NavigationView)findViewById(R.id.navigationview);
+        drawerLayout= findViewById(R.id.drawerll);
+        navigationView= findViewById(R.id.navigationview);
 
-        tbs=(TabLayout)findViewById(R.id.tabs);
+        tbs= findViewById(R.id.tabs);
         tbs.setSelectedTabIndicatorColor(ContextCompat.getColor(MainActivity.this,R.color.colorAccent));
-        vwpgr= (ViewPager) findViewById(R.id.vpgr);
+        vwpgr= findViewById(R.id.vpgr);
         adapter=new BDAdapter(this);
 
 
@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
         searchAdapter.addOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                TextView textView = (TextView) view.findViewById(R.id.textView_item_text);
+                TextView textView = view.findViewById(R.id.textView_item_text);
                 String query = textView.getText().toString();
 
                 Intent search=new Intent(MainActivity.this,searchableactivity.class);
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        appBarLayout=(AppBarLayout)findViewById(R.id.appbarll);
+        appBarLayout= findViewById(R.id.appbarll);
         searchViewpr.setOnOpenCloseListener(new SearchView.OnOpenCloseListener() {
             @Override
             public boolean onClose() {
@@ -258,9 +258,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         View headerLayout = navigationView.getHeaderView(0);
-        ivprofile=(CircleImageView) headerLayout.findViewById(R.id.profileimage);
-        tvusername=(TextView) headerLayout.findViewById(R.id.textviewusername);
-        tvusermail=(TextView) headerLayout.findViewById(R.id.textviewusermail);
+        ivprofile= headerLayout.findViewById(R.id.profileimage);
+        tvusername= headerLayout.findViewById(R.id.textviewusername);
+        tvusermail= headerLayout.findViewById(R.id.textviewusermail);
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -323,7 +323,9 @@ public class MainActivity extends AppCompatActivity {
                     .build();
 
 
-            shortcutManager.setDynamicShortcuts(Arrays.asList(shortcut, shortcutInfoLink));
+            if (shortcutManager != null) {
+                shortcutManager.setDynamicShortcuts(Arrays.asList(shortcut, shortcutInfoLink));
+            }
         }
 
     }
@@ -411,6 +413,6 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean isNetworkAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
-        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+        return (connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null) != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 }

@@ -83,8 +83,8 @@ public class casaactivity extends AppCompatActivity {
         infocasa=getIntent().getStringExtra("infocs");
         idcasa=getIntent().getStringExtra("csid");
 
-        appBarLayout=(AppBarLayout)findViewById(R.id.infocasaappbar);
-        toolbarinfocasa=(Toolbar)findViewById(R.id.barinfocasaactivity);
+        appBarLayout= findViewById(R.id.infocasaappbar);
+        toolbarinfocasa= findViewById(R.id.barinfocasaactivity);
         toolbarinfocasa.setTitle(localcasa);
         if (isNetworkAvailable(casaactivity.this)){
             toolbarinfocasa.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
@@ -92,7 +92,7 @@ public class casaactivity extends AppCompatActivity {
             toolbarinfocasa.setNavigationIcon(R.mipmap.ic_arrow_back_black_24dp);
         }
 
-        imageViewinfocasa=(ImageView) findViewById(R.id.imginfocasaactivity);
+        imageViewinfocasa= findViewById(R.id.imginfocasaactivity);
         toolbarinfocasa.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,10 +100,10 @@ public class casaactivity extends AppCompatActivity {
             }
         });
 
-        imgtoolbar=(CollapsingToolbarLayout)findViewById(R.id.tbinfocasaactivity);
+        imgtoolbar= findViewById(R.id.tbinfocasaactivity);
 
 
-        textViewinfocasa=(TextView)findViewById(R.id.txtinfocasaactivity);
+        textViewinfocasa= findViewById(R.id.txtinfocasaactivity);
 
         VolleySingleton volleySingleton = VolleySingleton.getInstancia(casaactivity.this);
         RequestQueue requestQueue = volleySingleton.getRequestQueue();
@@ -138,7 +138,7 @@ public class casaactivity extends AppCompatActivity {
         }
 
 
-        favoriteButton=(LikeButton) findViewById(R.id.favbuttoncasa);
+        favoriteButton= findViewById(R.id.favbuttoncasa);
         favoriteButton.setIcon(IconType.Heart);
         favoriteButton.setIconSizeDp(25);
         favoriteButton.setCircleEndColorRes(R.color.colorAccent);
@@ -188,7 +188,7 @@ public class casaactivity extends AppCompatActivity {
 
         textViewinfocasa.setText("Preço: " + precocasa+"\n\n"+infocasa);
 
-        mRoot=(ViewGroup)findViewById(R.id.card_viewinfo);
+        mRoot= findViewById(R.id.card_viewinfo);
 
     }
 
@@ -208,7 +208,7 @@ public class casaactivity extends AppCompatActivity {
 
     public boolean isNetworkAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
-        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+        return (connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null) != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
     @Override

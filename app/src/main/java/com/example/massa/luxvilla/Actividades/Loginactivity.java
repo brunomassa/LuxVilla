@@ -74,16 +74,16 @@ public class Loginactivity extends AppCompatActivity {
 
         firebaseAuth=FirebaseAuth.getInstance();
 
-        linearLayout=(LinearLayout)findViewById(R.id.linearLayoutsignin);
-        textInputLayoutmail=(TextInputLayout)findViewById(R.id.text_input_mail);
-        textInputLayoutpassword=(TextInputLayout) findViewById(R.id.text_input_password);
-        email=(EditText)findViewById(R.id.edittextmail);
-        password=(EditText)findViewById(R.id.edittextpassword);
-        btnsigin=(AppCompatButton)findViewById(R.id.loginbutton);
-        btnsugup=(AppCompatButton)findViewById(R.id.signupbutton);
-        signInButton=(SignInButton)findViewById(R.id.googlesignin);
+        linearLayout= findViewById(R.id.linearLayoutsignin);
+        textInputLayoutmail= findViewById(R.id.text_input_mail);
+        textInputLayoutpassword= findViewById(R.id.text_input_password);
+        email= findViewById(R.id.edittextmail);
+        password= findViewById(R.id.edittextpassword);
+        btnsigin= findViewById(R.id.loginbutton);
+        btnsugup= findViewById(R.id.signupbutton);
+        signInButton= findViewById(R.id.googlesignin);
 
-        layoutprogressbar=(LinearLayout)findViewById(R.id.linearLayoutprogressbar);
+        layoutprogressbar= findViewById(R.id.linearLayoutprogressbar);
 
         btnsigin.setOnClickListener(new View.OnClickListener() {
             @Override

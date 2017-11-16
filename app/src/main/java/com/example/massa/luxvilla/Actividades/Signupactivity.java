@@ -36,18 +36,18 @@ public class Signupactivity extends AppCompatActivity {
 
         firebaseAuth=FirebaseAuth.getInstance();
 
-        linearLayout=(LinearLayout)findViewById(R.id.linearLayoutsignin);
-        textInputLayoutusername=(TextInputLayout)findViewById(R.id.text_input_user_name);
-        textInputLayoutmail=(TextInputLayout)findViewById(R.id.text_input_mail);
-        textInputLayoutpassword=(TextInputLayout) findViewById(R.id.text_input_password);
-        textInputLayoutconfirmpassword=(TextInputLayout)findViewById(R.id.text_input_Comfirm_password);
-        username=(EditText)findViewById(R.id.edittextusername) ;
-        email=(EditText)findViewById(R.id.edittextmail);
-        password=(EditText)findViewById(R.id.edittextpassword);
-        confirmpassword=(EditText)findViewById(R.id.edittextconfirmpassword);
-        btnsugup=(AppCompatButton)findViewById(R.id.signupbutton);
+        linearLayout= findViewById(R.id.linearLayoutsignin);
+        textInputLayoutusername= findViewById(R.id.text_input_user_name);
+        textInputLayoutmail= findViewById(R.id.text_input_mail);
+        textInputLayoutpassword= findViewById(R.id.text_input_password);
+        textInputLayoutconfirmpassword= findViewById(R.id.text_input_Comfirm_password);
+        username= findViewById(R.id.edittextusername);
+        email= findViewById(R.id.edittextmail);
+        password= findViewById(R.id.edittextpassword);
+        confirmpassword= findViewById(R.id.edittextconfirmpassword);
+        btnsugup= findViewById(R.id.signupbutton);
 
-        layoutprogressbar=(LinearLayout)findViewById(R.id.linearLayoutprogressbar);
+        layoutprogressbar= findViewById(R.id.linearLayoutprogressbar);
 
         btnsugup.setOnClickListener(new View.OnClickListener() {
             @Override

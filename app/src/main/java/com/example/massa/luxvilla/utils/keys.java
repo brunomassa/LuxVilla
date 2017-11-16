@@ -5,11 +5,11 @@ package com.example.massa.luxvilla.utils;
  */
 public interface keys {
 
-    public interface allkeys{
-        public static final String KEY_ID="id";
-        public static final String KEY_LOCAL="local";
-        public static final String KEY_PRECO="preco";
-        public static final String KEY_IMGURL="imgURL";
-        public static final String KEY_INFO="infocasa";
+    interface allkeys{
+        String KEY_ID="id";
+        String KEY_LOCAL="local";
+        String KEY_PRECO="preco";
+        String KEY_IMGURL="imgURL";
+        String KEY_INFO="infocasa";
     }
 }

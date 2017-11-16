@@ -65,7 +65,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
     private adaptadorrvtodasoffline adaptadoroffline;
     static Context ctxtodas;
     Intent intent;
-    com.lapism.searchview.SearchView searchViewpr;
+    SearchView searchViewpr;
     List<SearchItem> sugestions;
     SearchHistoryTable msearchHistoryTable;
     SharedPreferences sharedPreferencesapp;
@@ -85,7 +85,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         requestQueue = volleySingleton.getRequestQueue();
         ctxtodas = searchableactivity.this;
 
-        searchViewpr = (com.lapism.searchview.SearchView) findViewById(R.id.searchViewpresult);
+        searchViewpr = findViewById(R.id.searchViewpresult);
         if (query!=null) {
             searchViewpr.setHint(query);
         }else {
@@ -169,7 +169,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         searchAdapter.addOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                TextView textView = (TextView) view.findViewById(R.id.textView_item_text);
+                TextView textView = view.findViewById(R.id.textView_item_text);
                 query = textView.getText().toString();
 
                 if (isNetworkAvailable(searchableactivity.this)) {
@@ -188,7 +188,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
         });
         searchViewpr.setAdapter(searchAdapter);
 
-        rvc1 = (RecyclerView) findViewById(R.id.rv_search);
+        rvc1 = findViewById(R.id.rv_search);
         rvc1.setLayoutManager(new LinearLayoutManager(searchableactivity.this));
         if (isNetworkAvailable(searchableactivity.this)) {
 
@@ -201,7 +201,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
             rvc1.setAdapter(adaptadoroffline);
         }
 
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipesearch);
+        swipeRefreshLayout = findViewById(R.id.swipesearch);
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(searchableactivity.this,R.color.colorPrimaryDark),ContextCompat.getColor(searchableactivity.this,R.color.colorPrimaryDark),ContextCompat.getColor(searchableactivity.this,R.color.colorPrimaryDark));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -404,7 +404,7 @@ public class searchableactivity extends AppCompatActivity implements RecyclerVie
 
     public boolean isNetworkAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
-        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+        return (connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null) != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
