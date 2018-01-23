@@ -4,24 +4,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.massa.luxvilla.separadores.separadoraveiro">
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        />
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeaveiro"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvaveiro"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <include
+        layout="@layout/layout_separadores"/>
 
 </FrameLayout>

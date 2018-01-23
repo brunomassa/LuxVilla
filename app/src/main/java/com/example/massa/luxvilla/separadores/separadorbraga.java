@@ -183,9 +183,9 @@ public class separadorbraga extends Fragment implements RecyclerViewOnClickListe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_separadorbraga, container, false);
-        recyclerViewtodas= view.findViewById(R.id.rvbraga);
+        recyclerViewtodas= view.findViewById(R.id.rvcasas);
         progressBar= view.findViewById(R.id.progress_bar);
-        swipeRefreshLayout= view.findViewById(R.id.swipebraga);
+        swipeRefreshLayout= view.findViewById(R.id.swipe);
 
 
         TelephonyManager manager = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
