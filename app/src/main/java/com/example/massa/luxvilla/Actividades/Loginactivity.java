@@ -163,6 +163,7 @@ public class Loginactivity extends AppCompatActivity {
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+        mGoogleApiClient.connect();
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
