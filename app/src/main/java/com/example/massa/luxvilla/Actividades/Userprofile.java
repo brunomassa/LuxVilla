@@ -134,6 +134,11 @@ public class Userprofile extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     private class adaptadortabs extends FragmentPagerAdapter{
 
         adaptadortabs(FragmentManager fm) {
