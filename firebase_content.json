@@ -1,0 +1,81 @@
+{
+  "casas" : {
+    "-KjrpXdcJNm5AUd1znAA" : {
+      "img_casa" : "http://brunoferreira.esy.es/imgsandroid/avatar2.jpg",
+      "info_casa" : "Moradia T4 bem localizada, com acabamentos de luxos e onde se pode desfrutar de 6 assoalhadas. Com um total de 2.100 m2 onde 540m2 são reservados para a moradia. Do seu interior faz parte uma cozinha com despensa e ilha, sala de estar e jantar, com boas dimensões, sala de cinema, biblioteca, escritório, suite com vestiário, 3 quartos, wc suite, wc completo, wc de serviço, ginásio, balneário com sauna, lavandaria. Já no seu exterior temos à disposição terraço, piscina coberta e garagem. A moradia lusivo para este espaço pensado para ser um lugar de encontros, vivências, centralidades e descobertas.",
+      "local" : "Aveiro",
+      "preco" : "900,000.00"
+    },
+    "-Kjrpx-pIqCWQbQG3B8S" : {
+      "img_casa" : "http://brunoferreira.esy.es/imgsandroid/casa5.jpg",
+      "info_casa" : "Moradia com um design moderno, onde se pode desfrutar de áreas amplas com excelente exposição solar, incorporados acabamentos de luxo e onde se detém vistas magnificas sobre a ria de Aveiro. Próxima de uma zona balnear, ideal para a prática de desportos náuticos.",
+      "local" : "Aveiro",
+      "preco" : "1.150.000.00"
+    },
+    "-KjrqLNDc5Dp3TUUB-Dw" : {
+      "img_casa" : "http://brunoferreira.esy.es/imgsandroid/casa1.jpg",
+      "info_casa" : "Apartamento T3 bem localizado no centro de Braga, com um design contemporâneo inserido numa área de jardins. Com um total de 451 m2 de área habitacional e um terraço grande e relaxante com jardim de 169 m2. O seu interior divide-se em 2 andares, completamente renovados com um longo hall de entrada com o pavimento construído em mármore e escadas. O 1º andar é composto por uma grande sala de estar com janelas altas, uma lareira e uma sala de jantar, uma cozinha, uma suite principal com um closet de grandes dimensões e uma casa de banho. No rés-do-chão existem 3 suites viradas para o jardim e uma área de SPA com banho turco e jacuzzi. Na cave existe uma garagem com 5 lugares de estacionamento e uma arrecadação construídas com qualidade de topo e matérias exclusivos, soalho em mármore, terraços com deck, esta casa evoca pelo seu design e arte únicos o luxo e a modernidade. ",
+      "local" : "Braga",
+      "preco" : "1.700.000"
+    },
+    "-KjrqgDbSL4pq8UiWpn7" : {
+      "img_casa" : "http://brunoferreira.esy.es/imgsandroid/casa2.jpg",
+      "info_casa" : "Moradia T3 bem localizada na região de Braga, com um total de construção de 349 m2. Do seu interior faz parte contem 3 quartos, 3 casas de banho, 1 sala, um hall de entrada, um corredor e uma cozinha. ",
+      "local" : "Braga",
+      "preco" : "1.800.000"
+    },
+    "-Kjrr3mukEEvc6inJLEw" : {
+      "img_casa" : "http://brunoferreira.esy.es/imgsandroid/casa3.jpg",
+      "info_casa" : "Soberba moradia, localizada na verdejante região do Gerês, refúgio de beleza natural e tranquilidade. A propriedade contempla a moradia de arquitetura moderna, jardins que acompanham toda a moradia, piscina e campo de ténis com vistas desafogadas e únicas para a barragem da Caniçada. Com acabamentos de elevada qualidade e excelente construção permitindo usufruir de todo o conforto e bem-estar. Amplas divisões com muita luminosidade criando harmonia entre os espaços. Com uma área de construção de 320 m2, contem 3 suites, 5 casas de banho, 3 salas, um hall de entrada, em corredor. Na parte exterior tem uma garagem com 2 lugares de estacionamento e 1 court de ténis. ",
+      "local" : "Braga",
+      "preco" : "1.100.000"
+    },
+    "-Kjrrae9qzB5QZdAgwRs" : {
+      "img_casa" : "http://brunoferreira.esy.es/imgsandroid/avatar4.PNG",
+      "info_casa" : "Moradia contemporânea, com 303m2 de habitação e 94m 2 ,personifica o glamour e requinte numa oportunidade perfeita entre arquitetura e o parque da cidade. Encontra-se inserida no condomínio privado com segurança 24h, piscina e ginásio. É constituída por cinco suites, duas salas bastante amplas e ainda uma vista magnífica que se estende até ao mar e sete casas de banho.",
+      "local" : "Porto",
+      "preco" : "1.600.000"
+    },
+    "-Kjrrzh-Ry-asnKztRQQ" : {
+      "img_casa" : "http://brunoferreira.esy.es/imgsandroid/casa7.jpg",
+      "info_casa" : "Moradia histórica, a poucos minutos a pé do mar. reabilitada, transformando-se em dois magníficos e contemporâneos andares moradias. Dentro de um condomínio fechado com cerca de 1000 m2 de jardim, a moradia possui toda estrutura moderna e prática dos dias atuais: áreas sociais com quase 100 m2, três lugares de garagem, quatro suites, e simultaneamente mantém os tetos, paredes e lareiras originais da moradia. É constituída por 5 quartos, 6 casas de banho, piscina interior e uma garagem com capacidade para 3 carros.",
+      "local" : "Porto",
+      "preco" : "1.200.000"
+    },
+    "-KjrsKRL8s2JUkgdyiAA" : {
+      "img_casa" : "http://brunoferreira.esy.es/imgsandroid/casa8.jpg",
+      "info_casa" : "Moradia localizada numa das mais relevantes e procuradas avenidas da cidade do Porto. Com detalhes e características únicas, que lhe conferem grande requinte e exclusividade, contempla um magnífico jardim, duas amplas salas, escritório e um majestoso hall de entrada. É constituída também por 4 quartos e 4 casas de banho. No seu exterior apresenta uma garagem com capacidade para 4 carros.",
+      "local" : "Porto",
+      "preco" : "3.200.000"
+    },
+    "-Kjrsg8M00N6WJWiRixv" : {
+      "img_casa" : "http://brunoferreira.esy.es/imgsandroid/casa9.jpg",
+      "info_casa" : "Moradia contemporânea na Foz. Oferece materiais de exceção, sistema de som centralizado e uma fantástica sala de cinema. Caracteriza-se pela amplitude e luminosidade dos cómodos. A piscina interior tem sistema de aquecimento e o jardim iluminação automática. É constituída por 5 quartos, 8 casas de banho uma piscina interior, uma garagem com capacidade para 4 carros. Apresenta uma área de 2215 m2, sendo 975 m2 para a habitação e 1240 m2 para o terreno.",
+      "local" : "Porto",
+      "preco" : "2.600.000"
+    },
+    "-Kjrt4jMbdj-lYyZ43sh" : {
+      "img_casa" : "http://brunoferreira.esy.es/imgsandroid/casa10.jpg",
+      "info_casa" : "Apartamento localizado em local Premium da cidade do Porto, à Avenida Marechal Gomes da Costa, onde pode viver-se com toda a calma e descontração. No ponto mais elevado da Foz, com vista de mar e uma envolvente de luxo, rodeado por moradias, com exteriores amplos e vistas deslumbrantes. É constituída por 4 quartos, 5 casas de banho e uma garagem em que tem a capacidade para 2 carros.",
+      "local" : "Porto",
+      "preco" : "1.600.000"
+    }
+  },
+  "users" : {
+    "v88QJgwWalgBt907dK0SQ8ng2uj2" : {
+      "likes" : {
+        "heart5" : {
+          "liked" : "true"
+        },
+        "heart6" : {
+          "liked" : "true"
+        }
+      },
+      "member_date" : "22/02/2017",
+      "user_bio" : "teste bio 2",
+      "user_birth" : "23/10/1996",
+      "user_gender" : "Masculino",
+      "verified" : true
+    }
+  }
+}
